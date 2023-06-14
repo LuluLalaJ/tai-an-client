@@ -13,8 +13,12 @@ import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from 'react-router-dom'
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import { useDispatch } from "react-redux";
+import { signinUser } from "../../redux/userSlice";
+
 
 export default function Signin() {
+  const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter a username").max(20),
@@ -30,6 +34,7 @@ export default function Signin() {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values)
+      dispatch(signinUser(values));
     },
   });
 

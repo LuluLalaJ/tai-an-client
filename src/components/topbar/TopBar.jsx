@@ -7,9 +7,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+
 export default function TopBar() {
   const pages = ["Teachers", "Gallery"];
-  const [isSignedIn, setIsSignedIn] = useState(false)
+  const { isSignedIn } = useSelector( store => store.user)
 
   return (
     <Box sx={{ flexGrow: 1 }}>

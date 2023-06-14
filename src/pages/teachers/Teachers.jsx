@@ -16,7 +16,7 @@ import { getTeachers } from '../../redux/teachersSlice';
 
 const Teachers = () => {
   const { teachers, isLoading } = useSelector( store => store.teachers)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     dispatch(getTeachers())
