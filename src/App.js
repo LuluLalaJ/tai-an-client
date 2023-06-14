@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar } from './components'
 import {
   About,
@@ -15,6 +16,7 @@ import {
 const App = () => {
   return (
     <>
+      <CssBaseline />
       <TopBar />
       <Routes>
         <Route path="/" exact element={<Home />} />

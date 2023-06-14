@@ -1,7 +1,5 @@
+import Footer from "./footer/Footer";
 import SideBar from "./sidebar/SideBar";
 import TopBar from "./topbar/TopBar";
 
-export {
-    SideBar,
-    TopBar
-}
+export { Footer, SideBar, TopBar };
