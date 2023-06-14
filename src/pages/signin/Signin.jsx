@@ -3,8 +3,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -25,6 +25,7 @@ export default function Signin() {
     initialValues: {
       username: "",
       password: "",
+      role:""
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -101,10 +102,22 @@ export default function Signin() {
               value={values.password}
               error={!!touched.password && !!errors.password}
             />
-            <FormControlLabel
-              control={<Checkbox value="teacher" color="primary" />}
-              label="I'm a teacher"
-            />
+            <RadioGroup row name="row-radio-buttons-group">
+              <FormControlLabel
+                value="teacher"
+                control={<Radio />}
+                label="I'm a teacher"
+                name="role"
+                onChange={handleChange}
+              />
+              <FormControlLabel
+                value="student"
+                name="role"
+                control={<Radio />}
+                label="I'm a student"
+                onChange={handleChange}
+              />
+            </RadioGroup>
             <Button
               type="submit"
               fullWidth
