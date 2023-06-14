@@ -8,10 +8,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { signOutUser } from "../../redux/userSlice";
 
 export default function TopBar() {
   const pages = ["Teachers", "Gallery"];
   const { isSignedIn } = useSelector( store => store.user)
+  const dispatch = useDispatch()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -44,7 +46,7 @@ export default function TopBar() {
           </Box>
 
           {isSignedIn ? (
-            <Button color="inherit" onClick={null}>
+            <Button color="inherit" onClick={() => dispatch(signOutUser())}>
               Sign out
             </Button>
           ) : (

@@ -8,6 +8,7 @@ import RadioGroup from "@mui/material/RadioGroup";import Link from "@mui/materia
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink, Navigate } from "react-router-dom";
@@ -18,7 +19,7 @@ import { signInUser } from "../../redux/userSlice";
 
 
 export default function Signin() {
-  const { isSignedIn } = useSelector((store) => store.user);
+  const { isSignedIn, error } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
@@ -136,6 +137,12 @@ export default function Signin() {
             >
               Sign In
             </Button>
+            {error
+            &&
+            <Alert severity="error">
+              {error.error}
+            </Alert>
+            }
             <Grid container>
               <Grid item xs>
                 {/* <Link href="#" variant="body2">

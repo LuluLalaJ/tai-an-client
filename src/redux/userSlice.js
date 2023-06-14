@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   isLoading: false,
   isSignedIn: false,
+  error: null,
 };
 
 export const signInUser = createAsyncThunk(
@@ -13,11 +14,10 @@ export const signInUser = createAsyncThunk(
     try {
       const resp = await axios.post("/login", signInInfo);
       return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue();
     }
-  }
-);
+    catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+  }});
 
 export const signOutUser = createAsyncThunk(
   "user/signInUser",
@@ -26,7 +26,7 @@ export const signOutUser = createAsyncThunk(
       const resp = await axios.delete("/logout");
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -38,7 +38,7 @@ export const checkSession = createAsyncThunk(
       const resp = await axios("/check_session");
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -51,43 +51,47 @@ const userSlice = createSlice({
     builder
       .addCase(signInUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(signInUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isSignedIn = true;
+        state.error = null;
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.isLoading = false;
-      });
-  },
-  extraReducers: (builder) => {
-    builder
+        state.error = action.payload;
+      })
       .addCase(signOutUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(signOutUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isSignedIn = false;
+        state.error = null;
       })
       .addCase(signOutUser.rejected, (state, action) => {
         state.isLoading = false;
-      });
-  },
-
-  extraReducers: (builder) => {
-    builder
+        state.error = action.payload;
+      })
       .addCase(checkSession.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
+
       })
       .addCase(checkSession.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isSignedIn = true;
+        state.error = null;
+
       })
       .addCase(checkSession.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
