@@ -5,9 +5,11 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
 
 export default function TopBar() {
   const pages = ["About", "Teachers", "Gallery"];
+  const [isSignedIn, setIsSignedIn] = useState(true)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -39,12 +41,20 @@ export default function TopBar() {
             ))}
           </Box>
 
-          <Button component={RouterLink} to={"/signin"} color="inherit">
-            Sign In
-          </Button>
-          <Button component={RouterLink} to={"/signup"} color="inherit">
-            Sign Up
-          </Button>
+          {isSignedIn ? (
+            <Button color="inherit" onClick={null}>
+              Sign out
+            </Button>
+          ) : (
+            <>
+              <Button component={RouterLink} to={"/signin"} color="inherit">
+                Sign In
+              </Button>
+              <Button component={RouterLink} to={"/signup"} color="inherit">
+                Sign Up
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

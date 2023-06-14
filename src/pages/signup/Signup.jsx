@@ -60,6 +60,7 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                autoFocus
                 required
                 fullWidth
                 id="username"
@@ -79,7 +80,6 @@ export default function SignUp() {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                autoFocus
                 value={values.firstName}
                 onChange={handleChange}
                 error={!!touched.firstName && !!errors.firstName}
