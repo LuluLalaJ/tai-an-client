@@ -6,30 +6,32 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-const TeacherCard = () => {
+const TeacherCard = ({teacher}) => {
+  const {id, country, first_name, avatar} = teacher
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia
         component="div"
         sx={{
           // 16:9
-          pt: "56.25%",
+          // pt: "56.25%",
+          pt: "120%",
         }}
-        image="https://source.unsplash.com/random?wallpapers"
+        image={avatar}
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="h2">
-          Heading
+          {first_name}
         </Typography>
         <Typography>
-          This is a media card. You can use this section to describe the
-          content.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam,
+          consequuntur.
         </Typography>
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="small">View</Button>
         <Button size="small">Edit</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

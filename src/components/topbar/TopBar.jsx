@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function TopBar() {
   const pages = ["About", "Teachers", "Gallery"];
-  const [isSignedIn, setIsSignedIn] = useState(true)
+  const [isSignedIn, setIsSignedIn] = useState(false)
 
   return (
     <Box sx={{ flexGrow: 1 }}>

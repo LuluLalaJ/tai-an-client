@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -10,9 +10,19 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { TeacherCard } from '../../components'
 
-const Teachers = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { getTeachers } from '../../redux/teachersSlice';
 
-  const teachers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const Teachers = () => {
+  const { teachers, isLoading } = useSelector( store => store.teachers)
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getTeachers())
+  }, [])
+
+  console.log(teachers)
 
   return (
     <main>
@@ -48,7 +58,7 @@ const Teachers = () => {
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container spacing={4}>
           {teachers.map((teacher) => (
-            <Grid item key={teacher} xs={12} sm={6} md={4}>
+            <Grid item key={teacher.id} xs={12} sm={6} md={4}>
               <TeacherCard teacher={teacher}/>
             </Grid>
           ))}
