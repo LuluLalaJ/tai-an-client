@@ -1,6 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -10,42 +11,18 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as RouterLink } from 'react-router-dom'
-import { useFormik } from "formik";
-import * as yup from "yup";
-
-
-
-
+import { Link as RouterLink} from "react-router-dom";
 
 
 export default function SignUp() {
-  const signupSchema = yup.object().shape({
-    username: yup.string().required("required"),
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
-  });
-
-
-  const formik = useFormik({
-    initialValues: {
-    username: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  },
-  validationSchema: signupSchema,
-  onSubmit: values => {
-    console.log(values)
-  }
-  })
-
-  const values = formik.values
-  const handleChange = formik.handleChange
-  const handleSubmit = formik.handleSubmit 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,8 +40,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -75,8 +51,6 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={handleChange}
-                value={values.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -87,8 +61,6 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
-                onChange={handleChange}
-                value={values.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,8 +71,6 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={handleChange}
-                value={values.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -112,8 +82,6 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                onChange={handleChange}
-                value={values.password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -133,7 +101,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link variant="body2" component={RouterLink} to={"/signin"}>
+              <Link component={RouterLink} to="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

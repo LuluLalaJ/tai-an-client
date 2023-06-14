@@ -11,17 +11,29 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from 'react-router-dom'
+import { useFormik } from "formik";
+import * as yup from 'yup';
 
 export default function Signin() {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Must enter a username").max(20),
+    password: yup.string().required("Must enter password").max(125),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const { values, handleChange, handleSubmit, touched, errors } = formik;
+
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -67,11 +79,14 @@ export default function Signin() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
+              onChange={handleChange}
+              value={values.username}
+              error={!!touched.username && !!errors.username}
             />
             <TextField
               margin="normal"
@@ -82,11 +97,14 @@ export default function Signin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
+              value={values.password}
+              error={!!touched.password && !!errors.password}
             />
             <FormControlLabel
-                control={<Checkbox value="teacher" color="primary" />}
-                label="I'm a teacher"
-              />
+              control={<Checkbox value="teacher" color="primary" />}
+              label="I'm a teacher"
+            />
             <Button
               type="submit"
               fullWidth
@@ -102,7 +120,7 @@ export default function Signin() {
                   </Link> */}
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to={'/signup'} variant="body2">
+                <Link component={RouterLink} to={"/signup"} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
