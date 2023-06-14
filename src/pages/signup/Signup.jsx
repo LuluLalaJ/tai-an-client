@@ -12,17 +12,33 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink} from "react-router-dom";
-
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Must enter a username"),
+    firstName: yup.string().required("required"),
+    lastName: yup.string().required("required"),
+    email: yup.string().email("Invalid email").required("required"),
+    password: yup.string().required("required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username:"",
+      firstName: "",
+      lastName:"",
+      email:"",
+      password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const { values, handleChange, handleSubmit, touched, errors } = formik;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -42,6 +58,19 @@ export default function SignUp() {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                value={values.username}
+                onChange={handleChange}
+                error={!!touched.username && !!errors.username}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
@@ -51,6 +80,9 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={values.firstName}
+                onChange={handleChange}
+                error={!!touched.firstName && !!errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -61,6 +93,9 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
+                value={values.lastName}
+                onChange={handleChange}
+                error={!!touched.lastName && !!errors.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -71,6 +106,9 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={values.email}
+                onChange={handleChange}
+                error={!!touched.email && !!errors.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,6 +120,9 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                value={values.password}
+                onChange={handleChange}
+                error={!!touched.password && !!errors.password}
               />
             </Grid>
             <Grid item xs={12}>
