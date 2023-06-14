@@ -10,14 +10,15 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from 'yup';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signinUser } from "../../redux/userSlice";
 
 
 export default function Signin() {
+  const { isSignedIn } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
@@ -40,7 +41,9 @@ export default function Signin() {
 
   const { values, handleChange, handleSubmit, touched, errors } = formik;
 
-
+  if (isSignedIn) {
+    return <Navigate to="/" />
+  }
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid

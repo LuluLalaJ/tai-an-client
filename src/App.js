@@ -11,11 +11,12 @@ import {
   PrivateRoute,
   Signup,
   Teachers,
+  AuthWrapper,
 } from "./pages";
 
 const App = () => {
   return (
-    <>
+    <AuthWrapper>
       <CssBaseline />
       <TopBar />
       <Routes>
@@ -26,7 +27,7 @@ const App = () => {
         <Route path="/gallery" exact element={<Gallery />} />
         <Route path="/signin" exact element={<Signin />} />
       </Routes>
-    </>
+    </AuthWrapper>
   );
 }
 
