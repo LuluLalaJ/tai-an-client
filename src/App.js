@@ -20,7 +20,7 @@ const App = () => {
       <TopBar />
       <Routes>
         <Route path="/" exact element={<Home />} />
-        <Route path="/about" exact element={<About />} />
+        {/* <Route path="/about" exact element={<About />} /> */}
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/teachers" exact element={<Teachers />} />
         <Route path="/gallery" exact element={<Gallery />} />

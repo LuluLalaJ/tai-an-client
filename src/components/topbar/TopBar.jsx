@@ -8,7 +8,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 export default function TopBar() {
-  const pages = ["About", "Teachers", "Gallery"];
+  const pages = ["Teachers", "Gallery"];
   const [isSignedIn, setIsSignedIn] = useState(false)
 
   return (
@@ -22,7 +22,7 @@ export default function TopBar() {
             aria-label="menu"
             sx={{ mr: 2 }}
             component={RouterLink}
-            to={"/home"}
+            to={"/"}
           >
             <HomeIcon />
           </IconButton>
