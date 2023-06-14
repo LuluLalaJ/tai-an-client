@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import { checkSession } from '../../redux/userSlice';
 
 
 const AuthWrapper = ({ children }) => {
-  const { isLoading } = useSelector((store) => store.user);
+  const { isLoading, isSignedIn } = useSelector((store) => store.user);
+  const dispatch = useDispatch()
+  useEffect(()=> {
+    dispatch(checkSession())
+  }, [])
 
   if (isLoading) {
     return (

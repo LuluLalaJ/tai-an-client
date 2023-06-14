@@ -14,7 +14,7 @@ import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
-import { signinUser } from "../../redux/userSlice";
+import { signInUser } from "../../redux/userSlice";
 
 
 export default function Signin() {
@@ -35,7 +35,7 @@ export default function Signin() {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values)
-      dispatch(signinUser(values));
+      dispatch(signInUser(values));
     },
   });
 
