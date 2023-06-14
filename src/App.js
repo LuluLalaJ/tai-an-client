@@ -7,7 +7,7 @@ import {
   Error,
   Gallery,
   Home,
-  Login,
+  Signin,
   PrivateRoute,
   Signup,
   Teachers,
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/teachers" exact element={<Teachers />} />
         <Route path="/gallery" exact element={<Gallery />} />
-        <Route path="/login" exact element={<Login />} />
+        <Route path="/signin" exact element={<Signin />} />
       </Routes>
     </>
   );

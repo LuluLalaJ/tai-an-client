@@ -1,13 +1,12 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function ButtonAppBar() {
+export default function TopBar() {
   const pages = ["About", "Teachers", "Gallery"];
 
   return (
@@ -40,8 +39,11 @@ export default function ButtonAppBar() {
             ))}
           </Box>
 
-          <Button component={RouterLink} to={"/login"} color="inherit">
-            Login
+          <Button component={RouterLink} to={"/signin"} color="inherit">
+            Sign In
+          </Button>
+          <Button component={RouterLink} to={"/signup"} color="inherit">
+            Sign Up
           </Button>
         </Toolbar>
       </AppBar>
