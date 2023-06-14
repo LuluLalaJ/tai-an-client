@@ -31,6 +31,18 @@ export const signOutUser = createAsyncThunk(
   }
 );
 
+export const signUpUser = createAsyncThunk(
+  "user/signUpUser",
+  async (signUpInfo, thunkAPI) => {
+    try {
+      const resp = await axios.post("/signup", signUpInfo);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const checkSession = createAsyncThunk(
   "user/checkSession",
   async (thunkAPI) => {
@@ -42,6 +54,7 @@ export const checkSession = createAsyncThunk(
     }
   }
 );
+
 
 const userSlice = createSlice({
   name: "user",
@@ -77,22 +90,34 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      .addCase(signUpUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(signUpUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isSignedIn = true;
+        state.error = null;
+      })
+      .addCase(signUpUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       .addCase(checkSession.pending, (state) => {
         state.isLoading = true;
         state.error = null;
-
       })
       .addCase(checkSession.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
         state.isSignedIn = true;
         state.error = null;
-
       })
       .addCase(checkSession.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      });;
   },
 });
 

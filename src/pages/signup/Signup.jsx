@@ -11,11 +11,17 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as RouterLink} from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../../redux/userSlice";
 
 export default function SignUp() {
+  const { isSignedIn, error } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter a username"),
     firstName: yup.string().required("required"),
@@ -35,11 +41,18 @@ export default function SignUp() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      console.log(values);
+      // CHECK WITH PRINCETON ON THIS
+      values["first_name"] = values.firstName
+      values["last_name"] = values.lastName
+      dispatch(signUpUser(values));
     },
   });
 
   const { values, handleChange, handleSubmit, touched, errors } = formik;
+
+  if (isSignedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -156,6 +169,7 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
+          {error && <Alert severity="error">{error.error}</Alert>}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={RouterLink} to="/signin" variant="body2">
