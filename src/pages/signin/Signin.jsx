@@ -25,11 +25,11 @@ export default function Signin() {
     initialValues: {
       username: "",
       password: "",
-      role:""
+      role:"student"
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values)
     },
   });
 
@@ -84,7 +84,6 @@ export default function Signin() {
               label="Username"
               name="username"
               autoComplete="username"
-              autoFocus
               onChange={handleChange}
               value={values.username}
               error={!!touched.username && !!errors.username}
@@ -102,20 +101,23 @@ export default function Signin() {
               value={values.password}
               error={!!touched.password && !!errors.password}
             />
-            <RadioGroup row name="row-radio-buttons-group">
-              <FormControlLabel
-                value="teacher"
-                control={<Radio />}
-                label="I'm a teacher"
-                name="role"
-                onChange={handleChange}
-              />
+            <RadioGroup
+              row
+              name="row-radio-buttons-group"
+              value={values.role}
+              onChange={handleChange}
+            >
               <FormControlLabel
                 value="student"
                 name="role"
                 control={<Radio />}
                 label="I'm a student"
-                onChange={handleChange}
+              />
+              <FormControlLabel
+                value="teacher"
+                control={<Radio />}
+                label="I'm a teacher"
+                name="role"
               />
             </RadioGroup>
             <Button

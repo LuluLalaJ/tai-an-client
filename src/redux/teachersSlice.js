@@ -8,13 +8,12 @@ const initialState = {
 
 export const getTeachers = createAsyncThunk(
     'teachers/getTeachers',
-    async (name, thunkAPI) => {
+    async (thunkAPI) => {
         try {
-          // console.log(name);
           // console.log(thunkAPI);
           // console.log(thunkAPI.getState());
           const resp = await axios("/teachers");
-          // console.log(resp)
+        //   console.log(resp)
           // console.log(resp.data)
           return resp.data;
         } catch (error) {

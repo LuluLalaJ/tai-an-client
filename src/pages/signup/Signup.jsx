@@ -1,10 +1,10 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -31,6 +31,7 @@ export default function SignUp() {
       lastName:"",
       email:"",
       password: "",
+      role:"student"
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -126,10 +127,25 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="teacher" color="primary" />}
-                label="I'm a teacher"
-              />
+              <RadioGroup
+                row
+                name="row-radio-buttons-group"
+                value={values.role}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="student"
+                  name="role"
+                  control={<Radio />}
+                  label="I'm a student"
+                />
+                <FormControlLabel
+                  value="teacher"
+                  control={<Radio />}
+                  label="I'm a teacher"
+                  name="role"
+                />
+              </RadioGroup>
             </Grid>
           </Grid>
           <Button
