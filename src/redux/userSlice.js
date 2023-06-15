@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   isSignedIn: false,
   error: null,
+  role: "",
 };
 
 export const signInUser = createAsyncThunk(
@@ -71,6 +72,7 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.isSignedIn = true;
         state.error = null;
+        state.role = action.payload.role;
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -85,6 +87,7 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.isSignedIn = false;
         state.error = null;
+        state.role = "";
       })
       .addCase(signOutUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -99,6 +102,8 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.isSignedIn = true;
         state.error = null;
+        state.role = action.payload.role;
+
       })
       .addCase(signUpUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -113,6 +118,8 @@ const userSlice = createSlice({
         state.user = action.payload;
         state.isSignedIn = true;
         state.error = null;
+        state.role = action.payload.role;
+
       })
       .addCase(checkSession.rejected, (state, action) => {
         state.isLoading = false;
