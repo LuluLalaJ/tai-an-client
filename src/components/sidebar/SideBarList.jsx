@@ -10,6 +10,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch } from "react-redux";
 import { toggleDrawer } from "../../redux/drawerSlice";
+import { Link as RouterLink } from "react-router-dom";
+
 
 
 
@@ -23,29 +25,52 @@ return (
     onKeyDown={() => dispatch(toggleDrawer(false))}
   >
     <List>
-      {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
+      <ListItem disablePadding>
+        <ListItemButton component={RouterLink} to={"/profile"}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItemButton>
+      </ListItem>
+
+      <ListItem disablePadding>
+        <ListItemButton component={RouterLink} to={"/schedule"}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Schedule" />
+        </ListItemButton>
+      </ListItem>
+
+      <ListItem disablePadding>
+        <ListItemButton>
+          <ListItemIcon component={RouterLink} to={"/lessons"}>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Lessons" />
+        </ListItemButton>
+      </ListItem>
+
+      <ListItem disablePadding>
+        <ListItemButton component={RouterLink} to={"/students"}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Students" />
+        </ListItemButton>
+      </ListItem>
     </List>
     <Divider />
     <List>
-      {["All mail", "Trash", "Spam"].map((text, index) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
+      <ListItem disablePadding>
+        <ListItemButton component={RouterLink} to={"/checkout"}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Buy Credits" />
+        </ListItemButton>
+      </ListItem>
     </List>
   </Box>
 );

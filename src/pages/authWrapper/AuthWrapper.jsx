@@ -6,6 +6,7 @@ import { checkSession } from '../../redux/userSlice';
 const AuthWrapper = ({ children }) => {
   const { isLoading, isSignedIn } = useSelector((store) => store.user);
   const dispatch = useDispatch()
+
   useEffect(()=> {
     dispatch(checkSession())
   }, [])
