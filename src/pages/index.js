@@ -4,7 +4,6 @@ import Checkout from './checkout/Checkout';
 import Error from "./error/Error";
 import Gallery from './gallery/Gallery';
 import Home from "./home/Home";
-import Lessons from "./lessons/Lessons";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import Profile from "./profile/Profile";
 import Schedule from "./schedule/Schedule";
@@ -20,7 +19,6 @@ export {
   Error,
   Gallery,
   Home,
-  Lessons,
   Signin,
   Profile,
   PrivateRoute,

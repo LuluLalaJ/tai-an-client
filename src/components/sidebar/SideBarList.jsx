@@ -45,14 +45,6 @@ return (
         </ListItemButton>
       </ListItem>
 
-      <ListItem disablePadding>
-        <ListItemButton>
-          <ListItemIcon component={RouterLink} to={"/lessons"}>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Lessons" />
-        </ListItemButton>
-      </ListItem>
     </List>
 
     <Divider />

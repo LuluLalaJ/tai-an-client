@@ -11,7 +11,6 @@ import {
   Error,
   Gallery,
   Home,
-  Lessons,
   Signin,
   Profile,
   PrivateRoute,
@@ -42,7 +41,6 @@ const App = () => {
 
           {isSignedIn && (
             <>
-              <Route path="/lessons" element={<Lessons />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/schedule" element={<Schedule />} />
             </>
