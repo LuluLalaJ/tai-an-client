@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import { Link as RouterLink } from "react-router-dom";
+import { NavLink as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -25,10 +25,11 @@ export default function TopBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            component={RouterLink}
-            to={"/"}
           >
-            <HomeIcon />
+            {isSignedIn
+            ? <HomeIcon onClick={()=>console.log("click")}/>
+            : <HomeIcon component={RouterLink} to={"/"} />}
+
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
