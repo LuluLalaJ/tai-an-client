@@ -57,16 +57,18 @@ export default function TopBar() {
                 sx={{
                   mr: 2,
                 }}
+                onClick={() => dispatch(toggleDrawer(true))}
               >
-                <MenuIcon onClick={() => dispatch(toggleDrawer(true))} />
+                <MenuIcon />
               </IconButton>
               <IconButton
                 size="large"
                 edge="start"
                 color="inherit"
                 aria-label="signout"
+                onClick={() => dispatch(signOutUser())}
               >
-                <ExitToAppIcon onClick={() => dispatch(signOutUser())} />
+                <ExitToAppIcon />
               </IconButton>
             </>
           ) : (
