@@ -7,9 +7,9 @@ const AuthWrapper = ({ children }) => {
   const { isLoading, isSignedIn } = useSelector((store) => store.user);
   const dispatch = useDispatch()
 
-  useEffect(()=> {
-    dispatch(checkSession())
-  }, [])
+  useEffect(() => {
+    dispatch(checkSession());
+  }, [isSignedIn]);
 
   if (isLoading) {
     return (

@@ -11,12 +11,14 @@ import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch } from "react-redux";
 import { toggleDrawer } from "../../redux/drawerSlice";
 import { Link as RouterLink } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 
 
 const SideBarList = () => {
     const dispatch = useDispatch();
+      const { role } = useSelector((store) => store.user);
+
 return (
   <Box
     sx={{ width: 250 }}
@@ -51,26 +53,32 @@ return (
           <ListItemText primary="Lessons" />
         </ListItemButton>
       </ListItem>
-
-      <ListItem disablePadding>
-        <ListItemButton component={RouterLink} to={"/students"}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Students" />
-        </ListItemButton>
-      </ListItem>
     </List>
+
     <Divider />
+
     <List>
-      <ListItem disablePadding>
-        <ListItemButton component={RouterLink} to={"/checkout"}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Buy Credits" />
-        </ListItemButton>
-      </ListItem>
+      {role === "teacher" && (
+        <ListItem disablePadding>
+          <ListItemButton component={RouterLink} to={"/students"}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Students" />
+          </ListItemButton>
+        </ListItem>
+      )}
+
+      {role === "student" && (
+        <ListItem disablePadding>
+          <ListItemButton component={RouterLink} to={"/checkout"}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Buy Credits" />
+          </ListItemButton>
+        </ListItem>
+      )}
     </List>
   </Box>
 );
