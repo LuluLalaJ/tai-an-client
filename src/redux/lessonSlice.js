@@ -1,20 +1,124 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
-  lesson: "",
+  newLesson: "",
+  newLessonValues: "",
+  allLessons: [],
+  myLessons: [],
+  error: null,
+  isLoading: false,
 };
+
+export const getAllLessons = createAsyncThunk(
+  "lesson/getAllLessons",
+  async (thunkAPI) => {
+    try {
+      const resp = await axios("/lessons");
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getTeacherLessons = createAsyncThunk("lesson/getTeacherLessons", async (id, thunkAPI) => {
+  try {
+    const resp = await axios(`/teachers/${id}/lessons`);
+    return resp.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+export const getStudentLessons = createAsyncThunk(
+  "lesson/getStudentLessons",
+  async (id, thunkAPI) => {
+    try {
+      const resp = await axios(`/students/${id}/lessons`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const postNewLesson = createAsyncThunk(
+  "lesson/postNewLesson",
+  async (newLessonInfo, thunkAPI) => {
+    try {
+      const resp = await axios.post(`/lessons`, newLessonInfo);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const lessonSlice = createSlice({
   name: "lesson",
   initialState,
   reducers: {
-    addNewLesson: (state, action) => {
-      state.lesson = action.payload;
-    },
-
-
+    updateNewLessonValues: (state, action) => {
+      state.newLessonValues = action.payload
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllLessons.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAllLessons.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.allLessons = action.payload;
+        state.error = null;
+      })
+      .addCase(getAllLessons.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getTeacherLessons.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getTeacherLessons.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.myLessons = action.payload;
+        state.error = null;
+      })
+      .addCase(getTeacherLessons.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getStudentLessons.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getStudentLessons.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.myLessons = action.payload;
+        state.error = null;
+      })
+      .addCase(getStudentLessons.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(postNewLesson.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(postNewLesson.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.newLesson = action.payload;
+        state.error = null;
+      })
+      .addCase(postNewLesson.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
-export const { addNewLesson } = lessonSlice.actions;
+export const { updateNewLessonValues } = lessonSlice.actions;
 export default lessonSlice.reducer;

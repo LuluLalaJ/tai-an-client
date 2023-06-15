@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../redux/modalSlice";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { addNewLesson } from "../../redux/lessonSlice";
+import { updateNewLessonValues } from "../../redux/lessonSlice";
 
 const style = {
   position: "absolute",
@@ -51,7 +51,8 @@ export default function LessonModal() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      dispatch(addNewLesson(values));
+      dispatch(updateNewLessonValues(values));
+      dispatch(closeModal());
     },
   });
 

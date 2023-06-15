@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core"
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -14,68 +14,87 @@ import {
 import { LessonList, LessonModal } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../redux/modalSlice";
-import { addNewLesson } from "../../redux/lessonSlice";
+import { getAllLessons, getTeacherLessons, postNewLesson } from "../../redux/lessonSlice";
 
 const Schedule = () => {
-    const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllLessons());
+  }, []);
 
-    const lesson = {
-      id: "",
-      title: "",
-      start: "",
-      end: "",
-      extendedProps: {
-        capacity: "",
-        level: "",
-        price: "",
-        description: "",
-      },
-    };
+  const { allLessons, myLessons, newLessonValues } = useSelector(
+    (store) => store.lesson
+  );
+  const { user, role } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const [currentCalendar, setCurrentCalendar] = useState(allLessons)
+  const [selected, setSelected] = useState("")
 
-    const [currentEvents, setCurrentEvents] = useState([]);
+  const handleEventClick = (info) => {
+    console.log(info.event.start);
+    console.log(info.event.id);
+    console.log(info.event.extendedProps);
+  };
 
-    const handleDateClick = (selected) => {
+  const addLesson = (selected) => {
     dispatch(openModal());
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
-
-
-
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        // allDay: selected.allDay,
-
-      });
-    }
+    setSelected(selected);
   };
 
 
+  useEffect(() => {
+    if (newLessonValues) {
+      const newLesson = {...newLessonValues};
+      newLesson['start'] = selected.startStr;
+      newLesson['end'] = selected.endStr;
+      newLesson['allDay'] = selected.allDay;
 
-  const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
+      const calendarApi = selected.view.calendar;
+      calendarApi.unselect();
+      calendarApi.addEvent(newLesson);
+      dispatch(postNewLesson(newLesson));
+    };
+  }, [newLessonValues]);
+
+  const edit = (info) => {
+    if (user.id === info.event.extendedProps['teacher_id']) {
+      alert(info.event.title + " end is now " + info.event.end.toISOString());
+        if (!window.confirm("is this okay?")) {
+          info.revert();
+        }
+    } else {
+      alert('You can only edit your own lesson!')
+      info.revert();
     }
+
   };
 
-
-  const handleSubmit = (e) => {
-    e.prevent.default()
-  }
+  // console.log(allLessons);
+  // console.log(myLessons)
 
   return (
     <Box m="20px">
       {/* <Header title="Calendar" subtitle="Full Calendar Interactive Page" /> */}
-      <Button onClick={() => dispatch(addNewLesson(1))}>Open modal</Button>
-      <LessonModal handleSubmit={handleSubmit} />
+      <Button
+        onClick={() => {
+          dispatch(getAllLessons());
+          setCurrentCalendar(allLessons);
+        }}
+      >
+        View All Lessons
+      </Button>
+
+      <Button
+        onClick={() => {
+          if (role === "student") {
+            console.log("student");
+          } else if (role === "teacher") dispatch(getTeacherLessons(user.id));
+          setCurrentCalendar(myLessons);
+        }}
+      >
+        View My Lessons
+      </Button>
+
+      <LessonModal />
       <Box display="flex" justifyContent="space-between">
         <Box
           flex="1 1 20%"
@@ -84,10 +103,9 @@ const Schedule = () => {
           borderRadius="4px"
         >
           <Typography variant="h5">Lessons</Typography>
-          <LessonList currentEvents={currentEvents} />
+          <LessonList currentEvents={currentCalendar} />
         </Box>
 
-        {/* CALENDAR */}
         <Box flex="1 1 100%" ml="15px">
           <FullCalendar
             height="75vh"
@@ -102,26 +120,20 @@ const Schedule = () => {
               center: "title",
               right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
             }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
+            initialView="timeGridWeek"
+            editable={role === "teacher"}
+            selectable={role === "teacher"}
+            selectMirror={role === "teacher"}
             dayMaxEvents={true}
-            select={handleDateClick}
-            eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2023-06-15",
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2022-06-17",
-              },
-            ]}
+            //add event through here
+            select={addLesson}
+            eventResize={(info) => edit(info)}
+            //edit event time through here
+            eventDragStart={(info) => console.log("drag", info)}
+            //edit event detail through here
+            eventClick={(info) => handleEventClick(info)}
+            // But not rendered the first time
+            events={currentCalendar}
           />
         </Box>
       </Box>
