@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import PersonIcon from "@mui/icons-material/Person";
+import MenuIcon from "@mui/icons-material/Menu";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ export default function TopBar() {
             component={RouterLink}
             to={"/"}
           >
-            <HomeIcon/>
+            <HomeIcon />
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -58,7 +58,7 @@ export default function TopBar() {
                   mr: 2,
                 }}
               >
-                <PersonIcon onClick={() => dispatch(toggleDrawer(true))} />
+                <MenuIcon onClick={() => dispatch(toggleDrawer(true))} />
               </IconButton>
               <IconButton
                 size="large"

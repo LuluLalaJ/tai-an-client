@@ -6,7 +6,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import Groups2Icon from '@mui/icons-material/Groups2';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import PersonIcon from "@mui/icons-material/Person";
+import ClassIcon from "@mui/icons-material/Class";
+import PaidIcon from "@mui/icons-material/Paid";
 import { useDispatch } from "react-redux";
 import { toggleDrawer } from "../../redux/drawerSlice";
 import { Link as RouterLink } from "react-router-dom";
@@ -29,7 +33,7 @@ return (
       <ListItem disablePadding>
         <ListItemButton component={RouterLink} to={"/profile"}>
           <ListItemIcon>
-            <InboxIcon />
+            <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItemButton>
@@ -38,7 +42,7 @@ return (
       <ListItem disablePadding>
         <ListItemButton component={RouterLink} to={"/schedule"}>
           <ListItemIcon>
-            <InboxIcon />
+            <CalendarMonthIcon />
           </ListItemIcon>
           <ListItemText primary="Schedule" />
         </ListItemButton>
@@ -47,7 +51,7 @@ return (
       <ListItem disablePadding>
         <ListItemButton component={RouterLink} to={"/lessons"}>
           <ListItemIcon>
-            <InboxIcon />
+            <ClassIcon />
           </ListItemIcon>
           <ListItemText primary="Lessons" />
         </ListItemButton>
@@ -61,7 +65,7 @@ return (
         <ListItem disablePadding>
           <ListItemButton component={RouterLink} to={"/students"}>
             <ListItemIcon>
-              <InboxIcon />
+              <Groups2Icon />
             </ListItemIcon>
             <ListItemText primary="Students" />
           </ListItemButton>
@@ -72,7 +76,7 @@ return (
         <ListItem disablePadding>
           <ListItemButton component={RouterLink} to={"/checkout"}>
             <ListItemIcon>
-              <InboxIcon />
+              <PaidIcon />
             </ListItemIcon>
             <ListItemText primary="Buy Credits" />
           </ListItemButton>
