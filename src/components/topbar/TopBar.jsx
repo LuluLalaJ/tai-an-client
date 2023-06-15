@@ -4,11 +4,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import { NavLink as RouterLink } from "react-router-dom";
-import { useState } from "react";
-
+import PersonIcon from "@mui/icons-material/Person";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../../redux/userSlice";
+import { toggleDrawer } from "../../redux/drawerSlice";
+
 
 export default function TopBar() {
   const pages = ["Teachers", "Gallery"];
@@ -22,14 +24,11 @@ export default function TopBar() {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
             aria-label="menu"
+            color="inherit"
             sx={{ mr: 2 }}
           >
-            {isSignedIn
-            ? <HomeIcon onClick={()=>console.log("click")}/>
-            : <HomeIcon component={RouterLink} to={"/"} />}
-
+            <HomeIcon component={RouterLink} to={"/"} />
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -47,9 +46,27 @@ export default function TopBar() {
           </Box>
 
           {isSignedIn ? (
-            <Button color="inherit" onClick={() => dispatch(signOutUser())}>
-              Sign out
-            </Button>
+            <>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="dashboard"
+                sx={{
+                  mr: 2,
+                }}
+              >
+                <PersonIcon onClick={() => dispatch(toggleDrawer(true))} />
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="signout"
+              >
+                <ExitToAppIcon onClick={() => dispatch(signOutUser())} />
+              </IconButton>
+            </>
           ) : (
             <>
               <Button component={RouterLink} to={"/signin"} color="inherit">

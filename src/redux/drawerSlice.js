@@ -12,11 +12,18 @@ const drawerSlice = createSlice({
   reducers: {
     toggleDrawer: (state, action) => {
         state.isOpen = action.payload;
+    },
+    openDrawer: state => {
+        state.isOpen = true
+    },
+
+    closeDrawer: state => {
+        state.isOpen = false
     }
   },
 });
 
 
-export const { toggleDrawer } =
+export const { toggleDrawer, openDrawer, closeDrawer } =
   drawerSlice.actions;
 export default drawerSlice.reducer;
