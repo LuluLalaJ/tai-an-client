@@ -12,7 +12,9 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../redux/modalSlice";
-import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { addNewLesson } from "../../redux/lessonSlice";
 
 const style = {
   position: "absolute",
@@ -31,8 +33,29 @@ export default function LessonModal() {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((store) => store.modal);
 
-  const [level, setLevel] = useState('')
-  const [capacity, setCapacity] = useState("");
+  const formSchema = yup.object().shape({
+    title: yup.string().required("required"),
+    description: yup.string().required("required"),
+    capacity: yup.number().required("required"),
+    level: yup.number().required("required"),
+    price: yup.number().required("required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      capacity: "",
+      level: "",
+      price: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      dispatch(addNewLesson(values));
+    },
+  });
+
+  const { values, handleChange, handleSubmit, touched, errors } = formik;
 
 
   return (
@@ -43,23 +66,31 @@ export default function LessonModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={null}>
+        <Box sx={style} component="form" onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Enter new lesson info:
             </Typography>
             <FormControl fullWidth>
-              <TextField required id="title" label="Title" variant="outlined" />
+              <TextField
+                required
+                id="title"
+                label="Title"
+                variant="outlined"
+                value={values.title}
+                onChange={handleChange}
+              />
             </FormControl>
 
             <FormControl fullWidth>
               <TextField
-                required 
-                id="outlined-multiline-flexible"
+                required
+                id="description"
                 label="Description"
                 multiline
                 rows={4}
-                maxRows={6}
+                value={values.description}
+                onChange={handleChange}
               />
             </FormControl>
             <FormControl fullWidth>
@@ -67,10 +98,11 @@ export default function LessonModal() {
               <Select
                 labelId="level"
                 id="level"
-                value={level}
+                name="level"
                 label="Level"
-                onChange={null}
                 required
+                value={values.level}
+                onChange={handleChange}
               >
                 <MenuItem value={1}>Beginner</MenuItem>
                 <MenuItem value={2}>Intermediate I</MenuItem>
@@ -86,10 +118,11 @@ export default function LessonModal() {
               <Select
                 labelId="capacity"
                 id="capacity"
-                value={capacity}
+                name="capacity"
                 label="Capacity"
-                onChange={null}
                 required
+                value={values.capacity}
+                onChange={handleChange}
               >
                 <MenuItem value={1}>One Student</MenuItem>
                 <MenuItem value={2}>Two Students</MenuItem>
@@ -102,26 +135,23 @@ export default function LessonModal() {
             <FormControl fullWidth>
               <InputLabel htmlFor="price">Price</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-amount"
+                id="price"
                 startAdornment={
                   <InputAdornment position="start">$</InputAdornment>
                 }
                 label="price"
                 type="number"
+                name="price"
+                value={values.price}
+                onChange={handleChange}
               />
             </FormControl>
-            <Button variant="contained" type="submit">Add lesson</Button>
+            <Button variant="contained" type="submit">
+              Add lesson
+            </Button>
           </Stack>
         </Box>
       </Modal>
     </div>
   );
 }
-
-// title = db.Column(db.String, nullable=False)
-//     description = db.Column(db.String, nullable=False)
-//     level = db.Column(db.Integer, nullable=False)
-//     start = db.Column(db.DateTime, nullable=False)
-//     end = db.Column(db.DateTime, nullable=False)
-//     capacity = db.Column(db.Integer, nullable=False)
-//     price = db.Column(db.Numeric(8, 2), default=0)

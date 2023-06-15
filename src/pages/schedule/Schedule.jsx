@@ -14,17 +14,33 @@ import {
 import { LessonList, LessonModal } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../redux/modalSlice";
+import { addNewLesson } from "../../redux/lessonSlice";
 
 const Schedule = () => {
     const dispatch = useDispatch()
+
+    const lesson = {
+      id: "",
+      title: "",
+      start: "",
+      end: "",
+      extendedProps: {
+        capacity: "",
+        level: "",
+        price: "",
+        description: "",
+      },
+    };
+
     const [currentEvents, setCurrentEvents] = useState([]);
 
     const handleDateClick = (selected) => {
+    dispatch(openModal());
     const title = prompt("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
 
-    console.log(selected);
+
 
     if (title) {
       calendarApi.addEvent({
@@ -32,7 +48,8 @@ const Schedule = () => {
         title,
         start: selected.startStr,
         end: selected.endStr,
-        allDay: selected.allDay,
+        // allDay: selected.allDay,
+
       });
     }
   };
@@ -49,11 +66,16 @@ const Schedule = () => {
     }
   };
 
+
+  const handleSubmit = (e) => {
+    e.prevent.default()
+  }
+
   return (
     <Box m="20px">
       {/* <Header title="Calendar" subtitle="Full Calendar Interactive Page" /> */}
-      <Button onClick={() => dispatch(openModal())}>Open modal</Button>
-      <LessonModal />
+      <Button onClick={() => dispatch(addNewLesson(1))}>Open modal</Button>
+      <LessonModal handleSubmit={handleSubmit} />
       <Box display="flex" justifyContent="space-between">
         <Box
           flex="1 1 20%"
