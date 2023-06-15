@@ -7,7 +7,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { useDispatch } from "react-redux";
 import { toggleDrawer } from "../../redux/drawerSlice";
 import { Link as RouterLink } from "react-router-dom";
@@ -45,6 +44,14 @@ return (
         </ListItemButton>
       </ListItem>
 
+      <ListItem disablePadding>
+        <ListItemButton component={RouterLink} to={"/lessons"}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Lessons" />
+        </ListItemButton>
+      </ListItem>
     </List>
 
     <Divider />
