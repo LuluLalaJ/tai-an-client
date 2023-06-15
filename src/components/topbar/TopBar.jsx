@@ -27,8 +27,10 @@ export default function TopBar() {
             aria-label="menu"
             color="inherit"
             sx={{ mr: 2 }}
+            component={RouterLink}
+            to={"/"}
           >
-            <HomeIcon component={RouterLink} to={"/"} />
+            <HomeIcon/>
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>

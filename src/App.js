@@ -15,19 +15,20 @@ import {
 } from "./pages";
 import { Dashboard } from '@mui/icons-material';
 
+
+
 const App = () => {
   return (
     <AuthWrapper>
       <CssBaseline />
-      <SideBar />
       <TopBar />
+      <SideBar />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/teachers" element={<Teachers />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       {/* <Route path="/about" exact element={<About />} /> */}
     </AuthWrapper>
