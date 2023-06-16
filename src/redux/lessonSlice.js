@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
+  newLessonTime: {start: "", end: ""},
   newLesson: "",
   newLessonValues: "",
   allLessons: [],
@@ -69,6 +70,9 @@ const lessonSlice = createSlice({
     closeNewLessonFormModal: (state) => {
       state.isNewLessonFormModalOpen = false;
     },
+    updateNewLessonTime: (state, action) => {
+      state.newLessonTime = {...action.payload};
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -131,5 +135,6 @@ export const {
   openNewLessonFormModal,
   closeNewLessonFormModal,
   updateNewLessonValues,
+  updateNewLessonTime,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

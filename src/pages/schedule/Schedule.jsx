@@ -13,29 +13,36 @@ import {
 
 import { LessonList, LessonModal } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllLessons, getTeacherLessons, postNewLesson, openNewLessonFormModal} from "../../redux/lessonSlice";
+import {
+  getAllLessons,
+  getTeacherLessons,
+  postNewLesson,
+  openNewLessonFormModal,
+  updateNewLessonTime,
+} from "../../redux/lessonSlice";
 
 const Schedule = () => {
-  useEffect(() => {
-    dispatch(getAllLessons());
-  }, []);
-
   const { allLessons, myLessons, newLessonValues } = useSelector(
     (store) => store.lesson
   );
   const { user, role } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllLessons());
+  }, []);
+
+
   const [currentCalendar, setCurrentCalendar] = useState(allLessons)
   const [selected, setSelected] = useState("")
 
-  const handleEventClick = (info) => {
-    console.log(info.event.start);
-    console.log(info.event.id);
-    console.log(info.event.extendedProps);
-  };
-
   const addLesson = (selected) => {
+    const selectedTime = {
+      start: selected.startStr,
+      end: selected.endStr,
+    }
     dispatch(openNewLessonFormModal());
+    dispatch(updateNewLessonTime(selectedTime));
     setSelected(selected);
   };
 
@@ -52,6 +59,13 @@ const Schedule = () => {
       dispatch(postNewLesson(newLesson));
     };
   }, [newLessonValues]);
+
+
+  const handleEventClick = (info) => {
+    console.log(info.event.start);
+    console.log(info.event.id);
+    console.log(info.event.extendedProps);
+  };
 
   const edit = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {

@@ -12,8 +12,13 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import * as yup from "yup";
-import { updateNewLessonValues, closeNewLessonFormModal } from "../../redux/lessonSlice";
+import {
+  updateNewLessonValues,
+  closeNewLessonFormModal,
+  postNewLesson,
+} from "../../redux/lessonSlice";
 
 const style = {
   position: "absolute",
@@ -30,15 +35,22 @@ const style = {
 
 export default function LessonModal() {
   const dispatch = useDispatch();
-  const { isNewLessonFormModalOpen } = useSelector((store) => store.lesson);
+  const { isNewLessonFormModalOpen, newLessonTime, updateNewLessonTime, error } = useSelector(
+    (store) => store.lesson
+  );
 
   const formSchema = yup.object().shape({
+    //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
     title: yup.string().required("required"),
     description: yup.string().required("required"),
     capacity: yup.number().required("required"),
     level: yup.number().required("required"),
     price: yup.number().required("required"),
+    // start: yup.date().required("required"),
+    // end: yup.date().required("required"),
   });
+
+  console.log(newLessonTime)
 
   const formik = useFormik({
     initialValues: {
@@ -50,13 +62,15 @@ export default function LessonModal() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      dispatch(updateNewLessonValues(values));
+      const newLesson ={...values, ...newLessonTime}
+      //add error handling later
+      dispatch(postNewLesson(newLesson));
       dispatch(closeNewLessonFormModal());
     },
   });
 
-  const { values, handleChange, handleSubmit, touched, errors } = formik;
 
+  const { values, handleChange, handleSubmit, touched, errors } = formik;
 
   return (
     <div>
@@ -71,6 +85,20 @@ export default function LessonModal() {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Enter new lesson info:
             </Typography>
+            {/* <DateTimePicker
+              label="Start"
+              id="start"
+              name="start"
+              value={newLessonTime.start}
+              onChange={(newTime) => updateNewLessonTime(newTime)}
+            />
+            <DateTimePicker
+              label="End"
+              id="end"
+              name="end"
+              value={newLessonTime.end}
+              onChange={(newTime) => updateNewLessonTime(newTime)}
+            /> */}
             <FormControl fullWidth>
               <TextField
                 required
