@@ -13,8 +13,7 @@ import {
 
 import { LessonList, LessonModal } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../../redux/modalSlice";
-import { getAllLessons, getTeacherLessons, postNewLesson } from "../../redux/lessonSlice";
+import { getAllLessons, getTeacherLessons, postNewLesson, openNewLessonFormModal} from "../../redux/lessonSlice";
 
 const Schedule = () => {
   useEffect(() => {
@@ -36,10 +35,9 @@ const Schedule = () => {
   };
 
   const addLesson = (selected) => {
-    dispatch(openModal());
+    dispatch(openNewLessonFormModal());
     setSelected(selected);
   };
-
 
   useEffect(() => {
     if (newLessonValues) {

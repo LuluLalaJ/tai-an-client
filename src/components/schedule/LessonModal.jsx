@@ -11,10 +11,9 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../redux/modalSlice";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { updateNewLessonValues } from "../../redux/lessonSlice";
+import { updateNewLessonValues, closeNewLessonFormModal } from "../../redux/lessonSlice";
 
 const style = {
   position: "absolute",
@@ -31,7 +30,7 @@ const style = {
 
 export default function LessonModal() {
   const dispatch = useDispatch();
-  const { isOpen } = useSelector((store) => store.modal);
+  const { isNewLessonFormModalOpen } = useSelector((store) => store.lesson);
 
   const formSchema = yup.object().shape({
     title: yup.string().required("required"),
@@ -52,7 +51,7 @@ export default function LessonModal() {
     validationSchema: formSchema,
     onSubmit: (values) => {
       dispatch(updateNewLessonValues(values));
-      dispatch(closeModal());
+      dispatch(closeNewLessonFormModal());
     },
   });
 
@@ -62,8 +61,8 @@ export default function LessonModal() {
   return (
     <div>
       <Modal
-        open={isOpen}
-        onClose={() => dispatch(closeModal())}
+        open={isNewLessonFormModalOpen}
+        onClose={() => dispatch(closeNewLessonFormModal())}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

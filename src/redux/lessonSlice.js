@@ -8,6 +8,7 @@ const initialState = {
   myLessons: [],
   error: null,
   isLoading: false,
+  isNewLessonFormModalOpen: false,
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -60,8 +61,14 @@ const lessonSlice = createSlice({
   initialState,
   reducers: {
     updateNewLessonValues: (state, action) => {
-      state.newLessonValues = action.payload
-    }
+      state.newLessonValues = action.payload;
+    },
+    openNewLessonFormModal: (state) => {
+      state.isNewLessonFormModalOpen = true;
+    },
+    closeNewLessonFormModal: (state) => {
+      state.isNewLessonFormModalOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -120,5 +127,9 @@ const lessonSlice = createSlice({
   },
 });
 
-export const { updateNewLessonValues } = lessonSlice.actions;
+export const {
+  openNewLessonFormModal,
+  closeNewLessonFormModal,
+  updateNewLessonValues,
+} = lessonSlice.actions;
 export default lessonSlice.reducer;
