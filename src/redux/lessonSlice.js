@@ -11,7 +11,6 @@ const initialState = {
   isLoading: false,
   isNewLessonFormModalOpen: false,
   // calendarApi: "",
-  lessonPopAnchorEl: null,
   isLessonPopOpen: false
 };
 
@@ -153,7 +152,6 @@ export const {
   closeNewLessonFormModal,
   updateNewLessonValues,
   updateNewLessonTime,
-  setLessonPopAnchorEl,
   openLessonPop,
   closeLessonPop
   // updateCalendarApi,

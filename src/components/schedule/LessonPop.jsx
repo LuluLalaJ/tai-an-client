@@ -3,13 +3,12 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { openLessonPop, closeLessonPop } from "../../redux/lessonSlice";
+import { closeLessonPop } from "../../redux/lessonSlice";
 
 
-export default function LessonPop() {
-    const dispatch = useDispatch()
-const { lessonPopAnchorEl, isLessonPopOpen } = useSelector((store) => store.lesson);
-
+export default function LessonPop({ lessonPopAnchorEl }) {
+  const dispatch = useDispatch();
+  const { isLessonPopOpen } = useSelector((store) => store.lesson);
 
   return (
     <div>

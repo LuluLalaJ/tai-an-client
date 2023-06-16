@@ -54,9 +54,12 @@ const Schedule = () => {
     };
   }, [newLesson]);
 
+
+  const [lessonPopAnchorEl, setLessonPopAnchorEl] = useState('')
   const handleEventClick = (info) => {
-    dispatch(setLessonPopAnchorEl(info.jsEvent.target));
+    setLessonPopAnchorEl(info.jsEvent.target);
     dispatch(openLessonPop());
+    console.log(info)
   };
 
   const edit = (info) => {
@@ -141,7 +144,7 @@ const Schedule = () => {
             // But not rendered the first time
             events={currentCalendar}
           />
-          <LessonPop />
+          <LessonPop lessonPopAnchorEl={lessonPopAnchorEl}/>
         </Box>
       </Box>
     </Box>
