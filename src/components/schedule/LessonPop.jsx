@@ -2,30 +2,22 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { openLessonPop, closeLessonPop } from "../../redux/lessonSlice";
 
-export default function LessonPop({ anchorEl, handleClose }) {
-  //   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  //   const handleClick = (event) => {
-  //     // console.log(event.currentTarget);
-  //     setAnchorEl(event.currentTarget);
-  //   };
+export default function LessonPop() {
+    const dispatch = useDispatch()
+const { lessonPopAnchorEl, isLessonPopOpen } = useSelector((store) => store.lesson);
 
- 
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   return (
     <div>
-      {/* <Button variant="contained" onClick={handleClick}>
-        Open Popover
-      </Button> */}
       <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
+        id="lesson"
+        open={isLessonPopOpen}
+        anchorEl={lessonPopAnchorEl}
+        onClose={() => dispatch(closeLessonPop())}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",

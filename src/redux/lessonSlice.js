@@ -2,15 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  newLessonTime: {start: "", end: ""},
+  newLessonTime: { start: "", end: "" },
   newLesson: "",
-  newLessonValues: "",
+  // newLessonValues: "",
   allLessons: [],
   myLessons: [],
   error: null,
   isLoading: false,
   isNewLessonFormModalOpen: false,
-  calendarApi: "",
+  // calendarApi: "",
+  lessonPopAnchorEl: null,
+  isLessonPopOpen: false
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -62,9 +64,9 @@ const lessonSlice = createSlice({
   name: "lesson",
   initialState,
   reducers: {
-    updateNewLessonValues: (state, action) => {
-      state.newLessonValues = action.payload;
-    },
+    // updateNewLessonValues: (state, action) => {
+    //   state.newLessonValues = action.payload;
+    // },
     openNewLessonFormModal: (state) => {
       state.isNewLessonFormModalOpen = true;
     },
@@ -72,11 +74,22 @@ const lessonSlice = createSlice({
       state.isNewLessonFormModalOpen = false;
     },
     updateNewLessonTime: (state, action) => {
-      state.newLessonTime = {...action.payload};
+      state.newLessonTime = { ...action.payload };
     },
-    updateCalendarApi: (state, action) => {
-      state.calendarApi = action.payload
+    setLessonPopAnchorEl: (state, action) => {
+      state.lessonPopAnchorEl = action.payload
+    },
+    openLessonPop:(state) => {
+      state.isLessonPopOpen = true
+    },
+    closeLessonPop:(state) => {
+      state.isLessonPopOpen = false
     }
+
+
+    // updateCalendarApi: (state, action) => {
+    //   state.calendarApi = action.payload
+    // }
   },
   extraReducers: (builder) => {
     builder
@@ -140,6 +153,9 @@ export const {
   closeNewLessonFormModal,
   updateNewLessonValues,
   updateNewLessonTime,
-  updateCalendarApi,
+  setLessonPopAnchorEl,
+  openLessonPop,
+  closeLessonPop
+  // updateCalendarApi,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

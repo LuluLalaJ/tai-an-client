@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
-import { formatDate } from "@fullcalendar/core"
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -16,10 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllLessons,
   getTeacherLessons,
-  postNewLesson,
   openNewLessonFormModal,
   updateNewLessonTime,
-  updateCalendarApi,
+  setLessonPopAnchorEl,
+  openLessonPop
 } from "../../redux/lessonSlice";
 
 const Schedule = () => {
@@ -55,16 +54,9 @@ const Schedule = () => {
     };
   }, [newLesson]);
 
-
-  //////////////////
-  const [anchorEl, setAnchorEl] = useState(null);
-
- const handleClose = () => {
-   setAnchorEl(null);
- };
   const handleEventClick = (info) => {
-    console.log(info)
-    setAnchorEl(info.jsEvent.target);
+    dispatch(setLessonPopAnchorEl(info.jsEvent.target));
+    dispatch(openLessonPop());
   };
 
   const edit = (info) => {
@@ -149,7 +141,7 @@ const Schedule = () => {
             // But not rendered the first time
             events={currentCalendar}
           />
-          <LessonPop anchorEl={anchorEl} handleClose={handleClose} />
+          <LessonPop />
         </Box>
       </Box>
     </Box>
