@@ -35,6 +35,7 @@ const Schedule = () => {
 
   const [currentCalendar, setCurrentCalendar] = useState(allLessons)
   const [selectedCalendar, setSelectedCalendar] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState("")
 
   const addLesson = (selected) => {
     const selectedTime = {
@@ -55,14 +56,17 @@ const Schedule = () => {
   }, [newLesson]);
 
 
-  const [lessonPopAnchorEl, setLessonPopAnchorEl] = useState('')
+
   const handleEventClick = (info) => {
-    setLessonPopAnchorEl(info.jsEvent.target);
+    setSelectedEvent(info)
     dispatch(openLessonPop());
     dispatch(setLessonPopInfo(info.event.extendedProps));
-
-    console.log(info.event.extendedProps);
+    console.log(info.event.id);
   };
+
+  const deleteLesson = (info) => {
+    info.event.remove()
+  }
 
   const edit = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
@@ -146,7 +150,9 @@ const Schedule = () => {
             // But not rendered the first time
             events={currentCalendar}
           />
-          <LessonPop lessonPopAnchorEl={lessonPopAnchorEl}/>
+          {selectedEvent && (
+            <LessonPop selectedEvent = {selectedEvent}  deleteLesson={deleteLesson} />
+          )}
         </Box>
       </Box>
     </Box>

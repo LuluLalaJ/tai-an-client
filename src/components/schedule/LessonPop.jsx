@@ -13,7 +13,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLessonPop } from "../../redux/lessonSlice";
+import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
 
 const LESSON_LEVEL = {
     1: "Beginner",
@@ -23,34 +23,39 @@ const LESSON_LEVEL = {
     5: "Advanced II"
 }
 
-export default function LessonPop({ lessonPopAnchorEl }) {
-
+export default function LessonPop({ selectedEvent, deleteLesson }) {
 
   const dispatch = useDispatch();
   const { isLessonPopOpen, lessonPopInfo} = useSelector((store) => store.lesson);
   const { role, user } = useSelector(store => store.user)
-  const {
-    is_full,
-    description,
-    level,
-    price,
-    teacher,
-    teacher_id
-  } = lessonPopInfo;
 
 
-  if (lessonPopInfo) {
+  const handleDeleteLesson = (selectedEvent) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the lesson '${selectedEvent.event.title}'`
+      )
+    ) {
+      dispatch(deleteLessonRequest(selectedEvent.event.id));
+      selectedEvent.event.remove()
+      dispatch(closeLessonPop());
+    }
+  };
+
+  if (selectedEvent) {
+
+    const { is_full, description, level, price, teacher, teacher_id } =
+      lessonPopInfo;
+
     const editable = role === "teacher" && user.id === teacher_id
     const canRegister = role === "student" && (!is_full)
-
-
 
     return (
       <div>
         <Popover
           id="lesson"
           open={isLessonPopOpen}
-          anchorEl={lessonPopAnchorEl}
+          anchorEl={selectedEvent.jsEvent.target}
           onClose={() => dispatch(closeLessonPop())}
           anchorOrigin={{
             vertical: "bottom",
@@ -118,8 +123,21 @@ export default function LessonPop({ lessonPopAnchorEl }) {
 
             {editable && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
-                <Button variant="contained" fullWidth disabled={!editable}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={!editable}
+                  onClick={null}
+                >
                   Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={!editable}
+                  onClick={() => handleDeleteLesson(selectedEvent)}
+                >
+                  Delete
                 </Button>
               </Box>
             )}

@@ -60,6 +60,18 @@ export const postNewLesson = createAsyncThunk(
   }
 );
 
+export const deleteLessonRequest = createAsyncThunk(
+  "lesson/deleteLessonRequest",
+  async (lessonId, thunkAPI) => {
+    try {
+      const resp = await axios.delete(`/lessons/${lessonId}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const lessonSlice = createSlice({
   name: "lesson",
   initialState,
@@ -144,6 +156,18 @@ const lessonSlice = createSlice({
         state.error = null;
       })
       .addCase(postNewLesson.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteLessonRequest.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteLessonRequest.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteLessonRequest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
