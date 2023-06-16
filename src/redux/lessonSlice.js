@@ -10,6 +10,7 @@ const initialState = {
   error: null,
   isLoading: false,
   isNewLessonFormModalOpen: false,
+  calendarApi: "",
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -72,6 +73,9 @@ const lessonSlice = createSlice({
     },
     updateNewLessonTime: (state, action) => {
       state.newLessonTime = {...action.payload};
+    },
+    updateCalendarApi: (state, action) => {
+      state.calendarApi = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -136,5 +140,6 @@ export const {
   closeNewLessonFormModal,
   updateNewLessonValues,
   updateNewLessonTime,
+  updateCalendarApi,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

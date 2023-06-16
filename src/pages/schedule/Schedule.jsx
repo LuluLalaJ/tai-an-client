@@ -19,10 +19,11 @@ import {
   postNewLesson,
   openNewLessonFormModal,
   updateNewLessonTime,
+  updateCalendarApi,
 } from "../../redux/lessonSlice";
 
 const Schedule = () => {
-  const { allLessons, myLessons, newLessonValues } = useSelector(
+  const { allLessons, myLessons, newLesson} = useSelector(
     (store) => store.lesson
   );
   const { user, role } = useSelector((store) => store.user);
@@ -34,32 +35,24 @@ const Schedule = () => {
 
 
   const [currentCalendar, setCurrentCalendar] = useState(allLessons)
-  const [selected, setSelected] = useState("")
+  const [selectedCalendar, setSelectedCalendar] = useState("");
 
   const addLesson = (selected) => {
     const selectedTime = {
       start: selected.startStr,
       end: selected.endStr,
-    }
+    };
     dispatch(openNewLessonFormModal());
     dispatch(updateNewLessonTime(selectedTime));
-    setSelected(selected);
+    setSelectedCalendar(selected);
   };
-
   useEffect(() => {
-    if (newLessonValues) {
-      const newLesson = {...newLessonValues};
-      newLesson['start'] = selected.startStr;
-      newLesson['end'] = selected.endStr;
-      newLesson['allDay'] = selected.allDay;
-
-      const calendarApi = selected.view.calendar;
+    if (newLesson) {
+      const calendarApi = selectedCalendar.view.calendar;
       calendarApi.unselect();
       calendarApi.addEvent(newLesson);
-      dispatch(postNewLesson(newLesson));
     };
-  }, [newLessonValues]);
-
+  }, [newLesson]);
 
   const handleEventClick = (info) => {
     console.log(info.event.start);

@@ -35,9 +35,14 @@ const style = {
 
 export default function LessonModal() {
   const dispatch = useDispatch();
-  const { isNewLessonFormModalOpen, newLessonTime, updateNewLessonTime, error } = useSelector(
-    (store) => store.lesson
-  );
+  const {
+    isNewLessonFormModalOpen,
+    newLessonTime,
+    newLesson,
+    calendarApi,
+    updateNewLessonTime,
+    error,
+  } = useSelector((store) => store.lesson);
 
   const formSchema = yup.object().shape({
     //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
@@ -50,8 +55,6 @@ export default function LessonModal() {
     // end: yup.date().required("required"),
   });
 
-  console.log(newLessonTime)
-
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -62,9 +65,9 @@ export default function LessonModal() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      const newLesson ={...values, ...newLessonTime}
+      const lessonValues ={...values, ...newLessonTime}
       //add error handling later
-      dispatch(postNewLesson(newLesson));
+      dispatch(postNewLesson(lessonValues));
       dispatch(closeNewLessonFormModal());
     },
   });
