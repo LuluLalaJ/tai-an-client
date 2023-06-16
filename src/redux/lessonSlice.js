@@ -11,7 +11,8 @@ const initialState = {
   isLoading: false,
   isNewLessonFormModalOpen: false,
   // calendarApi: "",
-  isLessonPopOpen: false
+  isLessonPopOpen: false,
+  lessonPopInfo: ""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -76,15 +77,17 @@ const lessonSlice = createSlice({
       state.newLessonTime = { ...action.payload };
     },
     setLessonPopAnchorEl: (state, action) => {
-      state.lessonPopAnchorEl = action.payload
+      state.lessonPopAnchorEl = action.payload;
     },
-    openLessonPop:(state) => {
-      state.isLessonPopOpen = true
+    openLessonPop: (state) => {
+      state.isLessonPopOpen = true;
     },
-    closeLessonPop:(state) => {
-      state.isLessonPopOpen = false
+    closeLessonPop: (state) => {
+      state.isLessonPopOpen = false;
+    },
+    setLessonPopInfo: (state, action) => {
+      state.lessonPopInfo = action.payload
     }
-
 
     // updateCalendarApi: (state, action) => {
     //   state.calendarApi = action.payload
@@ -153,7 +156,8 @@ export const {
   updateNewLessonValues,
   updateNewLessonTime,
   openLessonPop,
-  closeLessonPop
+  closeLessonPop,
+  setLessonPopInfo,
   // updateCalendarApi,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

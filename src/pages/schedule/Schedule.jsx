@@ -17,7 +17,7 @@ import {
   getTeacherLessons,
   openNewLessonFormModal,
   updateNewLessonTime,
-  setLessonPopAnchorEl,
+  setLessonPopInfo,
   openLessonPop
 } from "../../redux/lessonSlice";
 
@@ -59,7 +59,9 @@ const Schedule = () => {
   const handleEventClick = (info) => {
     setLessonPopAnchorEl(info.jsEvent.target);
     dispatch(openLessonPop());
-    console.log(info)
+    dispatch(setLessonPopInfo(info.event.extendedProps));
+
+    console.log(info.event.extendedProps);
   };
 
   const edit = (info) => {
