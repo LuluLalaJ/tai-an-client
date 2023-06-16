@@ -11,7 +11,7 @@ import {
   Button
 } from "@mui/material";
 
-import { LessonList, LessonModal } from "../../components";
+import { LessonList, LessonModal, LessonPop } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllLessons,
@@ -46,6 +46,7 @@ const Schedule = () => {
     dispatch(updateNewLessonTime(selectedTime));
     setSelectedCalendar(selected);
   };
+
   useEffect(() => {
     if (newLesson) {
       const calendarApi = selectedCalendar.view.calendar;
@@ -54,10 +55,16 @@ const Schedule = () => {
     };
   }, [newLesson]);
 
+
+  //////////////////
+  const [anchorEl, setAnchorEl] = useState(null);
+
+ const handleClose = () => {
+   setAnchorEl(null);
+ };
   const handleEventClick = (info) => {
-    console.log(info.event.start);
-    console.log(info.event.id);
-    console.log(info.event.extendedProps);
+    console.log(info)
+    setAnchorEl(info.jsEvent.target);
   };
 
   const edit = (info) => {
@@ -75,6 +82,8 @@ const Schedule = () => {
 
   // console.log(allLessons);
   // console.log(myLessons)
+
+
 
   return (
     <Box m="20px">
@@ -140,6 +149,7 @@ const Schedule = () => {
             // But not rendered the first time
             events={currentCalendar}
           />
+          <LessonPop anchorEl={anchorEl} handleClose={handleClose} />
         </Box>
       </Box>
     </Box>
