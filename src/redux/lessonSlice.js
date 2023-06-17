@@ -12,7 +12,8 @@ const initialState = {
   isNewLessonFormModalOpen: false,
   // calendarApi: "",
   isLessonPopOpen: false,
-  lessonPopInfo: ""
+  lessonPopInfo: "",
+  lessonToEdit: "",
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -65,6 +66,18 @@ export const deleteLessonRequest = createAsyncThunk(
   async (lessonId, thunkAPI) => {
     try {
       const resp = await axios.delete(`/lessons/${lessonId}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getLessonById = createAsyncThunk(
+  "lesson/getLessonById",
+  async (lessonId, thunkAPI) => {
+    try {
+      const resp = await axios(`/lessons/${lessonId}`);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -168,6 +181,19 @@ const lessonSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteLessonRequest.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getLessonById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getLessonById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.lessonToEdit = action.payload; 
+        state.error = null;
+      })
+      .addCase(getLessonById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
