@@ -12,6 +12,7 @@ import Signin from "./signin/Signin";
 import Signup from "./signup/Signup";
 import Students from "./students/Students";
 import Teachers from "./teachers/Teachers";
+import LessonEditor from "./lessonEditor/LessonEditor"
 
 export {
   About,
@@ -28,4 +29,5 @@ export {
   Signup,
   Students,
   Teachers,
+  LessonEditor,
 };

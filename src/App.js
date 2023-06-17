@@ -19,6 +19,7 @@ import {
   Signup,
   Students,
   Teachers,
+  LessonEditor
 } from "./pages";
 
 
@@ -42,14 +43,17 @@ const App = () => {
 
           {isSignedIn && (
             <>
-              <Route path="/lessons" element={<Lessons />} />
+              <Route path="/lessons" exact element={<Lessons />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/schedule" element={<Schedule />} />
             </>
           )}
 
           {isSignedIn && role === "teacher" && (
-            <Route path="/students" element={<Students />} />
+            <>
+              <Route path="/students" element={<Students />} />
+              <Route path="/lesssons/editor" element={<LessonEditor />} />
+            </>
           )}
 
           {isSignedIn && role === "student" && (
