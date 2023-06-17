@@ -12,6 +12,7 @@ import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import Box from "@mui/material/Box";
+import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
 
@@ -124,6 +125,8 @@ export default function LessonPop({ selectedEvent, deleteLesson }) {
             {editable && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
                 <Button
+                  component={RouterLink}
+                  to={`/editor/${selectedEvent.event.id}`}
                   variant="contained"
                   fullWidth
                   disabled={!editable}

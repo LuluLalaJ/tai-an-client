@@ -1,8 +1,9 @@
-import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, Outlet, Navigate} from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar } from './components'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllLessons } from './redux/lessonSlice';
 
 import {
   About,
@@ -25,7 +26,13 @@ import {
 
 
 const App = () => {
-  const { isSignedIn, role } = useSelector((store) => store.user);
+  const dispatch = useDispatch()
+  const { isSignedIn, role, user} = useSelector((store) => store.user);
+  const { allLessons } = useSelector((store) => store.lesson)
+
+  useEffect(() => {
+    dispatch(getAllLessons());
+  }, []);
 
   return (
     <>
@@ -52,7 +59,11 @@ const App = () => {
           {isSignedIn && role === "teacher" && (
             <>
               <Route path="/students" element={<Students />} />
-              <Route path="/lesssons/editor" element={<LessonEditor />} />
+              <Route
+                path="/editor/:lessonId"
+                element={<LessonEditor />}
+                />
+              {/* <Route path="/books/:id" element={<Book />} /> */}
             </>
           )}
 
