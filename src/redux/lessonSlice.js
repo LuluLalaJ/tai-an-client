@@ -89,7 +89,7 @@ export const getLessonById = createAsyncThunk(
 export const editLessonRequest = createAsyncThunk(
   "lesson/editLessonRequest",
   async (lessonInfo, thunkAPI) => {
-    const lessonId = lessonInfo.id
+    const lessonId = lessonInfo.id;
     try {
       const resp = await axios.patch(`/lessons/${lessonId}`, lessonInfo);
       return resp.data;

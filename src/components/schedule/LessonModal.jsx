@@ -68,6 +68,7 @@ export default function LessonModal() {
     onSubmit: (values) => {
       const lessonValues ={...values, ...newLessonTime}
       //add error handling later
+      // console.log(lessonValues)
       dispatch(postNewLesson(lessonValues));
       dispatch(closeNewLessonFormModal());
     },

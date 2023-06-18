@@ -22,24 +22,24 @@ const LessonEditor = () => {
   const { lessonToEdit } = useSelector(store => store.lesson)
 
   useEffect(()=>{
+    //NEED VARIOUS ERRO HANDLING
+    //EMPTY STRING - DATE RANGE INCORRECT - APPROPRIATE ERROR MESSAGE
+
     dispatch(getLessonById(lessonId));
   }, [])
 
-//  const phoneRegExp =
-//    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
-//  const checkoutSchema = yup.object().shape({
-//    firstName: yup.string().required("required"),
-//    lastName: yup.string().required("required"),
-//    email: yup.string().email("invalid email").required("required"),
-//    contact: yup
-//      .string()
-//      .matches(phoneRegExp, "Phone number is not valid")
-//      .required("required"),
-//    address1: yup.string().required("required"),
-//    address2: yup.string().required("required"),
-//  });
- const initialValues = lessonToEdit
+ const {id, title, description, capacity, level, price, start, end} = lessonToEdit
+ const initialValues = {
+   id,
+   title,
+   description,
+   capacity,
+   level,
+   price,
+   start,
+   end,
+ };
 
   const formSchema = yup.object().shape({
     //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
@@ -52,33 +52,14 @@ const LessonEditor = () => {
     end: yup.date().required("required"),
   });
 
-  // const formik = useFormik({
-  //   initialValues: lessonToEdit,
-  //   enableReinitialize: true,
-  //   validationSchema: formSchema,
-  //   onSubmit: (values) => {
-  //     // const lessonValues = { ...values, ...newLessonTime };
-  //     // //add error handling later
-  //     // dispatch(postNewLesson(lessonValues));
-  //     // dispatch(closeNewLessonFormModal());
-  //   },
-  // });
-
-  // const { initialValues, values, handleChange, handleSubmit, touched, errors } =
-  //   formik;
-
-  // console.log('init', initialValues);
-
-
-
     const handleFormSubmit = (values) => {
-      console.log('values', values);
-      dispatch(editLessonRequest(values));
+      console.log('submit', values)
+      values.start = new Date(values.start).toISOString();
+      values.end = new Date(values.end).toISOString();
+      console.log('convert', values)
+      // dispatch(editLessonRequest(values));
+
     };
-
-
-
-
 
    return (
      <Box m="20px">
@@ -132,6 +113,8 @@ const LessonEditor = () => {
                  name="start"
                  error={!!touched.start && !!errors.start}
                  sx={{ gridColumn: "span 2" }}
+                 disablePast={true}
+                 minutesStep={30}
                />
                <DateTimePicker
                  fullWidth
@@ -144,6 +127,8 @@ const LessonEditor = () => {
                  name="end"
                  error={!!touched.end && !!errors.end}
                  sx={{ gridColumn: "span 2" }}
+                 disablePast={true}
+                 minutesStep={30}
                />
 
                <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
