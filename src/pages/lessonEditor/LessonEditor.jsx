@@ -2,19 +2,44 @@ import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import * as yup from "yup";
 import { useFormik, Formik } from 'formik';
+import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonById } from "../../redux/lessonSlice";
 import { Box, Button, TextField } from "@mui/material";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import { editLessonRequest } from "../../redux/lessonSlice";
+
 
 const LessonEditor = () => {
   const dispatch = useDispatch()
   const { lessonId } = useParams()
   const { lessonToEdit } = useSelector(store => store.lesson)
+
   useEffect(()=>{
     dispatch(getLessonById(lessonId));
   }, [])
 
+//  const phoneRegExp =
+//    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
+//  const checkoutSchema = yup.object().shape({
+//    firstName: yup.string().required("required"),
+//    lastName: yup.string().required("required"),
+//    email: yup.string().email("invalid email").required("required"),
+//    contact: yup
+//      .string()
+//      .matches(phoneRegExp, "Phone number is not valid")
+//      .required("required"),
+//    address1: yup.string().required("required"),
+//    address2: yup.string().required("required"),
+//  });
+ const initialValues = lessonToEdit
 
   const formSchema = yup.object().shape({
     //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
@@ -27,26 +52,32 @@ const LessonEditor = () => {
     end: yup.date().required("required"),
   });
 
-  const formik = useFormik({
-    initialValues: lessonToEdit,
-    enableReinitialize: true,
-    validationSchema: formSchema,
-    onSubmit: (values) => {
-      // const lessonValues = { ...values, ...newLessonTime };
-      // //add error handling later
-      // dispatch(postNewLesson(lessonValues));
-      // dispatch(closeNewLessonFormModal());
-    },
-  });
+  // const formik = useFormik({
+  //   initialValues: lessonToEdit,
+  //   enableReinitialize: true,
+  //   validationSchema: formSchema,
+  //   onSubmit: (values) => {
+  //     // const lessonValues = { ...values, ...newLessonTime };
+  //     // //add error handling later
+  //     // dispatch(postNewLesson(lessonValues));
+  //     // dispatch(closeNewLessonFormModal());
+  //   },
+  // });
 
-  const { initialValues, values, handleChange, handleSubmit, touched, errors } =
-    formik;
+  // const { initialValues, values, handleChange, handleSubmit, touched, errors } =
+  //   formik;
 
-  console.log('init', initialValues);
+  // console.log('init', initialValues);
+
+
 
     const handleFormSubmit = (values) => {
-      console.log(values);
+      console.log('values', values);
+      dispatch(editLessonRequest(values));
     };
+
+
+
 
 
    return (
@@ -56,7 +87,8 @@ const LessonEditor = () => {
        <Formik
          onSubmit={handleFormSubmit}
          initialValues={initialValues}
-         validationSchema={checkoutSchema}
+         validationSchema={formSchema}
+         enableReinitialize="true"
        >
          {({
            values,
@@ -65,93 +97,127 @@ const LessonEditor = () => {
            handleBlur,
            handleChange,
            handleSubmit,
+           setFieldValue,
          }) => (
            <form onSubmit={handleSubmit}>
              <Box
                display="grid"
                gap="30px"
-               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              //  sx={{
-              //    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              //  }}
+               gridTemplateColumns="repeat(6, minmax(0, 1fr))"
+               //  sx={{
+               //    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+               //  }}
              >
                <TextField
                  fullWidth
                  variant="filled"
                  type="text"
-                 label="First Name"
-                 onBlur={handleBlur}
+                 label="Lesson Title"
                  onChange={handleChange}
-                 value={values.firstName}
-                 name="firstName"
-                 error={!!touched.firstName && !!errors.firstName}
-                 helperText={touched.firstName && errors.firstName}
+                 value={values.title}
+                 name="title"
+                 onBlur={handleBlur}
+                 error={!!touched.title && !!errors.title}
                  sx={{ gridColumn: "span 2" }}
                />
-               <TextField
+
+               <DateTimePicker
                  fullWidth
                  variant="filled"
                  type="text"
-                 label="Last Name"
+                 label="Start Time"
                  onBlur={handleBlur}
-                 onChange={handleChange}
-                 value={values.lastName}
-                 name="lastName"
-                 error={!!touched.lastName && !!errors.lastName}
-                 helperText={touched.lastName && errors.lastName}
+                 onChange={(date) => setFieldValue("start", date.toISOString())}
+                 value={dayjs(values.start)}
+                 name="start"
+                 error={!!touched.start && !!errors.start}
                  sx={{ gridColumn: "span 2" }}
                />
-               <TextField
+               <DateTimePicker
                  fullWidth
                  variant="filled"
                  type="text"
-                 label="Email"
+                 label="End Time"
                  onBlur={handleBlur}
-                 onChange={handleChange}
-                 value={values.email}
-                 name="email"
-                 error={!!touched.email && !!errors.email}
-                 helperText={touched.email && errors.email}
-                 sx={{ gridColumn: "span 4" }}
+                 onChange={(date) => setFieldValue("end", date.toISOString())}
+                 value={dayjs(values.end)}
+                 name="end"
+                 error={!!touched.end && !!errors.end}
+                 sx={{ gridColumn: "span 2" }}
                />
+
+               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                 <InputLabel id="level">Level</InputLabel>
+                 <Select
+                   labelId="level"
+                   id="level"
+                   name="level"
+                   label="Level"
+                   required
+                   value={values.level}
+                   onChange={handleChange}
+                   onBlur={handleBlur}
+                   error={!!touched.level && !!errors.level}
+                 >
+                   <MenuItem value={1}>Beginner</MenuItem>
+                   <MenuItem value={2}>Intermediate I</MenuItem>
+                   <MenuItem value={3}>Intermediate II</MenuItem>
+                   <MenuItem value={4}>Advanced I</MenuItem>
+                   <MenuItem value={5}>Advanced II</MenuItem>
+                 </Select>
+               </FormControl>
+
+               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                 <InputLabel id="capacity">Capacity</InputLabel>
+                 <Select
+                   labelId="capacity"
+                   id="capacity"
+                   name="capacity"
+                   label="Capacity"
+                   required
+                   value={values.capacity}
+                   onChange={handleChange}
+                   onBlur={handleBlur}
+                   error={!!touched.capacity && !!errors.capacity}
+                 >
+                   <MenuItem value={1}>One Student</MenuItem>
+                   <MenuItem value={2}>Two Students</MenuItem>
+                   <MenuItem value={3}>Three Students</MenuItem>
+                   <MenuItem value={4}>Four Students</MenuItem>
+                   <MenuItem value={5}>Five Students</MenuItem>
+                 </Select>
+               </FormControl>
+
+               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                 <InputLabel htmlFor="price">Price</InputLabel>
+                 <OutlinedInput
+                   id="price"
+                   startAdornment={
+                     <InputAdornment position="start">$</InputAdornment>
+                   }
+                   label="price"
+                   type="number"
+                   name="price"
+                   value={values.price}
+                   onChange={handleChange}
+                   onBlur={handleBlur}
+                   error={!!touched.price && !!errors.price}
+                 />
+               </FormControl>
+
                <TextField
                  fullWidth
+                 multiline
+                 rows={4}
                  variant="filled"
                  type="text"
-                 label="Contact Number"
+                 label="Lesson Description"
                  onBlur={handleBlur}
                  onChange={handleChange}
-                 value={values.contact}
-                 name="contact"
-                 error={!!touched.contact && !!errors.contact}
-                 helperText={touched.contact && errors.contact}
-                 sx={{ gridColumn: "span 4" }}
-               />
-               <TextField
-                 fullWidth
-                 variant="filled"
-                 type="text"
-                 label="Address 1"
-                 onBlur={handleBlur}
-                 onChange={handleChange}
-                 value={values.address1}
-                 name="address1"
-                 error={!!touched.address1 && !!errors.address1}
-                 helperText={touched.address1 && errors.address1}
-                 sx={{ gridColumn: "span 4" }}
-               />
-               <TextField
-                 fullWidth
-                 variant="filled"
-                 type="text"
-                 label="Address 2"
-                 onBlur={handleBlur}
-                 onChange={handleChange}
-                 value={values.address2}
-                 name="address2"
-                 error={!!touched.address2 && !!errors.address2}
-                 helperText={touched.address2 && errors.address2}
-                 sx={{ gridColumn: "span 4" }}
+                 value={values.description}
+                 name="description"
+                 error={!!touched.description && !!errors.description}
+                 sx={{ gridColumn: "span 6" }}
                />
              </Box>
              <Box display="flex" justifyContent="end" mt="20px">
@@ -166,29 +232,6 @@ const LessonEditor = () => {
    );
 }
 
-
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
-};
 
 
 export default LessonEditor

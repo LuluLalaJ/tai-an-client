@@ -14,6 +14,7 @@ const initialState = {
   isLessonPopOpen: false,
   lessonPopInfo: "",
   lessonToEdit: "",
+  afterEdit:""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -78,6 +79,19 @@ export const getLessonById = createAsyncThunk(
   async (lessonId, thunkAPI) => {
     try {
       const resp = await axios(`/lessons/${lessonId}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editLessonRequest = createAsyncThunk(
+  "lesson/editLessonRequest",
+  async (lessonInfo, thunkAPI) => {
+    const lessonId = lessonInfo.id
+    try {
+      const resp = await axios.patch(`/lessons/${lessonId}`, lessonInfo);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -190,10 +204,23 @@ const lessonSlice = createSlice({
       })
       .addCase(getLessonById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.lessonToEdit = action.payload; 
+        state.lessonToEdit = action.payload;
         state.error = null;
       })
       .addCase(getLessonById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(editLessonRequest.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(editLessonRequest.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.afterEdit = action.payload;
+        state.error = null;
+      })
+      .addCase(editLessonRequest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
