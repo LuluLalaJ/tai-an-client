@@ -146,7 +146,7 @@ export default function LessonPop({ selectedEvent }) {
                 </Button>
               </Box>
             )}
-            
+
             {canCancel && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
                 <Button
@@ -166,6 +166,7 @@ export default function LessonPop({ selectedEvent }) {
                 <Button
                   variant="contained"
                   fullWidth
+                  // NEED TO HANDLE INSUFFICIENT FUND ERROR
                   onClick={() => dispatch(addEnrollment(lessonId))}
                 >
                   {is_full ? "Join Waitlist" : "Register"}

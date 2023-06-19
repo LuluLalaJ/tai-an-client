@@ -14,7 +14,7 @@ export const cancelEnrollment = createAsyncThunk(
       const resp = await axios.delete(`/lessons/${lessonId}/enrollments/${enrollmentId}`);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -26,7 +26,7 @@ export const addEnrollment = createAsyncThunk(
       const resp = await axios.post(`/lessons/${lessonId}/enrollments`);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
