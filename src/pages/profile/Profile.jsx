@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
 
 export default function Profile() {
 
@@ -13,21 +14,9 @@ export default function Profile() {
 
   return (
     <Container sx={{ mt: 5 }}>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>My Info</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+      <StudentProfileEditor />
+      <TeacherProfileEditor />
+
 
       <Accordion>
         <AccordionSummary
@@ -60,7 +49,7 @@ export default function Profile() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      
+
     </Container>
   );
 }
