@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
+import { addEnrollment, cancelEnrollment } from "../../redux/enrollmentSlice";
 
 const LESSON_LEVEL = {
     1: "Beginner",
@@ -32,7 +33,6 @@ export default function LessonPop({ selectedEvent }) {
 
   const currentEnrollments = selectedEvent.event.extendedProps.enrollments
 
-
   const handleDeleteLesson = (selectedEvent) => {
     if (
       window.confirm(
@@ -45,15 +45,21 @@ export default function LessonPop({ selectedEvent }) {
     }
   };
 
-
   const checkStudentEnrollment = (currentEnrollments, studentId) => {
     const foundEnrollment = currentEnrollments.find(enrollment => enrollment.student_id === studentId);
     return foundEnrollment ? foundEnrollment.status : null
   }
 
 
+  const getEnrollmentId = (currentEnrollments, studentId) => {
+    const foundEnrollment = currentEnrollments.find(
+      (enrollment) => enrollment.student_id === studentId
+    );
+    return foundEnrollment ? foundEnrollment.id : null;
+  };
 
   if (selectedEvent) {
+    // MAYBE NEED TO GET THE LESSON TO STORE IT IN THE STATE
     const lessonId = selectedEvent.event.id
     const { is_full, description, level, price, teacher, teacher_id } =
       lessonPopInfo;
@@ -62,10 +68,13 @@ export default function LessonPop({ selectedEvent }) {
     const userEnrollmentStatus = checkStudentEnrollment(
       currentEnrollments,
       user.id
-    );
+    )
 
-    const canCancel = role === "student" && (userEnrollmentStatus === "registered")
-    const canJoin = role === "student" && userEnrollmentStatus !== "registered";
+    const canCancel =
+      role === "student" && userEnrollmentStatus;
+    const canJoin = role === "student" && !userEnrollmentStatus ;
+
+    const enrollmentId = getEnrollmentId(currentEnrollments, user.id);
 
     return (
       <div>
@@ -130,17 +139,23 @@ export default function LessonPop({ selectedEvent }) {
               <Typography>{description}</Typography>
             </ListItem>
 
-            {userEnrollmentStatus === "cancelled" && (
+            {canCancel && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
-                <Button variant="contained" fullWidth disabled={true}>
-                  Cancelled
+                <Button variant="text" fullWidth disabled={true}>
+                  {userEnrollmentStatus}
                 </Button>
               </Box>
             )}
-
+            
             {canCancel && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
-                <Button variant="contained" fullWidth onClick={null}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() =>
+                    dispatch(cancelEnrollment([lessonId, enrollmentId]))
+                  }
+                >
                   Cancel
                 </Button>
               </Box>
@@ -148,7 +163,11 @@ export default function LessonPop({ selectedEvent }) {
 
             {canJoin && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
-                <Button variant="contained" fullWidth onClick={null}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => dispatch(addEnrollment(lessonId))}
+                >
                   {is_full ? "Join Waitlist" : "Register"}
                 </Button>
               </Box>
