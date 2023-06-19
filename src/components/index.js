@@ -7,6 +7,7 @@ import LessonModal from "./schedule/LessonModal";
 import LessonPop from './schedule/LessonPop';
 import TeacherProfileEditor from "./profileEditor/TeacherProfileEditor";
 import StudentProfileEditor from "./profileEditor/StudentProfileEditor";
+import LessonCard from "./lessonCard/LessonCard";
 
 export {
   Footer,
@@ -18,4 +19,5 @@ export {
   LessonPop,
   StudentProfileEditor,
   TeacherProfileEditor,
+  LessonCard,
 };

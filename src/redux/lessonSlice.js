@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -67,12 +67,15 @@ export const deleteLessonRequest = createAsyncThunk(
   async (lessonId, thunkAPI) => {
     try {
       const resp = await axios.delete(`/lessons/${lessonId}`);
+      thunkAPI.dispatch(deleteLessonSuccess(lessonId))
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
+
+export const deleteLessonSuccess = createAction("lesson/deleteLessonSuccess");
 
 export const getLessonById = createAsyncThunk(
   "lesson/getLessonById",
@@ -197,6 +200,12 @@ const lessonSlice = createSlice({
       .addCase(deleteLessonRequest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(deleteLessonSuccess, (state, action) => {
+        const deletedLessonId = action.payload;
+        state.myLessons = state.myLessons.filter(
+          (lesson) => lesson.id !== deletedLessonId
+        )
       })
       .addCase(getLessonById.pending, (state) => {
         state.isLoading = true;
