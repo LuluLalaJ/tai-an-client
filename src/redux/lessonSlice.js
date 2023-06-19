@@ -77,6 +77,10 @@ export const deleteLessonRequest = createAsyncThunk(
 
 export const deleteLessonSuccess = createAction("lesson/deleteLessonSuccess");
 
+export const cancelEnrollmentSuccess = createAction(
+  "lesson/cancelEnrollmentSuccess"
+);
+
 export const getLessonById = createAsyncThunk(
   "lesson/getLessonById",
   async (lessonId, thunkAPI) => {
@@ -206,6 +210,15 @@ const lessonSlice = createSlice({
         state.myLessons = state.myLessons.filter(
           (lesson) => lesson.id !== deletedLessonId
         )
+      })
+      .addCase(cancelEnrollmentSuccess, (state, action) => {
+        const [lessonId, enrollmentId] = action.payload;
+        const lesson = state.myLessons.find((lesson) => lesson.id === lessonId);
+        if (lesson) {
+          lesson.enrollments = lesson.enrollments.filter(
+            (enrollment) => enrollment.id !== enrollmentId
+          );
+        }
       })
       .addCase(getLessonById.pending, (state) => {
         state.isLoading = true;

@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { cancelEnrollmentSuccess } from "./lessonSlice";
 
 const initialState = {
   newEnrollment: null,
@@ -12,12 +13,14 @@ export const cancelEnrollment = createAsyncThunk(
   async ([lessonId, enrollmentId], thunkAPI) => {
     try {
       const resp = await axios.delete(`/lessons/${lessonId}/enrollments/${enrollmentId}`);
+      thunkAPI.dispatch(cancelEnrollmentSuccess([lessonId, enrollmentId]));
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
+
 
 export const addEnrollment = createAsyncThunk(
   "enrollment/addEnrollment",
@@ -40,7 +43,6 @@ const enrollmentSlice = createSlice({
       .addCase(cancelEnrollment.pending, (state) => {
         state.isLoading = true;
         state.error = null;
-
       })
       .addCase(cancelEnrollment.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -50,6 +52,12 @@ const enrollmentSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      // .addCase(cancelEnrollmentSuccess, (state, action) => {
+      //   const cancelledEnrollment = action.payload;
+      //   state.myLessons = state.myLessons.filter(
+      //     (lesson) => lesson.id !== deletedLessonId
+      //   );
+      // })
       .addCase(addEnrollment.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -58,7 +66,6 @@ const enrollmentSlice = createSlice({
         state.isLoading = false;
         state.newEnrollment = action.payload;
         state.error = null;
-
       })
       .addCase(addEnrollment.rejected, (state, action) => {
         state.isLoading = false;
