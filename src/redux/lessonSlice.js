@@ -81,6 +81,10 @@ export const cancelEnrollmentSuccess = createAction(
   "lesson/cancelEnrollmentSuccess"
 );
 
+export const editEnrollmentStatusSuccess = createAction(
+  "lesson/editEnrollmentStatusSuccess"
+);
+
 export const getLessonById = createAsyncThunk(
   "lesson/getLessonById",
   async (lessonId, thunkAPI) => {
@@ -209,7 +213,7 @@ const lessonSlice = createSlice({
         const deletedLessonId = action.payload;
         state.myLessons = state.myLessons.filter(
           (lesson) => lesson.id !== deletedLessonId
-        )
+        );
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
         const [lessonId, enrollmentId] = action.payload;
@@ -218,6 +222,21 @@ const lessonSlice = createSlice({
           lesson.enrollments = lesson.enrollments.filter(
             (enrollment) => enrollment.id !== enrollmentId
           );
+        }
+      })
+      .addCase(editEnrollmentStatusSuccess, (state, action) => {
+        const [lessonId, enrollmentId, data] = action.payload;
+        const lesson = state.myLessons.find((lesson) => lesson.id === lessonId);
+        if (lesson) {
+          lesson.enrollments = lesson.enrollments.map( enrollment => {
+            if (enrollment.id === enrollmentId) {
+            return {
+              ...enrollment,
+              ...(data || {}),
+            };
+          }
+          return enrollment;
+        })
         }
       })
       .addCase(getLessonById.pending, (state) => {

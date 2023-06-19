@@ -43,6 +43,7 @@ const Schedule = () => {
       start: selected.startStr,
       end: selected.endStr,
     };
+    console.log(selectedTime);
     dispatch(openNewLessonFormModal());
     dispatch(updateNewLessonTime(selectedTime));
     setSelectedCalendar(selected);

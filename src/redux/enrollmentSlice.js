@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { cancelEnrollmentSuccess } from "./lessonSlice";
+import { cancelEnrollmentSuccess, editEnrollmentStatusSuccess } from "./lessonSlice";
 
 const initialState = {
   newEnrollment: null,
@@ -34,6 +34,23 @@ export const addEnrollment = createAsyncThunk(
   }
 );
 
+export const changeEnrollmentStatus = createAsyncThunk(
+  "enrollment/changeEnrollmentStatus",
+  async ([lessonId, enrollmentId, data], thunkAPI) => {
+    try {
+      const resp = await axios.patch(
+        `/lessons/${lessonId}/enrollments/${enrollmentId}`,
+        data
+      );
+      thunkAPI.dispatch(editEnrollmentStatusSuccess([lessonId, enrollmentId, data]));
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 const enrollmentSlice = createSlice({
   name: "enrollment",
   initialState,
@@ -52,12 +69,6 @@ const enrollmentSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      // .addCase(cancelEnrollmentSuccess, (state, action) => {
-      //   const cancelledEnrollment = action.payload;
-      //   state.myLessons = state.myLessons.filter(
-      //     (lesson) => lesson.id !== deletedLessonId
-      //   );
-      // })
       .addCase(addEnrollment.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -70,7 +81,19 @@ const enrollmentSlice = createSlice({
       .addCase(addEnrollment.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(changeEnrollmentStatus.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changeEnrollmentStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      // .addCase(changeEnrollmentStatus.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload;
+      // });
   },
 });
 

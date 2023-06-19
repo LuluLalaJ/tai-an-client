@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState} from 'react'
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -17,7 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteLessonRequest } from "../../redux/lessonSlice";
+import { deleteLessonRequest, openLessonPop, closeLessonPop } from "../../redux/lessonSlice";
 import { Link as RouterLink } from "react-router-dom";
 import List from "@mui/material/List";
 import { EnrollmentCard } from './EnrollmentCard';
@@ -26,7 +26,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Divider from "@mui/material/Divider";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
-
+import Popover from "@mui/material/Popover";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,6 +41,9 @@ const ExpandMore = styled((props) => {
 
 const LessonCard = ({ lesson }) => {
     const dispatch = useDispatch()
+    const { isLessonPopOpen, lessonPopInfo } = useSelector(
+      (store) => store.lesson
+    );
     const handleDeleteLesson = () => {
         if (
           window.confirm(
@@ -53,12 +56,12 @@ const LessonCard = ({ lesson }) => {
     }
 
     const [expanded, setExpanded] = React.useState(false);
-
+    const [anchorEl, setAnchorEl] = useState(null)
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-    const {start, end, capacity, level, price, description, title, enrollments} = lesson
+    const {start, end, capacity, level, price, description, title, enrollments, id} = lesson
   return (
     <Grid item key={lesson.id} xs={12} sm={12} md={6}>
       <Card sx={{ maxWidth: 345 }}>
@@ -69,13 +72,21 @@ const LessonCard = ({ lesson }) => {
             </Avatar>
           }
           //   action={
-          //     <IconButton aria-label="settings">
+          //     <IconButton
+          //       aria-label="info"
+          //       onClick={(event) => {
+          //         dispatch(openLessonPop())
+          //         setAnchorEl(event.currentTarget);
+
+          //       }}
+          //     >
           //       <MoreVertIcon />
           //     </IconButton>
           //   }
           title={`${title.slice(0, 30)}...`}
           subheader={start}
         />
+
         <CardMedia
           component="img"
           height="194"
@@ -132,7 +143,7 @@ const LessonCard = ({ lesson }) => {
 
               {enrollments &&
                 enrollments.map((enrollment) => (
-                  <EnrollmentCard enrollment={enrollment} key={enrollment.id}/>
+                  <EnrollmentCard enrollment={enrollment} key={enrollment.id} />
                 ))}
             </List>
           </CardContent>
