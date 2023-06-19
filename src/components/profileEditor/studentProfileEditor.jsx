@@ -70,8 +70,8 @@ const checkoutSchema = yup.object().shape({
            aria-controls="panel1a-content"
            id="panel1a-header"
          >
-            <Avatar alt="Cindy Baker" src={avatar} />
-
+           <Avatar alt="Cindy Baker" src={avatar} />
+           
          </AccordionSummary>
          <AccordionDetails>
            <Formik
