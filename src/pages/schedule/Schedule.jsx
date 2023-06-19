@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllLessons,
   getTeacherLessons,
+  getStudentLessons,
   openNewLessonFormModal,
   updateNewLessonTime,
   setLessonPopInfo,
@@ -101,7 +102,7 @@ const Schedule = () => {
       <Button
         onClick={() => {
           if (role === "student") {
-            console.log("student");
+            dispatch(getStudentLessons(user.id));
           } else if (role === "teacher") dispatch(getTeacherLessons(user.id));
           setCurrentCalendar(myLessons);
         }}

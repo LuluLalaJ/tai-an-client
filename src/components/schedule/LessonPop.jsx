@@ -24,11 +24,13 @@ const LESSON_LEVEL = {
     5: "Advanced II"
 }
 
-export default function LessonPop({ selectedEvent, deleteLesson }) {
+export default function LessonPop({ selectedEvent }) {
 
   const dispatch = useDispatch();
   const { isLessonPopOpen, lessonPopInfo} = useSelector((store) => store.lesson);
   const { role, user } = useSelector(store => store.user)
+
+  const currentEnrollments = selectedEvent.event.extendedProps.enrollments
 
 
   const handleDeleteLesson = (selectedEvent) => {
@@ -43,13 +45,27 @@ export default function LessonPop({ selectedEvent, deleteLesson }) {
     }
   };
 
-  if (selectedEvent) {
 
+  const checkStudentEnrollment = (currentEnrollments, studentId) => {
+    const foundEnrollment = currentEnrollments.find(enrollment => enrollment.student_id === studentId);
+    return foundEnrollment ? foundEnrollment.status : null
+  }
+
+
+
+  if (selectedEvent) {
+    const lessonId = selectedEvent.event.id
     const { is_full, description, level, price, teacher, teacher_id } =
       lessonPopInfo;
-
     const editable = role === "teacher" && user.id === teacher_id
-    const canRegister = role === "student" && (!is_full)
+
+    const userEnrollmentStatus = checkStudentEnrollment(
+      currentEnrollments,
+      user.id
+    );
+
+    const canCancel = role === "student" && (userEnrollmentStatus === "registered")
+    const canJoin = role === "student" && userEnrollmentStatus !== "registered";
 
     return (
       <div>
@@ -114,10 +130,26 @@ export default function LessonPop({ selectedEvent, deleteLesson }) {
               <Typography>{description}</Typography>
             </ListItem>
 
-            {canRegister && (
+            {userEnrollmentStatus === "cancelled" && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
-                <Button variant="contained" fullWidth disabled={!canRegister}>
-                  {canRegister ? "Register" : "Full"}
+                <Button variant="contained" fullWidth disabled={true}>
+                  Cancelled
+                </Button>
+              </Box>
+            )}
+
+            {canCancel && (
+              <Box sx={{ mt: 2, mb: 1, px: 4 }}>
+                <Button variant="contained" fullWidth onClick={null}>
+                  Cancel
+                </Button>
+              </Box>
+            )}
+
+            {canJoin && (
+              <Box sx={{ mt: 2, mb: 1, px: 4 }}>
+                <Button variant="contained" fullWidth onClick={null}>
+                  {is_full ? "Join Waitlist" : "Register"}
                 </Button>
               </Box>
             )}
@@ -130,7 +162,7 @@ export default function LessonPop({ selectedEvent, deleteLesson }) {
                   variant="contained"
                   fullWidth
                   disabled={!editable}
-                  onClick={null}
+                  // onClick={null}
                 >
                   Edit
                 </Button>
