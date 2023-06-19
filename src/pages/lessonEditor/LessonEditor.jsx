@@ -41,6 +41,10 @@ const LessonEditor = () => {
    end,
  };
 
+  // console.log(dayjs(start));
+  // console.log(dayjs(start).toDate());
+
+
   const formSchema = yup.object().shape({
     //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
     title: yup.string().required("required"),
@@ -54,10 +58,9 @@ const LessonEditor = () => {
 
     const handleFormSubmit = (values) => {
       console.log('submit', values)
-      values.start = new Date(values.start).toISOString();
-      values.end = new Date(values.end).toISOString();
       console.log('convert', values)
-      // dispatch(editLessonRequest(values));
+      //SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
+      dispatch(editLessonRequest(values));
 
     };
 
@@ -108,7 +111,7 @@ const LessonEditor = () => {
                  type="text"
                  label="Start Time"
                  onBlur={handleBlur}
-                 onChange={(date) => setFieldValue("start", date.toISOString())}
+                 onChange={(date) => setFieldValue("start", date)}
                  value={dayjs(values.start)}
                  name="start"
                  error={!!touched.start && !!errors.start}
@@ -122,7 +125,7 @@ const LessonEditor = () => {
                  type="text"
                  label="End Time"
                  onBlur={handleBlur}
-                 onChange={(date) => setFieldValue("end", date.toISOString())}
+                 onChange={(date) => setFieldValue("end", date)}
                  value={dayjs(values.end)}
                  name="end"
                  error={!!touched.end && !!errors.end}
