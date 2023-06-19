@@ -56,6 +56,30 @@ export const checkSession = createAsyncThunk(
   }
 );
 
+export const editStudentProfile = createAsyncThunk(
+  "user/editStudentProfile",
+  async ([studentId, profileInfo], thunkAPI) => {
+    try {
+      const resp = await axios.patch(`/students/${studentId}`, profileInfo);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editTeacherProfile = createAsyncThunk(
+  "user/editTeacherProfile",
+  async ([teacherId, profileInfo], thunkAPI) => {
+    try {
+      const resp = await axios.patch(`/teachers/${teacherId}`, profileInfo);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 const userSlice = createSlice({
   name: "user",
@@ -103,7 +127,6 @@ const userSlice = createSlice({
         state.isSignedIn = true;
         state.error = null;
         state.role = action.payload.role;
-
       })
       .addCase(signUpUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -119,12 +142,37 @@ const userSlice = createSlice({
         state.isSignedIn = true;
         state.error = null;
         state.role = action.payload.role;
-
       })
       .addCase(checkSession.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });;
+      })
+      .addCase(editStudentProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(editStudentProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(editStudentProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(editTeacherProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(editTeacherProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(editTeacherProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
