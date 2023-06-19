@@ -28,6 +28,7 @@ const LessonEditor = () => {
     dispatch(getLessonById(lessonId));
   }, [])
 
+      console.log("init", lessonToEdit);
 
  const {id, title, description, capacity, level, price, start, end} = lessonToEdit
  const initialValues = {
@@ -58,7 +59,6 @@ const LessonEditor = () => {
 
     const handleFormSubmit = (values) => {
       console.log('submit', values)
-      console.log('convert', values)
       //SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
       dispatch(editLessonRequest(values));
 
