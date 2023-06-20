@@ -17,6 +17,7 @@ import {
 import ButtonGroup from "@mui/material/ButtonGroup";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import { Formik } from 'formik';
 
 const EnrollmentDetail = ({enrollment}) => {
     const dispatch = useDispatch();
@@ -29,9 +30,15 @@ const EnrollmentDetail = ({enrollment}) => {
       lesson: { start, end, title },
     } = enrollment;
 
+const initialValues = {
+ comment,
+};
+     const handleFormSubmit = (values) => {
+       console.log("submit", values);
+     };
     // console.log(enrollment)
 
-    // MAKE SURE NO PAST ENROLLMENT CAN'T BE DELETED
+    // MAKE SURE NO PAST ENROLLMENT CAN'T BE DELETED or CHANGED!
     const handleDeleteEnrollment = () => {
       if (
         window.confirm(
@@ -56,7 +63,7 @@ const EnrollmentDetail = ({enrollment}) => {
           secondary={`Status: ${status}`}
         />
         {/* NEED TO RENDER IN THE FRONT */}
-        {status === "waitlisted" && (
+        {/* {status === "waitlisted" && (
           <IconButton
             aria-label="register"
             onClick={() =>
@@ -87,24 +94,48 @@ const EnrollmentDetail = ({enrollment}) => {
           >
             <PersonRemoveIcon />
           </IconButton>
-        )}
+        )} */}
       </ListItem>
       <ListItem>
         <ListItemText primary={`Start: ${start.slice(0, -3)}`} />
         <ListItemText primary={`End: ${end.slice(0, -3)}`} />
       </ListItem>
-      <TextField></TextField>
-      <Box>
-        <Button variant="outlined">Edit Comment</Button>
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={{comment}}
+        enableReinitialize="true"
+      >
+        {({
+          values,
+          handleChange,
+          handleSubmit,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <Box>
+              <TextField
+                fullWidth
+                variant="outlined"
+                type="comment"
+                label="Comments"
+                onChange={handleChange}
+                value={values.comment}
+                name="comment"
+              />
 
-        <Button
+              <Button variant="outlined" type="submit">
+                Edit Comments
+              </Button>
+            </Box>
+          </form>
+        )}
+      </Formik>
+      {/* <Button
           variant="outlined"
           color="error"
           onClick={handleDeleteEnrollment}
         >
           Cancel Enrollment
-        </Button>
-      </Box>
+        </Button> */}
 
       <Divider />
     </>
