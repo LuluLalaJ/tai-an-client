@@ -7,9 +7,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
-
 import EnrollmentDetail from "./EnrollmentDetail";
-
+import { Stack, Container } from "@mui/material";
 
 export default function StudentEnrollmentModal({enrollments}) {
   const [open, setOpen] = React.useState(false);
@@ -45,20 +44,20 @@ export default function StudentEnrollmentModal({enrollments}) {
         // aria-describedby="lesson-history"
       >
         <DialogTitle id="scroll-dialog-title">Lesson History</DialogTitle>
-        <DialogContent dividers={true}>
-          <DialogContentText
+        <Container>
+          <Stack
+            spacing={1}
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
           >
             {enrollments.map((enrollment) => (
-              <EnrollmentDetail enrollment={enrollment} />
+              <EnrollmentDetail enrollment={enrollment} key={enrollment.id} />
             ))}
-          </DialogContentText>
-        </DialogContent>
+          </Stack>
+        </Container>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>

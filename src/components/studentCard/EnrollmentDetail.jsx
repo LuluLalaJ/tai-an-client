@@ -1,6 +1,19 @@
-import { Typography } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 import React from 'react'
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 const EnrollmentDetail = ({enrollment}) => {
     const {
@@ -13,30 +26,28 @@ const EnrollmentDetail = ({enrollment}) => {
 
     console.log(enrollment)
 
+
   return (
     <>
-      <Typography>
-        `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-        consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
-        scelerisque nisl consectetur et.` `Cras mattis consectetur purus sit
-        amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget
-        quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-        `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-        consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
-        scelerisque nisl consectetur et.`
-      </Typography>
-      <TextField
-        autoFocus
-        margin="dense"
-        id="name"
-        label="Email Address"
-        type="email"
-        fullWidth
-        variant="standard"
-      />
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <AssignmentIndIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={`Lesson: ${title}`}
+          secondary={`Status: ${status}`}
+        />
+      </ListItem>
+      <ListItem>
+        <ListItemText primary={`Start: ${start.slice(0, -3)}`} />
+        <ListItemText primary={`End: ${end.slice(0, -3)}`} />
+      </ListItem>
+      <TextField></TextField>
+      <Button>Edit Comment</Button>
+      <Divider />
+
     </>
   );
 }
