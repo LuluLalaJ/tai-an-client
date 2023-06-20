@@ -13,7 +13,7 @@ import { toggleDrawer } from "../../redux/drawerSlice";
 
 
 export default function TopBar() {
-  const pages = ["Teachers", "Gallery"];
+  const pages = ["Teachers"];
   const { isSignedIn } = useSelector( store => store.user)
   const dispatch = useDispatch()
 
