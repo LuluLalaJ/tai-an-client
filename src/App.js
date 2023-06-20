@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Outlet, Navigate} from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar } from './components'
@@ -21,7 +21,9 @@ import {
   Students,
   Teachers,
   LessonEditor,
-  Product
+  Product,
+  Payment,
+  Completion,
 } from "./pages";
 
 
@@ -68,8 +70,15 @@ const App = () => {
           {isSignedIn && role === "student" && (
             <>
               <Route path="/product" element={<Product />} />
-
               <Route path="/checkout" element={<Checkout />} />
+              <Route
+                path="/payment"
+                element={<Payment />}
+              />
+              <Route
+                path="/completion"
+                element={<Completion />}
+              />
             </>
           )}
 

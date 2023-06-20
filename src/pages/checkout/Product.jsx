@@ -11,6 +11,7 @@ import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import { CardMedia } from "@mui/material";
+import { Link as RouterLink} from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -133,8 +134,8 @@ export default function Product() {
                   />
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant}>
-                    Check Out
+                  <Button fullWidth variant={tier.buttonVariant} component={RouterLink} to={`/checkout?price=${tier.price}`}>
+                    Check Out {tier.price}
                   </Button>
                 </CardActions>
               </Card>

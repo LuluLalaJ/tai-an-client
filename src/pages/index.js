@@ -14,6 +14,8 @@ import Students from "./students/Students";
 import Teachers from "./teachers/Teachers";
 import LessonEditor from "./lessonEditor/LessonEditor"
 import Product from "./checkout/Product";
+import Payment from "./checkout/Payment";
+import Completion from "./checkout/Completion";
 
 export {
   About,
@@ -32,4 +34,6 @@ export {
   Teachers,
   LessonEditor,
   Product,
+  Payment,
+  Completion,
 };
