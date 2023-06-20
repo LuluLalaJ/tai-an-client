@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import { LessonCard } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudents } from "../../redux/studentsSlice";
+import { StudentCard }from "../../components";
 
 const Students = () => {
   const dispatch = useDispatch()
@@ -14,11 +15,18 @@ const Students = () => {
   useEffect(() => {
     dispatch(getStudents(user.id));
   }, []);
+  console.log(students)
 
-  console.log(students);
-  if (students) {
-  return <div>Students</div>;
-  }
+  return (
+    <Container sx={{ py: 8 }} maxWidth="md">
+      <Grid container spacing={4}>
+        {students &&
+          students.map((student) => (
+            <StudentCard student={student} key={student.id} />
+          ))}
+      </Grid>
+    </Container>
+  );
 };
 
 export default Students;
