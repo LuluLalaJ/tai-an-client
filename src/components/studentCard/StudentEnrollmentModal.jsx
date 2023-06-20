@@ -9,7 +9,7 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
 import EnrollmentDetail from "./EnrollmentDetail";
 import { Stack, Container } from "@mui/material";
-
+import { StorefrontRounded } from "@mui/icons-material";
 export default function StudentEnrollmentModal({enrollments}) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => () => {
@@ -19,8 +19,9 @@ export default function StudentEnrollmentModal({enrollments}) {
     setOpen(false);
   };
 
-//   console.log(enrollments)
+  console.log(enrollments)
   const descriptionElementRef = React.useRef(null);
+
 
   React.useEffect(() => {
     if (open) {

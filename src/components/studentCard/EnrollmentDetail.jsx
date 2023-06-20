@@ -1,21 +1,26 @@
-import { Button, Divider, Typography } from '@mui/material'
+import { Button, Divider, Typography, Box, Container } from '@mui/material'
 import React from 'react'
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useDispatch } from "react-redux";
+import {
+  cancelEnrollment,
+  changeEnrollmentStatus,
+} from "../../redux/enrollmentSlice";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 
 const EnrollmentDetail = ({enrollment}) => {
+    const dispatch = useDispatch();
+
     const {
       comment,
       id,
@@ -24,8 +29,19 @@ const EnrollmentDetail = ({enrollment}) => {
       lesson: { start, end, title },
     } = enrollment;
 
-    console.log(enrollment)
+    // console.log(enrollment)
 
+    // MAKE SURE NO PAST ENROLLMENT CAN'T BE DELETED
+    const handleDeleteEnrollment = () => {
+      if (
+        window.confirm(
+          `Are you sure you want to unenroll the student?`
+        )
+      ) {
+        //NEED TO RENDER IN THE FRONT AS WELL
+        dispatch(cancelEnrollment([lesson_id, id]));
+      }
+    };
 
   return (
     <>
@@ -39,15 +55,58 @@ const EnrollmentDetail = ({enrollment}) => {
           primary={`Lesson: ${title}`}
           secondary={`Status: ${status}`}
         />
+        {/* NEED TO RENDER IN THE FRONT */}
+        {status === "waitlisted" && (
+          <IconButton
+            aria-label="register"
+            onClick={() =>
+              dispatch(
+                changeEnrollmentStatus([
+                  lesson_id,
+                  id,
+                  { status: "registered" },
+                ])
+              )
+            }
+          >
+            <PersonAddIcon />
+          </IconButton>
+        )}
+        {status === "registered" && (
+          <IconButton
+            aria-label="waitlist"
+            onClick={() =>
+              dispatch(
+                changeEnrollmentStatus([
+                  lesson_id,
+                  id,
+                  { status: "waitlisted" },
+                ])
+              )
+            }
+          >
+            <PersonRemoveIcon />
+          </IconButton>
+        )}
       </ListItem>
       <ListItem>
         <ListItemText primary={`Start: ${start.slice(0, -3)}`} />
         <ListItemText primary={`End: ${end.slice(0, -3)}`} />
       </ListItem>
       <TextField></TextField>
-      <Button>Edit Comment</Button>
-      <Divider />
+      <Box>
+        <Button variant="outlined">Edit Comment</Button>
 
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleDeleteEnrollment}
+        >
+          Cancel Enrollment
+        </Button>
+      </Box>
+
+      <Divider />
     </>
   );
 }

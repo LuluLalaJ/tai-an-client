@@ -15,6 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import StudentEnrollmentModal from "./StudentEnrollmentModal";
+import { useSelector } from "react-redux";
 
 
 
@@ -30,6 +31,8 @@ const ExpandMore = styled((props) => {
 }));
 
 const StudentCard = ({student}) => {
+      const { user } = useSelector((store) => store.user);
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -37,6 +40,11 @@ const StudentCard = ({student}) => {
   };
 
   const {avatar, email, enrollments, first_name, last_name, id} = student
+
+const enrollmentsInMyLessons = enrollments.filter((enrollment) => {
+  return enrollment.lesson.teacher_id === user.id;
+});
+
 
   return (
     <Grid item key={student.id} xs={12} sm={12} md={6}>
@@ -51,7 +59,7 @@ const StudentCard = ({student}) => {
             </Avatar>
           }
           action={
-           <StudentEnrollmentModal enrollments={enrollments}/>
+            <StudentEnrollmentModal enrollments={enrollmentsInMyLessons} />
           }
           title={`${first_name} ${last_name}`}
           subheader={email}
@@ -64,7 +72,7 @@ const StudentCard = ({student}) => {
         />
         <CardContent>
           <Typography variant="h6" color="text.secondary">
-            Total Lessons: {enrollments.length}
+            Total Lessons: {enrollmentsInMyLessons.length}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
