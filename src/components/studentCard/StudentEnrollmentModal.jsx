@@ -7,22 +7,20 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+
+import EnrollmentDetail from "./EnrollmentDetail";
 
 
-
-export default function StudentEnrollmentModal() {
+export default function StudentEnrollmentModal({enrollments}) {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
+//   console.log(enrollments)
   const descriptionElementRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -52,16 +50,11 @@ export default function StudentEnrollmentModal() {
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
-          ></DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+          >
+            {enrollments.map((enrollment) => (
+              <EnrollmentDetail enrollment={enrollment} />
+            ))}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

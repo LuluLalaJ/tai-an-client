@@ -15,7 +15,6 @@ const Students = () => {
   useEffect(() => {
     dispatch(getStudents(user.id));
   }, []);
-  console.log(students)
 
   return (
     <Container sx={{ py: 8 }} maxWidth="md">

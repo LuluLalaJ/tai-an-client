@@ -17,6 +17,7 @@ import Grid from "@mui/material/Grid";
 import StudentEnrollmentModal from "./StudentEnrollmentModal";
 
 
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -35,7 +36,6 @@ const StudentCard = ({student}) => {
     setExpanded(!expanded);
   };
 
-  console.log(student)
   const {avatar, email, enrollments, first_name, last_name, id} = student
 
   return (
@@ -51,7 +51,7 @@ const StudentCard = ({student}) => {
             </Avatar>
           }
           action={
-           <StudentEnrollmentModal />
+           <StudentEnrollmentModal enrollments={enrollments}/>
           }
           title={`${first_name} ${last_name}`}
           subheader={email}
