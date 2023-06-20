@@ -30,9 +30,6 @@ const EnrollmentDetail = ({enrollment}) => {
       lesson: { start, end, title },
     } = enrollment;
 
-const initialValues = {
- comment,
-};
      const handleFormSubmit = (values) => {
        console.log("submit", values);
      };

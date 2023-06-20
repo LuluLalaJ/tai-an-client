@@ -3,6 +3,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import IconButton from "@mui/material/IconButton";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import { Formik } from "formik";
+import TextField from "@mui/material/TextField";
+import { changeEnrollmentStatus } from "../../redux/enrollmentSlice";
+import { useDispatch } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -16,14 +22,23 @@ const style = {
   p: 4,
 };
 
-export default function FeedbackModal() {
+export default function FeedbackModal({ comment, lessonId, enrollmentId }) {
+  const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+   const handleFormSubmit = (values) => {
+     console.log("submit", values);
+     dispatch(changeEnrollmentStatus([lessonId, enrollmentId, values]));
+
+   };
+
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <IconButton aria-label="add lesson feedback" onClick={handleOpen}>
+        <RateReviewIcon />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -32,11 +47,35 @@ export default function FeedbackModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Comments
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={{ comment }}
+            enableReinitialize="true"
+          >
+            {({ values, handleChange, handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                <Box>
+                  <TextField
+                    fullWidth
+                    multiline
+                    minRows={4}
+                    variant="outlined"
+                    type="comment"
+                    // label="Edit box"
+                    onChange={handleChange}
+                    value={values.comment}
+                    name="comment"
+                  />
+
+                  <Button variant="outlined" type="submit">
+                    Edit Comments
+                  </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
         </Box>
       </Modal>
     </div>

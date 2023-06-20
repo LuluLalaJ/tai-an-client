@@ -9,16 +9,14 @@ import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import AddCommentIcon from "@mui/icons-material/AddComment";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 import { useDispatch } from 'react-redux';
 import { cancelEnrollment, changeEnrollmentStatus } from '../../redux/enrollmentSlice';
-
+import FeedbackModal from './FeedbackModal';
 
 export const EnrollmentCard = ({enrollment}) => {
     console.log(enrollment)
     const dispatch = useDispatch()
-    const {student:{first_name, last_name, avatar}, status, id, lesson_id} = enrollment
+    const {student:{first_name, last_name, avatar}, comment, status, id, lesson_id} = enrollment
 
 
     const handleDeleteEnrollment = () => {
@@ -42,9 +40,12 @@ export const EnrollmentCard = ({enrollment}) => {
           primary={`${first_name} ${last_name[0]}`}
           secondary={status}
         />
-        <IconButton aria-label="add lesson feedback" onClick={null}>
-          <RateReviewIcon />
-        </IconButton>
+
+        <FeedbackModal
+          comment={comment}
+          lessonId={lesson_id}
+          enrollmentId={id}
+        />
 
         {status === "waitlisted" && (
           <IconButton
