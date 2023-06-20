@@ -41,9 +41,9 @@ const ExpandMore = styled((props) => {
 
 const LessonCard = ({ lesson }) => {
     const dispatch = useDispatch()
-    const { isLessonPopOpen, lessonPopInfo } = useSelector(
-      (store) => store.lesson
-    );
+      const { role } = useSelector(store => store.user)
+      const canEdit = role === "teacher"
+
     const handleDeleteLesson = () => {
         if (
           window.confirm(
@@ -56,7 +56,6 @@ const LessonCard = ({ lesson }) => {
     }
 
     const [expanded, setExpanded] = React.useState(false);
-    const [anchorEl, setAnchorEl] = useState(null)
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
@@ -71,18 +70,6 @@ const LessonCard = ({ lesson }) => {
               {title[0]}
             </Avatar>
           }
-          //   action={
-          //     <IconButton
-          //       aria-label="info"
-          //       onClick={(event) => {
-          //         dispatch(openLessonPop())
-          //         setAnchorEl(event.currentTarget);
-
-          //       }}
-          //     >
-          //       <MoreVertIcon />
-          //     </IconButton>
-          //   }
           title={`${title.slice(0, 30)}...`}
           subheader={start}
         />
@@ -99,16 +86,21 @@ const LessonCard = ({ lesson }) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
-            component={RouterLink}
-            to={`/editor/${lesson.id}`}
-            aria-label="edit"
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete" onClick={handleDeleteLesson}>
-            <DeleteForeverIcon />
-          </IconButton>
+          {canEdit && (
+            <>
+              <IconButton
+                component={RouterLink}
+                to={`/editor/${lesson.id}`}
+                aria-label="edit"
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton aria-label="delete" onClick={handleDeleteLesson}>
+                <DeleteForeverIcon />
+              </IconButton>
+            </>
+          )}
+
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
@@ -143,7 +135,11 @@ const LessonCard = ({ lesson }) => {
 
               {enrollments &&
                 enrollments.map((enrollment) => (
-                  <EnrollmentCard enrollment={enrollment} key={enrollment.id} />
+                  <EnrollmentCard
+                    enrollment={enrollment}
+                    key={enrollment.id}
+                    canEdit={canEdit}
+                  />
                 ))}
             </List>
           </CardContent>
