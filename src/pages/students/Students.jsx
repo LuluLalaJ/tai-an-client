@@ -12,6 +12,8 @@ const Students = () => {
   const {user} = useSelector(store => store.user)
   const {students} = useSelector(store => store.students)
 
+  console.log(students)
+
   useEffect(() => {
     dispatch(getStudents(user.id));
   }, []);

@@ -45,7 +45,9 @@ const enrollmentsInMyLessons = enrollments.filter((enrollment) => {
   return enrollment.lesson.teacher_id === user.id;
 });
 
-
+if (enrollmentsInMyLessons.length === 0) {
+  return null 
+}
   return (
     <Grid item key={student.id} xs={12} sm={12} md={6}>
       <Card sx={{ maxWidth: 450 }}>

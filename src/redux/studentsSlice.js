@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -19,6 +19,14 @@ export const getStudents = createAsyncThunk(
   }
 );
 
+export const cancelStudentEnrollmentSuccess = createAction(
+  "students/cancelStudentEnrollmentSuccess"
+);
+
+export const editStudentEnrollmentSuccess = createAction(
+  "students/editStudentEnrollmentSuccess"
+);
+
 const studentsSlice = createSlice({
   name: "students",
   initialState,
@@ -37,6 +45,43 @@ const studentsSlice = createSlice({
       .addCase(getStudents.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(editStudentEnrollmentSuccess, (state, action) => {
+        const [enrollmentId, data] = action.payload;
+        state.students = state.students.map((student) => {
+          if (
+            student.enrollments.some(
+              (enrollment) => enrollment.id === enrollmentId
+            )
+          ) {
+            const updatedEnrollments = student.enrollments.map((enrollment) => {
+              if (enrollment.id === enrollmentId) {
+                return { ...enrollment, ...data };
+              }
+              return enrollment;
+            });
+            return { ...student, enrollments: updatedEnrollments };
+          }
+          return student;
+        });
+      })
+      .addCase(cancelStudentEnrollmentSuccess, (state, action) => {
+        const [enrollmentId, data] = action.payload;
+        state.students = state.students.map((student) => {
+          if (
+            student.enrollments.some(
+              (enrollment) => enrollment.id === enrollmentId
+            )
+          ) {
+            const updatedEnrollments = student.enrollments.filter(
+              (enrollment) => {
+                return enrollment.id !== enrollmentId;
+              }
+            );
+            return { ...student, enrollments: updatedEnrollments };
+          }
+          return student;
+        });
       });
   },
 });

@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { cancelEnrollmentSuccess, editEnrollmentStatusSuccess } from "./lessonSlice";
-
+import {
+  editStudentEnrollmentSuccess,
+  cancelStudentEnrollmentSuccess,
+} from "./studentsSlice";
+import thunk from "redux-thunk";
 const initialState = {
   newEnrollment: null,
   isLoading: false,
@@ -14,13 +18,16 @@ export const cancelEnrollment = createAsyncThunk(
     try {
       const resp = await axios.delete(`/lessons/${lessonId}/enrollments/${enrollmentId}`);
       thunkAPI.dispatch(cancelEnrollmentSuccess([lessonId, enrollmentId]));
+      thunkAPI.dispatch(
+        cancelStudentEnrollmentSuccess([enrollmentId])
+      );
+
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
-
 
 export const addEnrollment = createAsyncThunk(
   "enrollment/addEnrollment",
@@ -43,6 +50,7 @@ export const changeEnrollmentStatus = createAsyncThunk(
         data
       );
       thunkAPI.dispatch(editEnrollmentStatusSuccess([lessonId, enrollmentId, data]));
+      thunkAPI.dispatch(editStudentEnrollmentSuccess([enrollmentId, data]));
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

@@ -32,6 +32,7 @@ const EnrollmentDetail = ({enrollment}) => {
 
      const handleFormSubmit = (values) => {
        console.log("submit", values);
+       dispatch(changeEnrollmentStatus([lesson_id, id, values]));
      };
     // console.log(enrollment)
 
@@ -60,7 +61,7 @@ const EnrollmentDetail = ({enrollment}) => {
           secondary={`Status: ${status}`}
         />
         {/* NEED TO RENDER IN THE FRONT */}
-        {/* {status === "waitlisted" && (
+        {status === "waitlisted" && (
           <IconButton
             aria-label="register"
             onClick={() =>
@@ -91,7 +92,7 @@ const EnrollmentDetail = ({enrollment}) => {
           >
             <PersonRemoveIcon />
           </IconButton>
-        )} */}
+        )}
       </ListItem>
       <ListItem>
         <ListItemText primary={`Start: ${start.slice(0, -3)}`} />
@@ -126,13 +127,13 @@ const EnrollmentDetail = ({enrollment}) => {
           </form>
         )}
       </Formik>
-      {/* <Button
+      <Button
           variant="outlined"
           color="error"
           onClick={handleDeleteEnrollment}
         >
           Cancel Enrollment
-        </Button> */}
+        </Button>
 
       <Divider />
     </>
