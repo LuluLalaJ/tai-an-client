@@ -20,7 +20,8 @@ import {
   Signup,
   Students,
   Teachers,
-  LessonEditor
+  LessonEditor,
+  Product
 } from "./pages";
 
 
@@ -59,16 +60,17 @@ const App = () => {
           {isSignedIn && role === "teacher" && (
             <>
               <Route path="/students" element={<Students />} />
-              <Route
-                path="/editor/:lessonId"
-                element={<LessonEditor />}
-                />
+              <Route path="/editor/:lessonId" element={<LessonEditor />} />
               {/* <Route path="/books/:id" element={<Book />} /> */}
             </>
           )}
 
           {isSignedIn && role === "student" && (
-            <Route path="/checkout" element={<Checkout />} />
+            <>
+              <Route path="/product" element={<Product />} />
+
+              <Route path="/checkout" element={<Checkout />} />
+            </>
           )}
 
           <Route path="*" element={<p>There's nothing here: 404!</p>} />
