@@ -21,11 +21,12 @@ import { TOMORROW, LESSON_LEVEL } from "../../constants";
 import { getEnrollmentId, checkStudentEnrollment } from "../../utilities";
 
 export default function LessonPop({ info }) {
-  // console.log(info)
+  console.log(info)
   const dispatch = useDispatch();
   const { isLessonPopOpen } = useSelector((store) => store.lesson);
   const { role, user } = useSelector((store) => store.user);
-  const lessonId = info.event.id;
+  //this lessonId is a string
+  const lessonId = parseInt(info.event.id);
   const { is_full, description, level, price, teacher, teacher_id, enrollments} =
     info.event.extendedProps;
 
@@ -126,7 +127,10 @@ export default function LessonPop({ info }) {
                 variant="contained"
                 fullWidth
                 onClick={() =>
-                  dispatch(cancelEnrollment([lessonId, enrollmentId]))
+                  {
+                    dispatch(cancelEnrollment([lessonId, enrollmentId]))
+                    dispatch(dispatch(closeLessonPop()))
+                  }
                 }
               >
                 Cancel
@@ -143,8 +147,11 @@ export default function LessonPop({ info }) {
                 // right now, if there's not sufficient fund
                 // the rejection is not clear
                 // prevent from submitting at the first place if possible
-                
-                onClick={() => dispatch(addEnrollment(lessonId))}
+
+                onClick={() => {
+                  dispatch(addEnrollment(lessonId));
+                  dispatch(closeLessonPop())
+                }}
               >
                 {is_full ? "Join Waitlist" : "Register"}
               </Button>

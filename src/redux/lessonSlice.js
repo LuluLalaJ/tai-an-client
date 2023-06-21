@@ -13,7 +13,8 @@ const initialState = {
   isLessonPopOpen: false,
   // lessonPopInfo: "",
   lessonToEdit: "",
-  afterEdit:""
+  afterEdit:"",
+  testing:""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -214,9 +215,15 @@ const lessonSlice = createSlice({
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
         const [lessonId, enrollmentId] = action.payload;
-        const lesson = state.myLessons.find((lesson) => lesson.id === lessonId);
-        if (lesson) {
-          lesson.enrollments = lesson.enrollments.filter(
+        const lesson1 = state.myLessons.find((lesson) => lesson.id === lessonId);
+        if (lesson1) {
+          lesson1.enrollments = lesson1.enrollments.filter(
+            (enrollment) => enrollment.id !== enrollmentId
+          );
+        }
+        const lesson2 = state.currentCal.find((lesson) => lesson.id === lessonId);
+        if (lesson2) {
+          lesson2.enrollments = lesson2.enrollments.filter(
             (enrollment) => enrollment.id !== enrollmentId
           );
         }
@@ -237,11 +244,12 @@ const lessonSlice = createSlice({
         }
       })
       .addCase(addEnrollmentStatusSuccess, (state, action) => {
-        const [lessonId, newEnrollment] = action.payload;
-        const lesson = state.currentCal.find(lesson => lesson.id === lessonId)
-        if (lesson) {
-          lesson.enrollments = [...lesson.enrollments, newEnrollment]
-        }
+       const [lessonId, newEnrollment] = action.payload;
+       const lesson = state.currentCal.find((lesson) => lesson.id === lessonId);
+       state.testing = lesson
+       if (lesson) {
+        lesson.enrollments = [...lesson.enrollments, newEnrollment]
+       }
       })
       .addCase(getLessonById.pending, (state) => {
         state.isLoading = true;
