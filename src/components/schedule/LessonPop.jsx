@@ -16,16 +16,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
 import { addEnrollment, cancelEnrollment } from "../../redux/enrollmentSlice";
+import { TOMORROW, LESSON_LEVEL } from "../../constants";
 
-const LESSON_LEVEL = {
-    1: "Beginner",
-    2: "Intermediate I",
-    3: "Intermediate II",
-    4: "Advanced I",
-    5: "Advanced II"
-}
 
-export default function LessonPop({ info, tomorrow }) {
+export default function LessonPop({ info }) {
 
   const dispatch = useDispatch();
   const { isLessonPopOpen, lessonPopInfo} = useSelector((store) => store.lesson);
@@ -72,7 +66,7 @@ export default function LessonPop({ info, tomorrow }) {
     const canCancel = role === "student" && userEnrollmentStatus;
     const canJoin = role === "student" && !userEnrollmentStatus;
     const isMyLesson = role === "teacher" && user.id === teacher_id;
-    const notEditable = info.event.start <= tomorrow;
+    const notEditable = info.event.start <= TOMORROW;
 
     const enrollmentId = getEnrollmentId(currentEnrollments, user.id);
 

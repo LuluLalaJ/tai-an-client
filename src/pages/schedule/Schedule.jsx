@@ -17,10 +17,9 @@ import {
   openLessonPop,
   editLessonRequest
 } from "../../redux/lessonSlice";
+import {TOMORROW } from '../../constants'
 
 const Schedule = () => {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
 
   const dispatch = useDispatch();
   const { currentCal, newLesson } = useSelector(
@@ -36,9 +35,9 @@ const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState("")
 
   const addLesson = (info) => {
-    if (info.start <= tomorrow) {
-       alert("You can only add a new lesson at least one day in advance!");
-       info.view.calendar.unselect()
+    if (info.start <= TOMORROW) {
+      alert("You can only add a new lesson at least one day in advance!");
+      info.view.calendar.unselect();
     } else {
       console.log(info);
       const selectedTime = {
@@ -88,6 +87,7 @@ const Schedule = () => {
   };
 
   const changeStartTime = (info) => {
+    // NOTE: fullcalendar's dates is just native JavaScript Date objects
     if (user.id === info.event.extendedProps["teacher_id"]) {
       const message = `Do you want to start ${info.event.title} at the new time: ${info.event.start}?`;
       if (!window.confirm(message)) {
@@ -103,10 +103,9 @@ const Schedule = () => {
 
   // console.log("currentCal", currentCal);
 
-
   const currentCalGreyedPast = currentCal.map(event => {
     const eventStartDate = new Date(event.start)
-    if (eventStartDate <= tomorrow) {
+    if (eventStartDate <= TOMORROW) {
       const newAttr = {
         editable: false,
         backgroundColor: "#858585",
@@ -172,7 +171,6 @@ return (
       <LessonPop
         info={selectedEvent}
         deleteLesson={deleteLesson}
-        tomorrow={tomorrow}
       />
     )}
   </Box>
