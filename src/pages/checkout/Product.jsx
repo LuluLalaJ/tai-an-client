@@ -11,6 +11,11 @@ import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import { CardMedia } from "@mui/material";
+import LessonCredit100 from "../../assets/LessonCredit100.jpeg"
+import LessonCredit200 from "../../assets/LessonCredit200.jpg";
+import LessonCredit300 from "../../assets/LessonCredit300.jpeg";
+
+
 import axios from "axios";
 
 
@@ -19,50 +24,49 @@ const tiers = [
     title: "Discover",
     price: "100",
     buttonVariant: "outlined",
-    image: "https://rb.gy/ltfqb",
+    image: `${LessonCredit100}`,
+    pi: "price_1NLQNbFn2n3otckJ2XBj0Hzy",
   },
   {
     title: "Explore",
     subheader: "Most popular",
     price: "200",
     buttonVariant: "contained",
-    image: "https://rb.gy/n0lc1",
+    image: `${LessonCredit200}`,
+    pi: "price_1NLQNMFn2n3otckJVey4UEcX",
   },
   {
     title: "Master",
     price: "300",
     buttonVariant: "outlined",
-    image: "https://rb.gy/7yv2r",
+    image: `${LessonCredit300}`,
+    pi: "price_1NLQN6Fn2n3otckJUiaIh59j",
   },
 ];
 
 export default function Product() {
    useEffect(() => {
      async function fetchConfig() {
-       // Fetch config from our backend.
-       const { unitAmount, currency } = await fetch("/config").then((r) =>
+       await fetch("/config").then((r) =>
          r.json()
        );
-      //  setAmount(unitAmount);
-      //  setCurrency(currency);
      }
      fetchConfig();
    }, []);
 
 
-  const purchaseCredits = (e) => {
+  const purchaseCredits = (e, pi) => {
     e.preventDefault()
     // axios
     //   .post("/create-checkout-session", {
     //     quantity: 1,
     //   })
 
-// window.location.href = data.url;
-
     const postRequestObj = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        price: pi,
         quantity: 1
       })
     };
@@ -155,7 +159,7 @@ export default function Product() {
                       type="submit"
                       onClick={(e) => {
                         console.log("submitted");
-                        purchaseCredits(e);
+                        purchaseCredits(e, tier.pi);
                       }
                         }
                       fullWidth

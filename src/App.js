@@ -62,7 +62,6 @@ const App = () => {
             <>
               <Route path="/students" element={<Students />} />
               <Route path="/editor/:lessonId" element={<LessonEditor />} />
-              {/* <Route path="/books/:id" element={<Book />} /> */}
             </>
           )}
 
@@ -74,7 +73,7 @@ const App = () => {
             </>
           )}
 
-          <Route path="*" element={<p>There's nothing here: 404!</p>} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </AuthWrapper>
     </>
