@@ -13,7 +13,6 @@ import {
   getStudentLessons,
   openNewLessonFormModal,
   updateNewLessonTime,
-  setLessonPopInfo,
   openLessonPop,
   editLessonRequest
 } from "../../redux/lessonSlice";
@@ -62,8 +61,6 @@ const Schedule = () => {
   const editLesson = (info) => {
     setSelectedEvent(info);
     dispatch(openLessonPop());
-    dispatch(setLessonPopInfo(info.event.extendedProps));
-    console.log(info.event.id);
   };
 
   const deleteLesson = (info) => {

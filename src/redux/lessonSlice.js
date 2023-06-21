@@ -11,7 +11,7 @@ const initialState = {
   isLoading: false,
   isNewLessonFormModalOpen: false,
   isLessonPopOpen: false,
-  lessonPopInfo: "",
+  // lessonPopInfo: "",
   lessonToEdit: "",
   afterEdit:""
 };
@@ -131,9 +131,9 @@ const lessonSlice = createSlice({
     closeLessonPop: (state) => {
       state.isLessonPopOpen = false;
     },
-    setLessonPopInfo: (state, action) => {
-      state.lessonPopInfo = action.payload
-    }
+    // setLessonPopInfo: (state, action) => {
+    //   state.lessonPopInfo = action.payload
+    // }
   },
 
   extraReducers: (builder) => {
@@ -271,6 +271,6 @@ export const {
   updateNewLessonTime,
   openLessonPop,
   closeLessonPop,
-  setLessonPopInfo,
+  // setLessonPopInfo,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;
