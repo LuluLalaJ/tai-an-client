@@ -8,7 +8,6 @@ import { getAllLessons } from './redux/lessonSlice';
 import {
   About,
   AuthWrapper,
-  Checkout,
   Error,
   Gallery,
   Home,
@@ -22,9 +21,9 @@ import {
   Teachers,
   LessonEditor,
   Product,
-  Payment,
   Completion,
   Membership,
+  Canceled
 } from "./pages";
 
 
@@ -72,9 +71,9 @@ const App = () => {
             <>
               <Route path="/membership" element={<Membership />} />
               <Route path="/product" element={<Product />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/payment" element={<Payment />} />
+
               <Route path="/completion" element={<Completion />} />
+              <Route path="/canceled" element={<Canceled />} />
             </>
           )}
 

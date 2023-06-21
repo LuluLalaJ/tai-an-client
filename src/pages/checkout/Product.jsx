@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -11,25 +11,8 @@ import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import { CardMedia } from "@mui/material";
-import { Link as RouterLink} from "react-router-dom";
+import axios from "axios";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const tiers = [
   {
@@ -54,6 +37,40 @@ const tiers = [
 ];
 
 export default function Product() {
+   useEffect(() => {
+     async function fetchConfig() {
+       // Fetch config from our backend.
+       const { unitAmount, currency } = await fetch("/config").then((r) =>
+         r.json()
+       );
+      //  setAmount(unitAmount);
+      //  setCurrency(currency);
+     }
+     fetchConfig();
+   }, []);
+
+
+  const purchaseCredits = (e) => {
+    e.preventDefault()
+    // axios
+    //   .post("/create-checkout-session", {
+    //     quantity: 1,
+    //   })
+
+// window.location.href = data.url;
+
+    const postRequestObj = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        quantity: 1
+      })
+    };
+    fetch("/create-checkout-session", postRequestObj)
+      .then((r) => r.json())
+      .then((data) => (window.location.href = data.url));
+  }
+
   return (
     <>
       <GlobalStyles
@@ -130,13 +147,22 @@ export default function Product() {
                   <CardMedia
                     sx={{ height: 140 }}
                     image={tier.image}
-                    title="green iguana"
+                    // title="green iguana"
                   />
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} component={RouterLink} to={`/checkout?price=${tier.price}`}>
-                    Check Out {tier.price}
-                  </Button>
+                    <Button
+                      type="submit"
+                      onClick={(e) => {
+                        console.log("submitted");
+                        purchaseCredits(e);
+                      }
+                        }
+                      fullWidth
+                      variant={tier.buttonVariant}
+                    >
+                      Check Out
+                    </Button>
                 </CardActions>
               </Card>
             </Grid>

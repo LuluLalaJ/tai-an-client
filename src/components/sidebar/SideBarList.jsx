@@ -74,7 +74,7 @@ return (
       {role === "student" && (
         <>
           <ListItem disablePadding>
-            <ListItemButton component={RouterLink} to={"/checkout"}>
+            <ListItemButton component={RouterLink} to={"/product"}>
               <ListItemIcon>
                 <PaidIcon />
               </ListItemIcon>

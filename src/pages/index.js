@@ -1,6 +1,5 @@
 import About from "./about/About";
 import AuthWrapper from "./authWrapper/AuthWrapper";
-import Checkout from './checkout/Checkout';
 import Error from "./error/Error";
 import Gallery from './gallery/Gallery';
 import Home from "./home/Home";
@@ -14,14 +13,13 @@ import Students from "./students/Students";
 import Teachers from "./teachers/Teachers";
 import LessonEditor from "./lessonEditor/LessonEditor"
 import Product from "./checkout/Product";
-import Payment from "./checkout/Payment";
 import Completion from "./checkout/Completion";
 import Membership from "./checkout/Membership";
+import Canceled from "./checkout/Canceled";
 
 export {
   About,
   AuthWrapper,
-  Checkout,
   Error,
   Gallery,
   Home,
@@ -35,7 +33,7 @@ export {
   Teachers,
   LessonEditor,
   Product,
-  Payment,
   Completion,
   Membership,
+  Canceled,
 };
