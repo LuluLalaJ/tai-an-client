@@ -4,13 +4,12 @@ import axios from "axios";
 const initialState = {
   newLessonTime: { start: "", end: "" },
   newLesson: "",
-  // newLessonValues: "",
-  allLessons: [],
-  myLessons: [],
+  allLessons: "",
+  myLessons: "",
+  currentCal: "",
   error: null,
   isLoading: false,
   isNewLessonFormModalOpen: false,
-  // calendarApi: "",
   isLessonPopOpen: false,
   lessonPopInfo: "",
   lessonToEdit: "",
@@ -151,7 +150,8 @@ const lessonSlice = createSlice({
       })
       .addCase(getAllLessons.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.allLessons = action.payload;
+        state.allLessons = action.payload;;
+        state.currentCal = action.payload;
         state.error = null;
       })
       .addCase(getAllLessons.rejected, (state, action) => {
@@ -165,6 +165,7 @@ const lessonSlice = createSlice({
       .addCase(getTeacherLessons.fulfilled, (state, action) => {
         state.isLoading = false;
         state.myLessons = action.payload;
+        state.currentCal = action.payload;
         state.error = null;
       })
       .addCase(getTeacherLessons.rejected, (state, action) => {
@@ -178,6 +179,7 @@ const lessonSlice = createSlice({
       .addCase(getStudentLessons.fulfilled, (state, action) => {
         state.isLoading = false;
         state.myLessons = action.payload;
+        state.currentCal = action.payload;
         state.error = null;
       })
       .addCase(getStudentLessons.rejected, (state, action) => {

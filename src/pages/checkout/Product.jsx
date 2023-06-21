@@ -14,10 +14,9 @@ import { CardMedia } from "@mui/material";
 import LessonCredit100 from "../../assets/LessonCredit100.jpeg"
 import LessonCredit200 from "../../assets/LessonCredit200.jpg";
 import LessonCredit300 from "../../assets/LessonCredit300.jpeg";
-
+import { useSelector } from "react-redux";
 
 import axios from "axios";
-
 
 const tiers = [
   {
@@ -45,6 +44,9 @@ const tiers = [
 ];
 
 export default function Product() {
+  const {user} = useSelector(store => store.user )
+  const id = user.id
+
    useEffect(() => {
      async function fetchConfig() {
        await fetch("/config").then((r) =>
@@ -67,8 +69,11 @@ export default function Product() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         price: pi,
-        quantity: 1
-      })
+        quantity: 1,
+        metadata: {
+          id: id
+        }
+      }),
     };
     fetch("/create-checkout-session", postRequestObj)
       .then((r) => r.json())
