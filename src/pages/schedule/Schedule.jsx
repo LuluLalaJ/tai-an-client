@@ -19,6 +19,9 @@ import {
 } from "../../redux/lessonSlice";
 
 const Schedule = () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const dispatch = useDispatch();
   const { currentCal, newLesson } = useSelector(
     (store) => store.lesson
@@ -33,15 +36,20 @@ const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState("")
 
   const addLesson = (info) => {
-    console.log(info);
-    const selectedTime = {
-      start: info.startStr,
-      end: info.endStr,
-    };
-    console.log(info);
-    dispatch(openNewLessonFormModal());
-    dispatch(updateNewLessonTime(selectedTime));
-    setSelectedCalendar(info);
+    if (info.start <= tomorrow) {
+       alert("You can only add a new lesson at least one day in advance!");
+       info.view.calendar.unselect()
+    } else {
+      console.log(info);
+      const selectedTime = {
+        start: info.startStr,
+        end: info.endStr,
+      };
+      dispatch(openNewLessonFormModal());
+      dispatch(updateNewLessonTime(selectedTime));
+      setSelectedCalendar(info);
+    }
+
   };
 
   useEffect(() => {
@@ -95,12 +103,28 @@ const Schedule = () => {
 
   // console.log("currentCal", currentCal);
 
+
+  const currentCalGreyedPast = currentCal.map(event => {
+    const eventStartDate = new Date(event.start)
+    if (eventStartDate <= tomorrow) {
+      const newAttr = {
+        editable: false,
+        backgroundColor: "#858585",
+      };
+      return { ...event, ...newAttr };
+    }
+    return event
+  })
+
 return (
   <Box m="20px">
     <LessonModal />
     <FullCalendar
       height="80vh"
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+      // validRange={{
+      //   start:"2023-06-23"
+      // }}
       customButtons={{
         allLessons: {
           text: "All Lessons",
@@ -133,9 +157,10 @@ return (
       eventDrop={(info) => changeStartTime(info)}
       //edit event detail through here
       eventClick={(info) => editLesson(info)}
-      events={currentCal}
+      events={currentCalGreyedPast}
       /* you should also look into eventContent which might be able to change the displayed content
-      or other options to change colors 
+      or other options to change colors
+      https://fullcalendar.io/docs/event-display
       you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
@@ -144,7 +169,11 @@ return (
           */
     />
     {selectedEvent && (
-      <LessonPop selectedEvent={selectedEvent} deleteLesson={deleteLesson} />
+      <LessonPop
+        info={selectedEvent}
+        deleteLesson={deleteLesson}
+        tomorrow={tomorrow}
+      />
     )}
   </Box>
 );

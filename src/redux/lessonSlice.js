@@ -6,7 +6,7 @@ const initialState = {
   newLesson: "",
   allLessons: "",
   myLessons: "",
-  currentCal: "",
+  currentCal: [],
   error: null,
   isLoading: false,
   isNewLessonFormModalOpen: false,
@@ -113,9 +113,6 @@ const lessonSlice = createSlice({
   name: "lesson",
   initialState,
   reducers: {
-    // updateNewLessonValues: (state, action) => {
-    //   state.newLessonValues = action.payload;
-    // },
     openNewLessonFormModal: (state) => {
       state.isNewLessonFormModalOpen = true;
     },
@@ -137,11 +134,8 @@ const lessonSlice = createSlice({
     setLessonPopInfo: (state, action) => {
       state.lessonPopInfo = action.payload
     }
-
-    // updateCalendarApi: (state, action) => {
-    //   state.calendarApi = action.payload
-    // }
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getAllLessons.pending, (state) => {
@@ -278,6 +272,5 @@ export const {
   openLessonPop,
   closeLessonPop,
   setLessonPopInfo,
-  // updateCalendarApi,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

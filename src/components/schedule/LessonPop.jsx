@@ -25,22 +25,22 @@ const LESSON_LEVEL = {
     5: "Advanced II"
 }
 
-export default function LessonPop({ selectedEvent }) {
+export default function LessonPop({ info, tomorrow }) {
 
   const dispatch = useDispatch();
   const { isLessonPopOpen, lessonPopInfo} = useSelector((store) => store.lesson);
   const { role, user } = useSelector(store => store.user)
 
-  const currentEnrollments = selectedEvent.event.extendedProps.enrollments
+  const currentEnrollments = info.event.extendedProps.enrollments
 
-  const handleDeleteLesson = (selectedEvent) => {
+  const handleDeleteLesson = (info) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the lesson '${selectedEvent.event.title}'`
+        `Are you sure you want to delete the lesson '${info.event.title}'`
       )
     ) {
-      dispatch(deleteLessonRequest(selectedEvent.event.id));
-      selectedEvent.event.remove()
+      dispatch(deleteLessonRequest(info.event.id));
+      info.event.remove()
       dispatch(closeLessonPop());
     }
   };
@@ -58,21 +58,21 @@ export default function LessonPop({ selectedEvent }) {
     return foundEnrollment ? foundEnrollment.id : null;
   };
 
-  if (selectedEvent) {
+  if (info) {
     // MAYBE NEED TO GET THE LESSON TO STORE IT IN THE STATE
-    const lessonId = selectedEvent.event.id
+    const lessonId = info.event.id
     const { is_full, description, level, price, teacher, teacher_id } =
       lessonPopInfo;
-    const editable = role === "teacher" && user.id === teacher_id
 
     const userEnrollmentStatus = checkStudentEnrollment(
       currentEnrollments,
       user.id
     )
 
-    const canCancel =
-      role === "student" && userEnrollmentStatus;
-    const canJoin = role === "student" && !userEnrollmentStatus ;
+    const canCancel = role === "student" && userEnrollmentStatus;
+    const canJoin = role === "student" && !userEnrollmentStatus;
+    const isMyLesson = role === "teacher" && user.id === teacher_id;
+    const notEditable = info.event.start <= tomorrow;
 
     const enrollmentId = getEnrollmentId(currentEnrollments, user.id);
 
@@ -81,7 +81,7 @@ export default function LessonPop({ selectedEvent }) {
         <Popover
           id="lesson"
           open={isLessonPopOpen}
-          anchorEl={selectedEvent.jsEvent.target}
+          anchorEl={info.jsEvent.target}
           onClose={() => dispatch(closeLessonPop())}
           anchorOrigin={{
             vertical: "bottom",
@@ -174,14 +174,14 @@ export default function LessonPop({ selectedEvent }) {
               </Box>
             )}
 
-            {editable && (
+            {isMyLesson && (
               <Box sx={{ mt: 2, mb: 1, px: 4 }}>
                 <Button
                   component={RouterLink}
-                  to={`/editor/${selectedEvent.event.id}`}
+                  to={`/editor/${info.event.id}`}
                   variant="contained"
                   fullWidth
-                  disabled={!editable}
+                  disabled={notEditable}
                   // onClick={null}
                 >
                   Edit
@@ -189,8 +189,8 @@ export default function LessonPop({ selectedEvent }) {
                 <Button
                   variant="contained"
                   fullWidth
-                  disabled={!editable}
-                  onClick={() => handleDeleteLesson(selectedEvent)}
+                  disabled={notEditable}
+                  onClick={() => handleDeleteLesson(info)}
                 >
                   Delete
                 </Button>
