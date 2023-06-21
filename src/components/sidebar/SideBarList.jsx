@@ -82,14 +82,6 @@ return (
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton component={RouterLink} to={"/membership"}>
-              <ListItemIcon>
-                <PaidIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add Membership" />
-            </ListItemButton>
-          </ListItem>
         </>
       )}
     </List>

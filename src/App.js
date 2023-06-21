@@ -22,7 +22,6 @@ import {
   LessonEditor,
   Product,
   Completion,
-  Membership,
   Canceled
 } from "./pages";
 
@@ -69,9 +68,7 @@ const App = () => {
 
           {isSignedIn && role === "student" && (
             <>
-              <Route path="/membership" element={<Membership />} />
               <Route path="/product" element={<Product />} />
-
               <Route path="/completion" element={<Completion />} />
               <Route path="/canceled" element={<Canceled />} />
             </>

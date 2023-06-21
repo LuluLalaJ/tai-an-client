@@ -14,7 +14,6 @@ import Teachers from "./teachers/Teachers";
 import LessonEditor from "./lessonEditor/LessonEditor"
 import Product from "./checkout/Product";
 import Completion from "./checkout/Completion";
-import Membership from "./checkout/Membership";
 import Canceled from "./checkout/Canceled";
 
 export {
@@ -34,6 +33,5 @@ export {
   LessonEditor,
   Product,
   Completion,
-  Membership,
   Canceled,
 };
