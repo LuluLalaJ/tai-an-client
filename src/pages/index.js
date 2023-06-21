@@ -16,6 +16,7 @@ import LessonEditor from "./lessonEditor/LessonEditor"
 import Product from "./checkout/Product";
 import Payment from "./checkout/Payment";
 import Completion from "./checkout/Completion";
+import Membership from "./checkout/Membership";
 
 export {
   About,
@@ -36,4 +37,5 @@ export {
   Product,
   Payment,
   Completion,
+  Membership,
 };

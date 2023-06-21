@@ -24,6 +24,7 @@ import {
   Product,
   Payment,
   Completion,
+  Membership,
 } from "./pages";
 
 
@@ -69,16 +70,11 @@ const App = () => {
 
           {isSignedIn && role === "student" && (
             <>
+              <Route path="/membership" element={<Membership />} />
               <Route path="/product" element={<Product />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route
-                path="/payment"
-                element={<Payment />}
-              />
-              <Route
-                path="/completion"
-                element={<Completion />}
-              />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/completion" element={<Completion />} />
             </>
           )}
 

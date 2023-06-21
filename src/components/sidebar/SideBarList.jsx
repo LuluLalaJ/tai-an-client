@@ -72,14 +72,25 @@ return (
       )}
 
       {role === "student" && (
-        <ListItem disablePadding>
-          <ListItemButton component={RouterLink} to={"/checkout"}>
-            <ListItemIcon>
-              <PaidIcon />
-            </ListItemIcon>
-            <ListItemText primary="Buy Credits" />
-          </ListItemButton>
-        </ListItem>
+        <>
+          <ListItem disablePadding>
+            <ListItemButton component={RouterLink} to={"/checkout"}>
+              <ListItemIcon>
+                <PaidIcon />
+              </ListItemIcon>
+              <ListItemText primary="Buy Credits" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton component={RouterLink} to={"/membership"}>
+              <ListItemIcon>
+                <PaidIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add Membership" />
+            </ListItemButton>
+          </ListItem>
+        </>
       )}
     </List>
   </Box>
