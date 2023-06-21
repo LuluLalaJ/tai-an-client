@@ -1,28 +1,22 @@
 import React, { useEffect } from 'react';
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { TeacherCard } from '../../components'
-
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachers } from '../../redux/teachersSlice';
 
 
 const Teachers = () => {
-  const { teachers, isLoading } = useSelector( store => store.teachers)
+  const { teachers } = useSelector( store => store.teachers)
   const dispatch = useDispatch();
 
   useEffect(()=>{
     dispatch(getTeachers())
   }, [])
 
-  console.log(teachers)
+  // console.log(teachers)
 
   return (
     <main>

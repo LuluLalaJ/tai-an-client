@@ -14,13 +14,13 @@ import {
   openNewLessonFormModal,
   updateNewLessonTime,
   setLessonPopInfo,
-  openLessonPop
+  openLessonPop,
+  editLessonRequest
 } from "../../redux/lessonSlice";
-import { render } from "@fullcalendar/core/preact";
 
 const Schedule = () => {
   const dispatch = useDispatch();
-  const { allLessons, myLessons, currentCal, newLesson} = useSelector(
+  const { currentCal, newLesson } = useSelector(
     (store) => store.lesson
   );
   const { user, role } = useSelector((store) => store.user);
@@ -32,15 +32,16 @@ const Schedule = () => {
   const [selectedCalendar, setSelectedCalendar] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("")
 
-  const addLesson = (selected) => {
+  const addLesson = (info) => {
+    console.log(info);
     const selectedTime = {
-      start: selected.startStr,
-      end: selected.endStr,
+      start: info.startStr,
+      end: info.endStr,
     };
-    console.log(selectedTime);
+    console.log(info);
     dispatch(openNewLessonFormModal());
     dispatch(updateNewLessonTime(selectedTime));
-    setSelectedCalendar(selected);
+    setSelectedCalendar(info);
   };
 
   useEffect(() => {
@@ -51,8 +52,8 @@ const Schedule = () => {
     };
   }, [newLesson]);
 
-  const handleEventClick = (info) => {
-    setSelectedEvent(info)
+  const editLesson = (info) => {
+    setSelectedEvent(info);
     dispatch(openLessonPop());
     dispatch(setLessonPopInfo(info.event.extendedProps));
     console.log(info.event.id);
@@ -62,19 +63,38 @@ const Schedule = () => {
     info.event.remove()
   }
 
-  const edit = (info) => {
+  const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
-      alert(info.event.title + " end is now " + info.event.end.toISOString());
-        if (!window.confirm("is this okay?")) {
-          info.revert();
-        }
+      const message = `Do you want to end ${info.event.title} at the new time: ${info.event.end}?`
+      if (!window.confirm(message)) {
+        info.revert();
+      } else {
+        // console.log(info.event.end);
+        //format: Sun Jul 02 2023 11:00:00 GMT-0400 (Eastern Daylight Time)
+        dispatch(editLessonRequest(info.event));
+      }
     } else {
       alert('You can only edit your own lesson!')
       info.revert();
     }
   };
 
-  console.log("currentCal", currentCal);
+  const changeStartTime = (info) => {
+    if (user.id === info.event.extendedProps["teacher_id"]) {
+      const message = `Do you want to start ${info.event.title} at the new time: ${info.event.start}?`;
+      if (!window.confirm(message)) {
+        info.revert();
+      } else {
+        dispatch(editLessonRequest(info.event));
+      }
+    } else {
+      alert("You can only edit your own lesson!");
+      info.revert();
+    }
+  };
+
+  // console.log("currentCal", currentCal);
+
 return (
   <Box m="20px">
     <LessonModal />
@@ -108,18 +128,19 @@ return (
       selectMirror={role === "teacher"}
       dayMaxEvents={true}
       //add event through here
-      select={addLesson}
-      eventResize={(info) => edit(info)}
-      //edit event time through here
-      eventDragStart={(info) => console.log("drag", info)}
+      select={(info) => addLesson(info)}
+      eventResize={(info) => changeEndTime(info)}
+      eventDrop={(info) => changeStartTime(info)}
       //edit event detail through here
-      eventClick={(info) => handleEventClick(info)}
-      // But not rendered the first time
+      eventClick={(info) => editLesson(info)}
       events={currentCal}
-      /* you can update a remote database when these fire:
+      /* you should also look into eventContent which might be able to change the displayed content
+      or other options to change colors 
+      you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
             eventRemove={function(){}}
+
           */
     />
     {selectedEvent && (
