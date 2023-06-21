@@ -84,6 +84,10 @@ export const editEnrollmentStatusSuccess = createAction(
   "lesson/editEnrollmentStatusSuccess"
 );
 
+export const addEnrollmentStatusSuccess = createAction(
+  "lesson/addEnrollmentStatusSuccess"
+);
+
 export const getLessonById = createAsyncThunk(
   "lesson/getLessonById",
   async (lessonId, thunkAPI) => {
@@ -131,9 +135,6 @@ const lessonSlice = createSlice({
     closeLessonPop: (state) => {
       state.isLessonPopOpen = false;
     },
-    // setLessonPopInfo: (state, action) => {
-    //   state.lessonPopInfo = action.payload
-    // }
   },
 
   extraReducers: (builder) => {
@@ -144,7 +145,7 @@ const lessonSlice = createSlice({
       })
       .addCase(getAllLessons.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.allLessons = action.payload;;
+        state.allLessons = action.payload;
         state.currentCal = action.payload;
         state.error = null;
       })
@@ -224,15 +225,22 @@ const lessonSlice = createSlice({
         const [lessonId, enrollmentId, data] = action.payload;
         const lesson = state.myLessons.find((lesson) => lesson.id === lessonId);
         if (lesson) {
-          lesson.enrollments = lesson.enrollments.map( enrollment => {
+          lesson.enrollments = lesson.enrollments.map((enrollment) => {
             if (enrollment.id === enrollmentId) {
-            return {
-              ...enrollment,
-              ...(data || {}),
-            };
-          }
-          return enrollment;
-        })
+              return {
+                ...enrollment,
+                ...(data || {}),
+              };
+            }
+            return enrollment;
+          });
+        }
+      })
+      .addCase(addEnrollmentStatusSuccess, (state, action) => {
+        const [lessonId, newEnrollment] = action.payload;
+        const lesson = state.currentCal.find(lesson => lesson.id === lessonId)
+        if (lesson) {
+          lesson.enrollments = [...lesson.enrollments, newEnrollment]
         }
       })
       .addCase(getLessonById.pending, (state) => {

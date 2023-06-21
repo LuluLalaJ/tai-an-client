@@ -12,7 +12,7 @@ import {
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
@@ -30,12 +30,12 @@ export default function LessonPop({ info }) {
     info.event.extendedProps;
 
   const enrollmentId = getEnrollmentId(enrollments, user.id);
-  const userEnrollmentStatus = checkStudentEnrollment(enrollments, user.id);
+  const userIsEnrolled = checkStudentEnrollment(enrollments, user.id);
 
-  const canCancel = role === "student" && userEnrollmentStatus;
-  const canJoin = role === "student" && !userEnrollmentStatus;
+  const isFutureEvent = info.event.start > TOMORROW;
+  const canCancelEnrollment = role === "student" && userIsEnrolled && isFutureEvent;
+  const canJoin = role === "student" && !userIsEnrolled && isFutureEvent;
   const isMyLesson = role === "teacher" && user.id === teacher_id;
-  const notEditable = info.event.start <= TOMORROW;
 
   const handleDeleteLesson = (info) => {
     if (
@@ -96,7 +96,7 @@ export default function LessonPop({ info }) {
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                <BeachAccessIcon />
+                <StarBorderIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText
@@ -112,15 +112,15 @@ export default function LessonPop({ info }) {
             <Typography>{description}</Typography>
           </ListItem>
 
-          {canCancel && (
+          {canCancelEnrollment && (
             <Box sx={{ mt: 2, mb: 1, px: 4 }}>
               <Button variant="text" fullWidth disabled={true}>
-                {userEnrollmentStatus}
+                {userIsEnrolled}
               </Button>
             </Box>
           )}
 
-          {canCancel && (
+          {canCancelEnrollment && (
             <Box sx={{ mt: 2, mb: 1, px: 4 }}>
               <Button
                 variant="contained"
@@ -140,6 +140,10 @@ export default function LessonPop({ info }) {
                 variant="contained"
                 fullWidth
                 // NEED TO HANDLE INSUFFICIENT FUND ERROR
+                // right now, if there's not sufficient fund
+                // the rejection is not clear
+                // prevent from submitting at the first place if possible
+                
                 onClick={() => dispatch(addEnrollment(lessonId))}
               >
                 {is_full ? "Join Waitlist" : "Register"}
@@ -154,7 +158,7 @@ export default function LessonPop({ info }) {
                 to={`/editor/${info.event.id}`}
                 variant="contained"
                 fullWidth
-                disabled={notEditable}
+                disabled={!isFutureEvent}
                 // onClick={null}
               >
                 Edit
@@ -162,7 +166,7 @@ export default function LessonPop({ info }) {
               <Button
                 variant="contained"
                 fullWidth
-                disabled={notEditable}
+                disabled={!isFutureEvent}
                 onClick={() => handleDeleteLesson(info)}
               >
                 Delete

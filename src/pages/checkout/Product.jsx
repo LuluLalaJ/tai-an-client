@@ -24,7 +24,7 @@ const tiers = [
     price: "100",
     buttonVariant: "outlined",
     image: `${LessonCredit100}`,
-    pi: "price_1NLQNbFn2n3otckJ2XBj0Hzy",
+    pi: "price_1NLZSEFn2n3otckJWCRG9mIQ",
   },
   {
     title: "Explore",
@@ -32,14 +32,14 @@ const tiers = [
     price: "200",
     buttonVariant: "contained",
     image: `${LessonCredit200}`,
-    pi: "price_1NLQNMFn2n3otckJVey4UEcX",
+    pi: "price_1NLZTRFn2n3otckJk0ANGJms",
   },
   {
     title: "Master",
     price: "300",
     buttonVariant: "outlined",
     image: `${LessonCredit300}`,
-    pi: "price_1NLQN6Fn2n3otckJUiaIh59j",
+    pi: "price_1NLZTzFn2n3otckJbfNPTVAt",
   },
 ];
 
