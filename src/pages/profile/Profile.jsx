@@ -8,12 +8,13 @@ import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
 import axios from "axios";
-import {PaymentHistoryCard} from "../../components"
+import { PaymentHistoryCard, LessonCreditHistory } from "../../components";
 
 export default function Profile() {
 
   const { user, role } = useSelector(store => store.user )
   const [payments, setPayments] = useState([])
+  const [records, setRecords] = useState([])
 
   useEffect(()=>{
     if (role === "student") {
@@ -24,6 +25,18 @@ export default function Profile() {
       })
     }
   }, [])
+
+  useEffect(() => {
+    if (role === "student") {
+      axios
+        .get(`/students/${user.id}/lessoncredithistory`)
+        .then((r) => setRecords(r.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
 
   const renderPayments = payments.map(payment => {
                <PaymentHistoryCard payment={payment}/>;
@@ -45,6 +58,27 @@ export default function Profile() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>$ {user.lesson_credit}</Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Lesson Credits History</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack spacing={1}>
+                {records.length === 0 ? (
+                  <Typography>There are no records!</Typography>
+                ) : (
+                  records.map((record) => (
+                    <LessonCreditHistory record={record} key={record.id} />
+                  ))
+                )}
+              </Stack>
             </AccordionDetails>
           </Accordion>
 

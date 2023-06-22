@@ -10,6 +10,7 @@ import StudentProfileEditor from "./profile/StudentProfileEditor";
 import PaymentHistoryCard from "./profile/PaymentHistoryCard";
 import LessonCard from "./lessonCard/LessonCard";
 import StudentCard from "./studentCard/StudentCard";
+import LessonCreditHistory from "./profile/LessonCreditHistory";
 
 export {
   Footer,
@@ -24,4 +25,5 @@ export {
   LessonCard,
   StudentCard,
   PaymentHistoryCard,
+  LessonCreditHistory,
 };
