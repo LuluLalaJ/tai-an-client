@@ -7,7 +7,7 @@ import LessonModal from "./schedule/LessonModal";
 import LessonPop from './schedule/LessonPop';
 import TeacherProfileEditor from "./profile/TeacherProfileEditor";
 import StudentProfileEditor from "./profile/StudentProfileEditor";
-import PurchaseHistoryCard from "./profile/PurchaseHistoryCard";
+import PaymentHistoryCard from "./profile/PaymentHistoryCard";
 import LessonCard from "./lessonCard/LessonCard";
 import StudentCard from "./studentCard/StudentCard";
 
@@ -23,5 +23,5 @@ export {
   TeacherProfileEditor,
   LessonCard,
   StudentCard,
-  PurchaseHistoryCard,
+  PaymentHistoryCard,
 };

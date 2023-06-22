@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+import { Stack, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
 import axios from "axios";
-import PurchaseHistoryCard from "../../components";
+import {PaymentHistoryCard} from "../../components"
 
 export default function Profile() {
 
@@ -25,6 +25,9 @@ export default function Profile() {
     }
   }, [])
 
+  const renderPayments = payments.map(payment => {
+               <PaymentHistoryCard payment={payment}/>;
+              })
 
   return (
     <Container sx={{ mt: 5 }}>
@@ -41,9 +44,7 @@ export default function Profile() {
               <Typography>Remaining Credit</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                $ {user.lesson_credit}
-              </Typography>
+              <Typography>$ {user.lesson_credit}</Typography>
             </AccordionDetails>
           </Accordion>
 
@@ -56,14 +57,15 @@ export default function Profile() {
               <Typography>Purchase History</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {payments.length === 0
-              ? <Typography>
-                You have not purchased any lesson credits!
-              </Typography>
-              : payments.map(payment => {
-                <PurchaseHistoryCard />
-              })}
-
+              <Stack spacing={1}>
+                {payments.length === 0 ? (
+                  <Typography>You didn't purchase any credits yet!</Typography>
+                ) : (
+                  payments.map((payment) => (
+                    <PaymentHistoryCard payment={payment} key={payment.id} />
+                  ))
+                )}
+              </Stack>
             </AccordionDetails>
           </Accordion>
         </>
