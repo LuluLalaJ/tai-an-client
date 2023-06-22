@@ -67,7 +67,7 @@ const Schedule = () => {
   };
 
 
-  //NOT WORKING PROPERLY! WHY?? 
+  //NOT WORKING PROPERLY! WHY??
   const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
       const message = `Do you want to end ${info.event.title} at the new time: ${info.event.end}?`
@@ -78,7 +78,7 @@ const Schedule = () => {
         //format: Sun Jul 02 2023 11:00:00 GMT-0400 (Eastern Daylight Time)
         const lessonId = parseInt(info.event.id);
         // setTimeout(function () {
-        //   dispatch(editLessonRequest([lessonId, info.event]));
+          dispatch(editLessonRequest([lessonId, info.event]));
         // }, 0);
       }
     } else {
@@ -95,11 +95,11 @@ const Schedule = () => {
       if (!window.confirm(message)) {
         info.revert();
       } else {
-        // console.log("start", info.event.start);
-        // console.log(info.event)
+        // console.log("start", info.event.start.toISOString());
+        // console.log(typeof(info.event.start))
         const lessonId = parseInt(info.event.id);
         // setTimeout(function () {
-        //    dispatch(editLessonRequest([lessonId, info.event]));
+           dispatch(editLessonRequest([lessonId, { start: info.event.start }]));
         // }, 0);
       }
     } else {
@@ -126,6 +126,7 @@ return (
   <Box m="20px">
     <LessonModal />
     <FullCalendar
+      timeZone={"UTC"}
       height="80vh"
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
       customButtons={{

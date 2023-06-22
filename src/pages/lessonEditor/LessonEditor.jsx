@@ -59,9 +59,9 @@ const LessonEditor = () => {
 
     const handleFormSubmit = (values) => {
       // SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
-      // There must be a better way 
-      values.start = convertToEDTISOString( values.start.toISOString() )
-      values.end = convertToEDTISOString( values.end.toISOString() )
+      // There must be a better way
+      values.start = values.start
+      values.end = values.end
       console.log("submit", values.start);
       console.log("submit", values.end);
       dispatch(editLessonRequest([id, values]));
