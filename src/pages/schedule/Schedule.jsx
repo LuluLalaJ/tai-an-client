@@ -67,21 +67,26 @@ const Schedule = () => {
   };
 
 
+  //NOT WORKING PROPERLY! WHY?? 
   const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
       const message = `Do you want to end ${info.event.title} at the new time: ${info.event.end}?`
       if (!window.confirm(message)) {
         info.revert();
       } else {
-        // console.log(info.event.end);
+        // console.log("end", info.event.end);
         //format: Sun Jul 02 2023 11:00:00 GMT-0400 (Eastern Daylight Time)
-        dispatch(editLessonRequest(info.event));
+        const lessonId = parseInt(info.event.id);
+        // setTimeout(function () {
+        //   dispatch(editLessonRequest([lessonId, info.event]));
+        // }, 0);
       }
     } else {
       alert('You can only edit your own lesson!')
       info.revert();
     }
   };
+
 
   const changeStartTime = (info) => {
     // NOTE: fullcalendar's dates is just native JavaScript Date objects
@@ -90,7 +95,12 @@ const Schedule = () => {
       if (!window.confirm(message)) {
         info.revert();
       } else {
-        dispatch(editLessonRequest(info.event));
+        // console.log("start", info.event.start);
+        // console.log(info.event)
+        const lessonId = parseInt(info.event.id);
+        // setTimeout(function () {
+        //    dispatch(editLessonRequest([lessonId, info.event]));
+        // }, 0);
       }
     } else {
       alert("You can only edit your own lesson!");
@@ -156,16 +166,15 @@ return (
       https://fullcalendar.io/docs/event-display
       you can update a remote database when these fire:
             eventAdd={function(){}}
-            eventChange={function(){}}
             eventRemove={function(){}}
-
+            eventChange={(info)=>{
+      //   const lessonId = parseInt(info.event.id);
+      //   dispatch(editLessonRequest([lessonId, info.event]))
+      // }}
           */
+      //
     />
-    {selectedEvent && (
-      <LessonPop
-        info={selectedEvent}
-      />
-    )}
+    {selectedEvent && <LessonPop info={selectedEvent} />}
   </Box>
 );
 };

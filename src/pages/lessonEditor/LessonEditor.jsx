@@ -14,6 +14,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import { editLessonRequest } from "../../redux/lessonSlice";
+import { convertToEDTISOString } from "../../utilities"
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
@@ -28,7 +29,7 @@ const LessonEditor = () => {
     dispatch(getLessonById(lessonId));
   }, [])
 
-    console.log("init", lessonToEdit);
+    // console.log("init", lessonToEdit);
 
  const {id, title, description, capacity, level, price, start, end} = lessonToEdit
  const initialValues = {
@@ -58,12 +59,12 @@ const LessonEditor = () => {
 
     const handleFormSubmit = (values) => {
       // SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
-      // values.start = values.start
-      // values.end = values.end;
-      console.log("submit", values);
-
-      dispatch(editLessonRequest(values));
-
+      // There must be a better way 
+      values.start = convertToEDTISOString( values.start.toISOString() )
+      values.end = convertToEDTISOString( values.end.toISOString() )
+      console.log("submit", values.start);
+      console.log("submit", values.end);
+      dispatch(editLessonRequest([id, values]));
     };
 
   if (lessonToEdit) {

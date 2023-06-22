@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import thunk from "redux-thunk";
 
 const initialState = {
   newLessonTime: { start: "", end: "" },
@@ -13,6 +14,7 @@ const initialState = {
   isLessonPopOpen: false,
   lessonToEdit: "",
   afterEdit:"",
+  testing:""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -99,12 +101,14 @@ export const getLessonById = createAsyncThunk(
   }
 );
 
+export const editLessonSuccess = createAction("lesson/editLessonSuccess");
+
 export const editLessonRequest = createAsyncThunk(
   "lesson/editLessonRequest",
-  async (lessonInfo, thunkAPI) => {
-    const lessonId = lessonInfo.id;
+  async ([lessonId, lessonInfo], thunkAPI) => {
     try {
       const resp = await axios.patch(`/lessons/${lessonId}`, lessonInfo);
+      // thunkAPI.dispatch(editLessonSuccess([lessonId, lessonInfo]));
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -216,13 +220,17 @@ const lessonSlice = createSlice({
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
         const [lessonId, enrollmentId] = action.payload;
-        const lesson1 = state.myLessons.find((lesson) => lesson.id === lessonId);
+        const lesson1 = state.myLessons.find(
+          (lesson) => lesson.id === lessonId
+        );
         if (lesson1) {
           lesson1.enrollments = lesson1.enrollments.filter(
             (enrollment) => enrollment.id !== enrollmentId
           );
         }
-        const lesson2 = state.currentCal.find((lesson) => lesson.id === lessonId);
+        const lesson2 = state.currentCal.find(
+          (lesson) => lesson.id === lessonId
+        );
         if (lesson2) {
           lesson2.enrollments = lesson2.enrollments.filter(
             (enrollment) => enrollment.id !== enrollmentId
@@ -245,11 +253,13 @@ const lessonSlice = createSlice({
         }
       })
       .addCase(addEnrollmentStatusSuccess, (state, action) => {
-       const [lessonId, newEnrollment] = action.payload;
-       const lesson = state.currentCal.find((lesson) => lesson.id === lessonId);
-       if (lesson) {
-        lesson.enrollments = [...lesson.enrollments, newEnrollment]
-       }
+        const [lessonId, newEnrollment] = action.payload;
+        const lesson = state.currentCal.find(
+          (lesson) => lesson.id === lessonId
+        );
+        if (lesson) {
+          lesson.enrollments = [...lesson.enrollments, newEnrollment];
+        }
       })
       .addCase(getLessonById.pending, (state) => {
         state.isLoading = true;
@@ -276,7 +286,17 @@ const lessonSlice = createSlice({
       .addCase(editLessonRequest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
+      // .addCase(editLessonSuccess, (state, action) => {
+      //   const [lessonId, lessonInfo] = action.payload;
+      //   const lesson = state.currentCal.find(
+      //     (lesson) => lesson.id === lessonId
+      //   );
+      //   state.testing = lessonInfo;
+      //   // if (lesson) {
+      //   //   lesson = {...lesson, lessonInfo};
+      //   // }
+      // });
   },
 });
 
