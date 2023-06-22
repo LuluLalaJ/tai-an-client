@@ -11,10 +11,8 @@ const initialState = {
   isLoading: false,
   isNewLessonFormModalOpen: false,
   isLessonPopOpen: false,
-  // lessonPopInfo: "",
   lessonToEdit: "",
   afterEdit:"",
-  testing:""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -249,7 +247,6 @@ const lessonSlice = createSlice({
       .addCase(addEnrollmentStatusSuccess, (state, action) => {
        const [lessonId, newEnrollment] = action.payload;
        const lesson = state.currentCal.find((lesson) => lesson.id === lessonId);
-       state.testing = lesson
        if (lesson) {
         lesson.enrollments = [...lesson.enrollments, newEnrollment]
        }

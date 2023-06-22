@@ -17,8 +17,6 @@ const initialState = {
   newEnrollment: null,
   isLoading: false,
   error: null,
-  testing1: "",
-  testing2: "",
 };
 
 export const cancelEnrollment = createAsyncThunk(

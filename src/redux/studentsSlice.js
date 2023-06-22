@@ -5,7 +5,6 @@ const initialState = {
   students: [],
   isLoading: true,
   error: null,
-  testing: ""
 };
 
 export const getStudents = createAsyncThunk(
@@ -68,7 +67,6 @@ const studentsSlice = createSlice({
       })
       .addCase(cancelStudentEnrollmentSuccess, (state, action) => {
         const enrollmentId = action.payload;
-        state.testing = action.payload
         state.students = state.students.map((student) => {
           if (
             student.enrollments.some(
