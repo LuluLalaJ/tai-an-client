@@ -21,30 +21,39 @@ import { TOMORROW, LESSON_LEVEL } from "../../constants";
 import { getEnrollmentId, checkStudentEnrollment } from "../../utilities";
 
 export default function LessonPop({ info }) {
-  console.log(info)
+  // console.log(info)
   const dispatch = useDispatch();
   const { isLessonPopOpen } = useSelector((store) => store.lesson);
   const { role, user } = useSelector((store) => store.user);
   //this lessonId is a string
   const lessonId = parseInt(info.event.id);
-  const { is_full, description, level, price, teacher, teacher_id, enrollments} =
-    info.event.extendedProps;
+  const {
+    is_full,
+    description,
+    level,
+    price,
+    teacher,
+    teacher_id,
+    enrollments,
+  } = info.event.extendedProps;
 
   const enrollmentId = getEnrollmentId(enrollments, user.id);
   const userIsEnrolled = checkStudentEnrollment(enrollments, user.id);
 
   const isFutureEvent = info.event.start > TOMORROW;
-  const canCancelEnrollment = role === "student" && userIsEnrolled && isFutureEvent;
+  const canCancelEnrollment =
+    role === "student" && userIsEnrolled && isFutureEvent;
   const canJoin = role === "student" && !userIsEnrolled && isFutureEvent;
   const isMyLesson = role === "teacher" && user.id === teacher_id;
 
-  const handleDeleteLesson = (info) => {
+  const handleDeleteLesson = () => {
     if (
       window.confirm(
         `Are you sure you want to delete the lesson '${info.event.title}'`
       )
     ) {
-      dispatch(deleteLessonRequest(info.event.id));
+      // dispatch(deleteLessonRequest(info.event.id));
+      console.log(info.event)
       info.event.remove();
       dispatch(closeLessonPop());
     }
@@ -126,12 +135,10 @@ export default function LessonPop({ info }) {
               <Button
                 variant="contained"
                 fullWidth
-                onClick={() =>
-                  {
-                    dispatch(cancelEnrollment([lessonId, enrollmentId]))
-                    dispatch(dispatch(closeLessonPop()))
-                  }
-                }
+                onClick={() => {
+                  dispatch(cancelEnrollment([lessonId, enrollmentId]));
+                  dispatch(dispatch(closeLessonPop()));
+                }}
               >
                 Cancel
               </Button>
@@ -150,7 +157,7 @@ export default function LessonPop({ info }) {
 
                 onClick={() => {
                   dispatch(addEnrollment(lessonId));
-                  dispatch(closeLessonPop())
+                  dispatch(closeLessonPop());
                 }}
               >
                 {is_full ? "Join Waitlist" : "Register"}

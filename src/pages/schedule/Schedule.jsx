@@ -59,8 +59,11 @@ const Schedule = () => {
   }, [newLesson]);
 
   const editLesson = (info) => {
+    // console.log(info)
     setSelectedEvent(info);
     dispatch(openLessonPop());
+
+
   };
 
   const deleteLesson = (info) => {
@@ -118,9 +121,6 @@ return (
     <FullCalendar
       height="80vh"
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-      // validRange={{
-      //   start:"2023-06-23"
-      // }}
       customButtons={{
         allLessons: {
           text: "All Lessons",
