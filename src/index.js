@@ -7,8 +7,9 @@ import { store } from './store'
 import { Provider } from 'react-redux';
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { createTheme, ThemeProvider } from '@mui/material';
-
+// import dayjs from 'dayjs';
+// var utc = require("dayjs/plugin/utc");
+// dayjs.extend(utc);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -15,8 +15,12 @@ import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import { editLessonRequest } from "../../redux/lessonSlice";
 import { convertToEDTISOString } from "../../utilities"
-var utc = require("dayjs/plugin/utc");
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("UTC");
 
 const LessonEditor = () => {
   const dispatch = useDispatch()
@@ -110,13 +114,14 @@ return (
             />
 
             <DateTimePicker
+              timezone="UTC"
               fullWidth
               variant="filled"
               type="text"
               label="Start Time"
               onBlur={handleBlur}
               onChange={(date) => setFieldValue("start", date)}
-              value={dayjs(values.start)}
+              value={dayjs.utc(values.start)}
               name="start"
               error={!!touched.start && !!errors.start}
               sx={{ gridColumn: "span 2" }}
@@ -124,13 +129,14 @@ return (
               minutesStep={30}
             />
             <DateTimePicker
+              timezone="UTC"
               fullWidth
               variant="filled"
               type="text"
               label="End Time"
               onBlur={handleBlur}
               onChange={(date) => setFieldValue("end", date)}
-              value={dayjs(values.end)}
+              value={dayjs.utc(values.end)}
               name="end"
               error={!!touched.end && !!errors.end}
               sx={{ gridColumn: "span 2" }}

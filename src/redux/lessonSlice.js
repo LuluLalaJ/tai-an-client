@@ -14,7 +14,8 @@ const initialState = {
   isLessonPopOpen: false,
   lessonToEdit: "",
   afterEdit:"",
-  testing:""
+  testing:"",
+  testing2: ""
 };
 
 export const getAllLessons = createAsyncThunk(
@@ -108,7 +109,7 @@ export const editLessonRequest = createAsyncThunk(
   async ([lessonId, lessonInfo], thunkAPI) => {
     try {
       const resp = await axios.patch(`/lessons/${lessonId}`, lessonInfo);
-      // thunkAPI.dispatch(editLessonSuccess([lessonId, lessonInfo]));
+      thunkAPI.dispatch(editLessonSuccess([lessonId, lessonInfo]));
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -287,16 +288,16 @@ const lessonSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      // .addCase(editLessonSuccess, (state, action) => {
-      //   const [lessonId, lessonInfo] = action.payload;
-      //   const lesson = state.currentCal.find(
-      //     (lesson) => lesson.id === lessonId
-      //   );
-      //   state.testing = lessonInfo;
-      //   // if (lesson) {
-      //   //   lesson = {...lesson, lessonInfo};
-      //   // }
-      // });
+      .addCase(editLessonSuccess, (state, action) => {
+        const [lessonId, lessonInfo] = action.payload;
+        const updatedCurrentCal = state.currentCal.map((lesson) => {
+          if (lesson.id === lessonId) {
+            return { ...lesson, ...lessonInfo };
+          }
+          return lesson;
+        });
+        state.currentCal = updatedCurrentCal
+      });
   },
 });
 
