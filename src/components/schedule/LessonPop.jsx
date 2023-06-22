@@ -46,15 +46,13 @@ export default function LessonPop({ info }) {
   const canJoin = role === "student" && !userIsEnrolled && isFutureEvent;
   const isMyLesson = role === "teacher" && user.id === teacher_id;
 
-  const handleDeleteLesson = () => {
+  const handleDeleteLesson = ({}) => {
     if (
       window.confirm(
         `Are you sure you want to delete the lesson '${info.event.title}'`
       )
     ) {
-      // dispatch(deleteLessonRequest(info.event.id));
-      console.log(info.event)
-      info.event.remove();
+      dispatch(deleteLessonRequest(lessonId));
       dispatch(closeLessonPop());
     }
   };

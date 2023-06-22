@@ -35,7 +35,6 @@ export default function Signin() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      console.log(values)
       dispatch(signInUser(values));
     },
   });

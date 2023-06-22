@@ -212,6 +212,9 @@ const lessonSlice = createSlice({
         state.myLessons = state.myLessons.filter(
           (lesson) => lesson.id !== deletedLessonId
         );
+        state.currentCal = state.currentCal.filter(
+          (lesson) => lesson.id !== deletedLessonId
+        );
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
         const [lessonId, enrollmentId] = action.payload;

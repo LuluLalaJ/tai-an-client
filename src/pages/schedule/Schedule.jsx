@@ -66,9 +66,6 @@ const Schedule = () => {
 
   };
 
-  const deleteLesson = (info) => {
-    info.event.remove()
-  }
 
   const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
@@ -167,7 +164,6 @@ return (
     {selectedEvent && (
       <LessonPop
         info={selectedEvent}
-        deleteLesson={deleteLesson}
       />
     )}
   </Box>
