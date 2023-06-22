@@ -4,7 +4,8 @@ import axios from "axios";
 const initialState = {
   students: [],
   isLoading: true,
-  error: null
+  error: null,
+  testing: ""
 };
 
 export const getStudents = createAsyncThunk(
@@ -66,7 +67,8 @@ const studentsSlice = createSlice({
         });
       })
       .addCase(cancelStudentEnrollmentSuccess, (state, action) => {
-        const [enrollmentId, data] = action.payload;
+        const enrollmentId = action.payload;
+        state.testing = action.payload
         state.students = state.students.map((student) => {
           if (
             student.enrollments.some(

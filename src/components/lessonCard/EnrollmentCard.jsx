@@ -16,8 +16,8 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { green } from '@mui/material/colors';
 
 
-export const EnrollmentCard = ({enrollment, canEdit}) => {
-    console.log(enrollment)
+export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
+    // console.log(enrollment)
     const dispatch = useDispatch()
     const {student:{first_name, last_name, avatar, id: student_id}, comment, status, id, lesson_id} = enrollment
     const {user, role} = useSelector(store => store.user)
@@ -68,6 +68,7 @@ export const EnrollmentCard = ({enrollment, canEdit}) => {
             {status === "waitlisted" && (
               <IconButton
                 aria-label="register"
+                disabled={!isFutureEvent}
                 onClick={() =>
                   dispatch(
                     changeEnrollmentStatus([
@@ -84,6 +85,7 @@ export const EnrollmentCard = ({enrollment, canEdit}) => {
             {status === "registered" && (
               <IconButton
                 aria-label="waitlist"
+                disabled={!isFutureEvent}
                 onClick={() =>
                   dispatch(
                     changeEnrollmentStatus([
@@ -97,14 +99,22 @@ export const EnrollmentCard = ({enrollment, canEdit}) => {
                 <PersonRemoveIcon />
               </IconButton>
             )}
-            <IconButton aria-label="delete" onClick={handleDeleteEnrollment}>
+            <IconButton
+              aria-label="delete"
+              disabled={!isFutureEvent}
+              onClick={handleDeleteEnrollment}
+            >
               <DeleteForeverIcon />
             </IconButton>
           </>
         )}
 
         {isStudentUser && (
-          <IconButton aria-label="delete" onClick={handleDeleteEnrollmentStudent}>
+          <IconButton
+            aria-label="delete"
+            disabled={!isFutureEvent}
+            onClick={handleDeleteEnrollmentStudent}
+          >
             <DeleteForeverIcon />
           </IconButton>
         )}

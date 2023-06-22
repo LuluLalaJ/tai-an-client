@@ -17,6 +17,8 @@ const initialState = {
   newEnrollment: null,
   isLoading: false,
   error: null,
+  testing1: "",
+  testing2: "",
 };
 
 export const cancelEnrollment = createAsyncThunk(
@@ -27,8 +29,7 @@ export const cancelEnrollment = createAsyncThunk(
         `/lessons/${lessonId}/enrollments/${enrollmentId}`
       );
       thunkAPI.dispatch(cancelEnrollmentSuccess([lessonId, enrollmentId]));
-      thunkAPI.dispatch(cancelStudentEnrollmentSuccess([enrollmentId]));
-
+      thunkAPI.dispatch(cancelStudentEnrollmentSuccess(enrollmentId));
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

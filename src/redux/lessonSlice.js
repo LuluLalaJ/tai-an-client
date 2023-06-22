@@ -4,8 +4,8 @@ import axios from "axios";
 const initialState = {
   newLessonTime: { start: "", end: "" },
   newLesson: "",
-  allLessons: "",
-  myLessons: "",
+  allLessons: [],
+  myLessons: [],
   currentCal: [],
   error: null,
   isLoading: false,

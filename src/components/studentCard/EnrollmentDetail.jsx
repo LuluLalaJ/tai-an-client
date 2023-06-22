@@ -14,10 +14,11 @@ import {
   cancelEnrollment,
   changeEnrollmentStatus,
 } from "../../redux/enrollmentSlice";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { Formik } from 'formik';
+import { TOMORROW } from "../../constants";
+
 
 const EnrollmentDetail = ({enrollment}) => {
     const dispatch = useDispatch();
@@ -30,13 +31,13 @@ const EnrollmentDetail = ({enrollment}) => {
       lesson: { start, end, title },
     } = enrollment;
 
+    const isFutureEvent = new Date(start) > TOMORROW;
+
      const handleFormSubmit = (values) => {
        console.log("submit", values);
        dispatch(changeEnrollmentStatus([lesson_id, id, values]));
      };
-    // console.log(enrollment)
 
-    // MAKE SURE NO PAST ENROLLMENT CAN'T BE DELETED or CHANGED!
     const handleDeleteEnrollment = () => {
       if (
         window.confirm(
@@ -60,10 +61,10 @@ const EnrollmentDetail = ({enrollment}) => {
           primary={`Lesson: ${title}`}
           secondary={`Status: ${status}`}
         />
-        {/* NEED TO RENDER IN THE FRONT */}
         {status === "waitlisted" && (
           <IconButton
             aria-label="register"
+            disabled={!isFutureEvent}
             onClick={() =>
               dispatch(
                 changeEnrollmentStatus([
@@ -80,6 +81,7 @@ const EnrollmentDetail = ({enrollment}) => {
         {status === "registered" && (
           <IconButton
             aria-label="waitlist"
+            disabled={!isFutureEvent}
             onClick={() =>
               dispatch(
                 changeEnrollmentStatus([
@@ -100,14 +102,10 @@ const EnrollmentDetail = ({enrollment}) => {
       </ListItem>
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={{comment}}
+        initialValues={{ comment }}
         enableReinitialize="true"
       >
-        {({
-          values,
-          handleChange,
-          handleSubmit,
-        }) => (
+        {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Box>
               <TextField
@@ -127,13 +125,15 @@ const EnrollmentDetail = ({enrollment}) => {
           </form>
         )}
       </Formik>
+
       <Button
-          variant="outlined"
-          color="error"
-          onClick={handleDeleteEnrollment}
-        >
-          Cancel Enrollment
-        </Button>
+        variant="outlined"
+        color="error"
+        disabled={!isFutureEvent}
+        onClick={handleDeleteEnrollment}
+      >
+        Cancel Enrollment
+      </Button>
 
       <Divider />
     </>
