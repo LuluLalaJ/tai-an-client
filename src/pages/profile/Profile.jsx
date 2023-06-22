@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -7,10 +7,24 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
+import axios from "axios";
+import PurchaseHistoryCard from "../../components";
 
 export default function Profile() {
 
   const { user, role } = useSelector(store => store.user )
+  const [payments, setPayments] = useState([])
+
+  useEffect(()=>{
+    if (role === "student") {
+      axios.get(`/students/${user.id}/payments`)
+      .then(r => setPayments(r.data))
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  }, [])
+
 
   return (
     <Container sx={{ mt: 5 }}>
@@ -39,14 +53,17 @@ export default function Profile() {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Payment History</Typography>
+              <Typography>Purchase History</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+              {payments.length === 0
+              ? <Typography>
+                You have not purchased any lesson credits!
               </Typography>
+              : payments.map(payment => {
+                <PurchaseHistoryCard />
+              })}
+
             </AccordionDetails>
           </Accordion>
         </>
