@@ -6,16 +6,17 @@ import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../../redux/userSlice";
 import { toggleDrawer } from "../../redux/drawerSlice";
-
+import { useHistory } from "react-router-dom";
 
 export default function TopBar() {
   const pages = ["Teachers"];
   const { isSignedIn } = useSelector( store => store.user)
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -66,7 +67,10 @@ export default function TopBar() {
                 edge="start"
                 color="inherit"
                 aria-label="signout"
-                onClick={() => dispatch(signOutUser())}
+                onClick={() => {
+                  dispatch(signOutUser())
+                  navigate("/signin");
+                  }}
               >
                 <ExitToAppIcon />
               </IconButton>
