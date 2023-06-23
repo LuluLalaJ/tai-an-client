@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { Button, TextField } from "@mui/material";
-import Container from "@mui/material/Container";
+import { Toolbar, TextField, IconButton, Grid, Container} from "@mui/material";
 import { LessonCard } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherLessons, getStudentLessons } from "../../redux/lessonSlice";
 import { sortByDateAsc, sortByDateDesc } from "../../utilities";
+
+import SearchIcon from "@mui/icons-material/Search";
+import ShuffleIcon from "@mui/icons-material/Shuffle";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 
 const Lessons = () => {
   const dispatch = useDispatch()
@@ -37,41 +39,63 @@ const Lessons = () => {
     );
   });
 
-  console.log(filteredLessons)
-  console.log(sortedLessons)
-  console.log(myLessons)
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
-      <Button
-        variant="contained"
-        onClick={() => setSortedLessons(sortByDateAsc(myLessons, "start"))}
+    <Container sx={{ py: 2 }} maxWidth="md">
+      <Toolbar
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        Sort Asc
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => setSortedLessons(sortByDateDesc(myLessons, "start"))}
-      >
-        Sort Desc
-      </Button>
-      <Button variant="contained" onClick={() => setSortedLessons(myLessons)}>
-        Unsort
-      </Button>
+        <div>
+          <IconButton
+            variant="outlined"
+            size="small"
+            onClick={() => setSortedLessons(sortByDateDesc(myLessons, "start"))}
+          >
+            <KeyboardDoubleArrowDownIcon />
+          </IconButton>
+          <IconButton
+            variant="outlined"
+            size="small"
+            onClick={() => setSortedLessons(sortByDateAsc(myLessons, "start"))}
+          >
+            <KeyboardDoubleArrowUpIcon />
+          </IconButton>
 
-      <TextField
-        label="Search"
-        variant="outlined"
-        value={searchKeyword}
-        onChange={handleSearchChange}
-      />
+          <IconButton
+            variant="outlined"
+            size="small"
+            onClick={() => setSortedLessons(myLessons)}
+          >
+            <ShuffleIcon />
+          </IconButton>
+        </div>
+        <div>
+          <TextField
+            label="Search"
+            variant="outlined"
+            value={searchKeyword}
+            onChange={handleSearchChange}
+            size="small"
+            placeholder="Search"
+          />
+          <IconButton aria-label="search">
+            <SearchIcon />
+          </IconButton>
+        </div>
+      </Toolbar>
 
-      <Grid container spacing={4}>
-        {filteredLessons.length ===0
-        ? myLessons.map((lesson) => (
-          <LessonCard lesson={lesson} key={lesson.id} />))
-        : filteredLessons.map((lesson) => (
-          <LessonCard lesson={lesson} key={lesson.id} />))
-        }
+      <Grid container spacing={4} sx={{ py: 1 }} >
+        {filteredLessons.length === 0
+          ? myLessons.map((lesson) => (
+              <LessonCard lesson={lesson} key={lesson.id} />
+            ))
+          : filteredLessons.map((lesson) => (
+              <LessonCard lesson={lesson} key={lesson.id} />
+            ))}
       </Grid>
     </Container>
   );

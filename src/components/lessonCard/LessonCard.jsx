@@ -67,12 +67,12 @@ const LessonCard = ({ lesson }) => {
 
     return (
       <Grid item key={lesson.id} xs={12} sm={12} md={6}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 450 }}>
           <CardHeader
             //maybe do group avatars here
-            //maybe color separation between past and current events 
+            //maybe color separation between past and current events
             avatar={
-              <Avatar sx={{ bgcolor: green[500] }} aria-label="lesson">
+              <Avatar sx={{ bgcolor: green[700] }} aria-label="lesson">
                 {title[0]}
               </Avatar>
             }

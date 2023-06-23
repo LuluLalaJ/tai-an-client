@@ -32,3 +32,35 @@ export const sortByDateAsc = (array, dateKey) => {
   });
   return newArr;
 };
+
+// still need to understand string sorting 
+export const sortByStringDesc = (array, attriKey) => {
+  const newArr = [...array];
+  newArr.sort((a, b) => {
+    const strA = a[attriKey];
+    const strB = b[attriKey];
+    if (strA < strB) {
+      return 1;
+    } else if (strA > strB) {
+      return -1;
+    }
+    return 0;
+  });
+  return newArr;
+};
+
+
+export const sortByStringAsc = (array, attriKey) => {
+  const newArr = [...array];
+  newArr.sort((a, b) => {
+    const strA = a[attriKey];
+    const strB = b[attriKey];
+    if (strA > strB) {
+      return 1;
+    } else if (strA < strB) {
+      return -1;
+    }
+    return 0;
+  });
+  return newArr;
+};
