@@ -88,12 +88,16 @@ const Lessons = () => {
         </div>
       </Toolbar>
 
-      <Grid container spacing={4} sx={{ py: 1 }} >
-        {filteredLessons.length === 0
+      <Grid container spacing={4} sx={{ py: 1 }}>
+        {/* {filteredLessons.length === 0
           ? myLessons.map((lesson) => (
               <LessonCard lesson={lesson} key={lesson.id} />
             ))
           : filteredLessons.map((lesson) => (
+              <LessonCard lesson={lesson} key={lesson.id} />
+            ))} */}
+
+        {filteredLessons.map((lesson) => (
               <LessonCard lesson={lesson} key={lesson.id} />
             ))}
       </Grid>

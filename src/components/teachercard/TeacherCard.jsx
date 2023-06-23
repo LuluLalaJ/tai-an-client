@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 const TeacherCard = ({teacher}) => {
-  const {id, country, first_name, avatar} = teacher
+  const {id, country, first_name, avatar, bio} = teacher
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia
@@ -23,10 +23,7 @@ const TeacherCard = ({teacher}) => {
         <Typography gutterBottom variant="h5" component="h2">
           {first_name}
         </Typography>
-        <Typography>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam,
-          consequuntur.
-        </Typography>
+        <Typography>{bio}</Typography>
       </CardContent>
       {/* <CardActions>
         <Button size="small">View</Button>

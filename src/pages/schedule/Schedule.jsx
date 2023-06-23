@@ -70,7 +70,7 @@ const Schedule = () => {
   //note all the message with time is in Eastern - backend in UTC - everything in UTC
   const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
-      const message = `Do you want to end ${info.event.title} at the new time: ${info.event.end}?`
+      const message = `Do you want to change the time for ${info.event.title}?`;
       if (!window.confirm(message)) {
         info.revert();
       } else {
@@ -89,7 +89,7 @@ const Schedule = () => {
   const changeStartTime = (info) => {
     // NOTE: fullcalendar's dates is just native JavaScript Date objects
     if (user.id === info.event.extendedProps["teacher_id"]) {
-      const message = `Do you want to start ${info.event.title} at the new time: ${info.event.start}?`;
+      const message = `Do you want to change the time for ${info.event.title}?`;
       if (!window.confirm(message)) {
         info.revert();
       } else {

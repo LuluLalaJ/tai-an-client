@@ -98,13 +98,16 @@ const Students = () => {
       </Toolbar>
 
       <Grid container spacing={4} sx={{ py: 1 }}>
-        {filteredStudents.length === 0
-        ? students.map((student) => (
-            <StudentCard student={student} key={student.id} />
-          ))
-        : filteredStudents.map((student) => (
-            <StudentCard student={student} key={student.id} />
-          ))}
+        {/* {filteredStudents.length === 0
+          ? students.map((student) => (
+              <StudentCard student={student} key={student.id} />
+            ))
+          : filteredStudents.map((student) => (
+              <StudentCard student={student} key={student.id} />
+            ))} */}
+        {filteredStudents.map((student) => (
+              <StudentCard student={student} key={student.id} />
+            ))}
       </Grid>
     </Container>
   );

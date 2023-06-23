@@ -16,15 +16,16 @@ export default function Profile() {
   const [payments, setPayments] = useState([])
   const [records, setRecords] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (role === "student") {
-      axios.get(`/students/${user.id}/payments`)
-      .then(r => setPayments(r.data))
-      .catch(err => {
-        console.log(err)
-      })
+      axios
+        .get(`/students/${user.id}/payments`)
+        .then((r) => setPayments(r.data))
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (role === "student") {
@@ -57,7 +58,13 @@ export default function Profile() {
               <Typography>Remaining Credit</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>$ {user.lesson_credit}</Typography>
+              <Typography>
+                $
+                {records
+                  ? user.lesson_credit
+                  : records[records.length - 1].new_credit}
+                {/* {user.lesson_credit} */}
+              </Typography>
             </AccordionDetails>
           </Accordion>
 

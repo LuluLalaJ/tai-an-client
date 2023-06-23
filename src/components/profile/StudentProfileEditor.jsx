@@ -36,7 +36,6 @@ const StudentProfileEditor = () => {
     } = user;
 
     const initialValues = {
-      id,
       username,
       email,
       phone,
@@ -71,7 +70,7 @@ const checkoutSchema = yup.object().shape({
            id="panel1a-header"
          >
            <Avatar alt="Cindy Baker" src={avatar} />
-           
+
          </AccordionSummary>
          <AccordionDetails>
            <Formik
