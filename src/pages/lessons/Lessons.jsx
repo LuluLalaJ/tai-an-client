@@ -15,16 +15,13 @@ const Lessons = () => {
   const [sortedLessons, setSortedLessons] = useState(myLessons);
   const [searchKeyword, setSearchKeyword] = useState("");
 
-
   useEffect(() => {
-    console.log(myLessons)
-    if (role === 'teacher') {
-    dispatch(getTeacherLessons(user.id));
-    } else if (role === 'student') {
+    if (role === "teacher") {
+      dispatch(getTeacherLessons(user.id));
+    } else if (role === "student") {
       dispatch(getStudentLessons(user.id));
     }
   }, []);
-
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -40,6 +37,9 @@ const Lessons = () => {
     );
   });
 
+  console.log(filteredLessons)
+  console.log(sortedLessons)
+  console.log(myLessons)
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       <Button
@@ -66,9 +66,12 @@ const Lessons = () => {
       />
 
       <Grid container spacing={4}>
-        {filteredLessons.map((lesson) => (
-          <LessonCard lesson={lesson} key={lesson.id} />
-        ))}
+        {filteredLessons.length ===0
+        ? myLessons.map((lesson) => (
+          <LessonCard lesson={lesson} key={lesson.id} />))
+        : filteredLessons.map((lesson) => (
+          <LessonCard lesson={lesson} key={lesson.id} />))
+        }
       </Grid>
     </Container>
   );
