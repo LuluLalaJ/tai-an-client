@@ -1,5 +1,4 @@
-import React , {useState} from 'react'
-import Button from "@mui/material/Button";
+import React from 'react'
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,13 +10,12 @@ import CardHeader from "@mui/material/CardHeader";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import { green, red } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteLessonRequest, openLessonPop, closeLessonPop } from "../../redux/lessonSlice";
+import { deleteLessonRequest } from "../../redux/lessonSlice";
 import { Link as RouterLink } from "react-router-dom";
 import List from "@mui/material/List";
 import { EnrollmentCard } from './EnrollmentCard';
@@ -60,7 +58,7 @@ const LessonCard = ({ lesson }) => {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-    const {start, end, capacity, level, price, description, title, enrollments, id} = lesson
+    const {start, description, title, enrollments } = lesson
 
     //BACKEND HANDLING TOO
     const isFutureEvent = new Date(start) > TOMORROW;

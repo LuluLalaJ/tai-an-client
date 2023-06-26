@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -7,7 +7,6 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import { CardMedia } from "@mui/material";
@@ -15,8 +14,6 @@ import LessonCredit100 from "../../assets/LessonCredit100.jpeg"
 import LessonCredit200 from "../../assets/LessonCredit200.jpg";
 import LessonCredit300 from "../../assets/LessonCredit300.jpeg";
 import { useSelector } from "react-redux";
-
-import axios from "axios";
 
 const tiers = [
   {

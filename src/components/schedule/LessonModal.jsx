@@ -13,10 +13,8 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import * as yup from "yup";
 import {
-  updateNewLessonValues,
   closeNewLessonFormModal,
   postNewLesson,
 } from "../../redux/lessonSlice";
@@ -39,10 +37,6 @@ export default function LessonModal() {
   const {
     isNewLessonFormModalOpen,
     newLessonTime,
-    newLesson,
-    calendarApi,
-    updateNewLessonTime,
-    error,
   } = useSelector((store) => store.lesson);
 
   const formSchema = yup.object().shape({
@@ -75,7 +69,7 @@ export default function LessonModal() {
   });
 
 
-  const { values, handleChange, handleSubmit, touched, errors } = formik;
+  const { values, handleChange, handleSubmit } = formik;
 
   return (
     <div>

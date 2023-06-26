@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, Outlet, Navigate} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar } from './components'
 import { useSelector, useDispatch } from "react-redux";
 import { getAllLessons } from './redux/lessonSlice';
 
 import {
-  About,
   AuthWrapper,
   Error,
-  Gallery,
   Home,
   Lessons,
   Signin,
   Profile,
-  PrivateRoute,
   Schedule,
   Signup,
   Students,
@@ -29,12 +26,13 @@ import {
 
 const App = () => {
   const dispatch = useDispatch()
-  const { isSignedIn, role, user} = useSelector((store) => store.user);
-  const { allLessons } = useSelector((store) => store.lesson)
+  const { isSignedIn, role } = useSelector((store) => store.user);
 
+  //is it necessary to include dispatch in the dependency?
   useEffect(() => {
     dispatch(getAllLessons());
-  }, []);
+  }, [dispatch]);
+
 
   return (
     <>
@@ -44,9 +42,7 @@ const App = () => {
         <SideBar />
         <Routes>
           <Route path="/" exact element={<Home />} />
-          {/* <Route path="/about" exact element={<About />} /> */}
           <Route path="/teachers" element={<Teachers />} />
-          {/* <Route path="/gallery" element={<Gallery />} /> */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
 

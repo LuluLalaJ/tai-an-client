@@ -4,7 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
-import { Badge, Button } from '@mui/material';
+import { Badge } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cancelEnrollment, changeEnrollmentStatus } from '../../redux/enrollmentSlice';
 import FeedbackModal from './FeedbackModal';
 import CommentIcon from "@mui/icons-material/Comment";
-import { green } from '@mui/material/colors';
 
 
 export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {

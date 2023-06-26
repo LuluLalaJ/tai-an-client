@@ -10,7 +10,6 @@ import { Link as RouterLink, useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../../redux/userSlice";
 import { toggleDrawer } from "../../redux/drawerSlice";
-import { useHistory } from "react-router-dom";
 
 export default function TopBar() {
   const pages = ["Teachers"];

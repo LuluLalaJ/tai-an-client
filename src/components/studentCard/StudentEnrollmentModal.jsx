@@ -2,14 +2,12 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
 import EnrollmentDetail from "./EnrollmentDetail";
 import { Stack, Container } from "@mui/material";
-import { StorefrontRounded } from "@mui/icons-material";
+
 export default function StudentEnrollmentModal({enrollments}) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => () => {

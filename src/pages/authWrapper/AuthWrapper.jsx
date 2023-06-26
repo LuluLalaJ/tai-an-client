@@ -9,7 +9,7 @@ const AuthWrapper = ({ children }) => {
 
   useEffect(() => {
     dispatch(checkSession());
-  }, [isSignedIn]);
+  }, [isSignedIn, dispatch]);
 
   if (isLoading) {
     return (

@@ -1,11 +1,6 @@
-import { useState } from "react";
-import FullCalendar from "@fullcalendar/react";
+
 import { formatDate } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
-import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 
 const LessonList = ({currentEvents}) => {
   return (
