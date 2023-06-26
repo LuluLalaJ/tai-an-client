@@ -12,9 +12,9 @@ const Teachers = () => {
   const { teachers } = useSelector( store => store.teachers)
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(getTeachers())
-  }, [])
+  useEffect(() => {
+    dispatch(getTeachers());
+  }, [dispatch]);
 
   return (
     <main>

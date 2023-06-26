@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import * as yup from "yup";
-import { useFormik, Formik } from 'formik';
+import { Formik } from 'formik';
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonById } from "../../redux/lessonSlice";
@@ -14,7 +14,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import { editLessonRequest } from "../../redux/lessonSlice";
-import { convertToEDTISOString } from "../../utilities"
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -27,11 +26,11 @@ const LessonEditor = () => {
   const { lessonId } = useParams()
   const { lessonToEdit } = useSelector(store => store.lesson)
 
-  useEffect(()=>{
+  useEffect(() => {
     //NEED VARIOUS ERRO HANDLING
     //EMPTY STRING - DATE RANGE INCORRECT - APPROPRIATE ERROR MESSAGE
     dispatch(getLessonById(lessonId));
-  }, [])
+  }, [dispatch, lessonId]);
 
     // console.log("init", lessonToEdit);
 
@@ -64,8 +63,6 @@ const LessonEditor = () => {
     const handleFormSubmit = (values) => {
       // SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
       // There must be a better way
-      values.start = values.start
-      values.end = values.end
       console.log("submit", values.start);
       console.log("submit", values.end);
       dispatch(editLessonRequest([id, values]));

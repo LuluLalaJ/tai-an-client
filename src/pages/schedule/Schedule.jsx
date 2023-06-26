@@ -28,7 +28,7 @@ const Schedule = () => {
 
   useEffect(() => {
     dispatch(getAllLessons());
-  }, []);
+  }, [dispatch]);
 
   const [selectedCalendar, setSelectedCalendar] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("")

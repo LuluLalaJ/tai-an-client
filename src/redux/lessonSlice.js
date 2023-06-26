@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import thunk from "redux-thunk";
 
 const initialState = {
   newLessonTime: { start: "", end: "" },

@@ -1,5 +1,4 @@
 import { Container } from '@mui/material'
-import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';

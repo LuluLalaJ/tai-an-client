@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import { Stack, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Container } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
 import axios from "axios";
 import { PaymentHistoryCard, LessonCreditHistory } from "../../components";
@@ -25,7 +25,7 @@ export default function Profile() {
           console.log(err);
         });
     }
-  }, []);
+  }, [role, user.id]);
 
   useEffect(() => {
     if (role === "student") {
@@ -36,12 +36,7 @@ export default function Profile() {
           console.log(err);
         });
     }
-  }, []);
-
-
-  const renderPayments = payments.map(payment => {
-               <PaymentHistoryCard payment={payment}/>;
-              })
+  }, [role, user.id]);
 
   return (
     <Container sx={{ mt: 5 }}>

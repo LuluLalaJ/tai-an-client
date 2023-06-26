@@ -23,7 +23,7 @@ const Lessons = () => {
     } else if (role === "student") {
       dispatch(getStudentLessons(user.id));
     }
-  }, []);
+  }, [dispatch, role, user.id]);
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);

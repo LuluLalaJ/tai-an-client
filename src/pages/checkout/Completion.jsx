@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -10,17 +10,6 @@ const Completion = () => {
   const [session, setSession] = useState({});
   const location = useLocation();
   const sessionId = location.search.replace("?session_id=", "");
-
-  // useEffect(() => {
-  //   async function fetchSession() {
-  //     setSession(
-  //       await fetch("/checkout-session?sessionId=" + sessionId).then((res) =>
-  //         res.json()
-  //       )
-  //     );
-  //   }
-  //   fetchSession();
-  // }, [sessionId]);
 
   return (
     <Container maxWidth="xl">
