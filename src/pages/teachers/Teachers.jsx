@@ -16,8 +16,6 @@ const Teachers = () => {
     dispatch(getTeachers())
   }, [])
 
-  // console.log(teachers)
-
   return (
     <main>
       <Box
@@ -43,9 +41,12 @@ const Teachers = () => {
             color="text.secondary"
             paragraph
           >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, harum
-            quas? Ex officiis facilis reprehenderit voluptate aut aspernatur sit
-            molestiae.
+            Our tea teachers are exceptional guides and mentors in the world of
+            Japanese tea ceremony. With their extensive knowledge, dedication,
+            and passion for the art, they impart not only the technical skills
+            of making tea but also the profound principles of harmony, respect,
+            and tranquility. Through their guidance, students embark on a transformative journey,
+            discovering the beauty and depth of the tea ceremony.
           </Typography>
         </Container>
       </Box>
@@ -53,7 +54,7 @@ const Teachers = () => {
         <Grid container spacing={4}>
           {teachers.map((teacher) => (
             <Grid item key={teacher.id} xs={12} sm={6} md={4}>
-              <TeacherCard teacher={teacher}/>
+              <TeacherCard teacher={teacher} />
             </Grid>
           ))}
         </Grid>
