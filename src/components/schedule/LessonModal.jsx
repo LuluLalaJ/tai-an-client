@@ -84,20 +84,6 @@ export default function LessonModal() {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Enter new lesson info:
             </Typography>
-            {/* <DateTimePicker
-              label="Start"
-              id="start"
-              name="start"
-              value={newLessonTime.start}
-              onChange={(newTime) => updateNewLessonTime(newTime)}
-            />
-            <DateTimePicker
-              label="End"
-              id="end"
-              name="end"
-              value={newLessonTime.end}
-              onChange={(newTime) => updateNewLessonTime(newTime)}
-            /> */}
             <FormControl fullWidth>
               <TextField
                 required

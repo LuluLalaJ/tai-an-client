@@ -17,15 +17,20 @@ import ClassIcon from "@mui/icons-material/Class";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
-import { addEnrollment, cancelEnrollment } from "../../redux/enrollmentSlice";
+import {
+  addEnrollment,
+  cancelEnrollment,
+  resetEnrollmentError,
+} from "../../redux/enrollmentSlice";
 import { TOMORROW, LESSON_LEVEL } from "../../constants";
 import { getEnrollmentId, checkStudentEnrollment } from "../../utilities";
-import { green } from "@mui/material/colors";
+import { useEffect } from "react";
 
 export default function LessonPop({ info }) {
   const dispatch = useDispatch();
   const { isLessonPopOpen } = useSelector((store) => store.lesson);
   const { role, user } = useSelector((store) => store.user);
+  const { error } = useSelector(store => store.enrollment)
   const lessonId = parseInt(info.event.id);
   const {title} = info.event
 
@@ -58,6 +63,15 @@ export default function LessonPop({ info }) {
       dispatch(closeLessonPop());
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      if (error.error == "Insufficient credit") {
+        alert("Insufficient credit to register; please purchase more!")
+        dispatch(resetEnrollmentError());
+      }
+    }
+  }, [error]);
 
   return (
     <div>
@@ -170,6 +184,7 @@ export default function LessonPop({ info }) {
 
                 onClick={() => {
                   dispatch(addEnrollment(lessonId));
+                  console.log(error)
                   dispatch(closeLessonPop());
                 }}
               >

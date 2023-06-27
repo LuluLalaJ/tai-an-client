@@ -1,29 +1,15 @@
-import React from 'react'
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { useState } from 'react';
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Divider, Grid, IconButton, List, ListItem, ListItemText, ListItemAvatar, Typography} from '@mui/material';
 import { styled } from "@mui/material/styles";
-import CardHeader from "@mui/material/CardHeader";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import { green } from "@mui/material/colors";
+import { green, grey } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLessonRequest } from "../../redux/lessonSlice";
 import { Link as RouterLink } from "react-router-dom";
-import List from "@mui/material/List";
 import { EnrollmentCard } from './EnrollmentCard';
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Divider from "@mui/material/Divider";
-import PersonOffIcon from "@mui/icons-material/PersonOff";
 import { TOMORROW } from "../../constants";
 
 
@@ -54,7 +40,7 @@ const LessonCard = ({ lesson }) => {
         }
     }
 
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
@@ -70,7 +56,7 @@ const LessonCard = ({ lesson }) => {
             //maybe do group avatars here
             //maybe color separation between past and current events
             avatar={
-              <Avatar sx={{ bgcolor: green[700] }} aria-label="lesson">
+              <Avatar sx={{ bgcolor: (isFutureEvent) ? green[500] : grey[500]}} aria-label="lesson">
                 {title[0]}
               </Avatar>
             }

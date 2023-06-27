@@ -71,7 +71,11 @@ export const changeEnrollmentStatus = createAsyncThunk(
 const enrollmentSlice = createSlice({
   name: "enrollment",
   initialState,
-  reducers: {},
+  reducers: {
+    resetEnrollmentError: state => {
+      state.error = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(cancelEnrollment.pending, (state) => {
@@ -107,11 +111,10 @@ const enrollmentSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       });
-    // .addCase(changeEnrollmentStatus.rejected, (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // });
   },
 });
 
+export const {
+  resetEnrollmentError,
+} = enrollmentSlice.actions;
 export default enrollmentSlice.reducer;
