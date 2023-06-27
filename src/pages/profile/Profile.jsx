@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Accordion, AccordionSummary, AccordionDetails, Container, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Container, Stack, Typography, IconButton} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import { useSelector } from "react-redux";
 import {
   StudentProfileEditor,
@@ -8,20 +10,24 @@ import {
   PaymentHistoryCard,
   LessonCreditHistory,
 } from "../../components";
+import { sortByDateAsc, sortByDateDesc } from "../../utilities";
 import axios from "axios";
 
 
 export default function Profile() {
 
   const { user, role } = useSelector(store => store.user )
-  const [payments, setPayments] = useState([])
-  const [records, setRecords] = useState([])
+  const [ records, setRecords ] = useState([])
+  const [ sortedPayments, setSortedPayments ] = useState([])
+  const [ sortedRecords, setSortedRecords ] = useState([])
 
   useEffect(() => {
     if (role === "student") {
       axios
         .get(`/students/${user.id}/payments`)
-        .then((r) => setPayments(r.data))
+        .then((r) => {
+          setSortedPayments(sortByDateDesc(r.data, "created_at"));
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -32,12 +38,15 @@ export default function Profile() {
     if (role === "student") {
       axios
         .get(`/students/${user.id}/lessoncredithistory`)
-        .then((r) => setRecords(r.data))
+        .then((r) => {
+          setRecords(r.data)
+          setSortedRecords(sortByDateDesc(r.data, "created_at"));})
         .catch((err) => {
           console.log(err);
         });
     }
   }, [role, user.id]);
+
 
   return (
     <Container sx={{ mt: 5 }}>
@@ -48,8 +57,7 @@ export default function Profile() {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
+              id="remaining-credit"
             >
               <Typography>Remaining Credit</Typography>
             </AccordionSummary>
@@ -59,7 +67,6 @@ export default function Profile() {
                 {records
                   ? user.lesson_credit
                   : records[records.length - 1].new_credit}
-                {/* {user.lesson_credit} */}
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -67,17 +74,34 @@ export default function Profile() {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
+              id="lesson-credit-history"
             >
               <Typography>Lesson Credits History</Typography>
             </AccordionSummary>
             <AccordionDetails>
+              <IconButton
+                variant="outlined"
+                size="small"
+                onClick={() =>
+                  setSortedRecords(sortByDateDesc(sortedRecords, "created_at"))
+                }
+              >
+                <KeyboardDoubleArrowDownIcon />
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                size="small"
+                onClick={() =>
+                  setSortedRecords(sortByDateAsc(sortedRecords, "created_at"))
+                }
+              >
+                <KeyboardDoubleArrowUpIcon />
+              </IconButton>
               <Stack spacing={1}>
-                {records.length === 0 ? (
+                {sortedRecords.length === 0 ? (
                   <Typography>There are no records!</Typography>
                 ) : (
-                  records.map((record) => (
+                  sortedRecords.map((record) => (
                     <LessonCreditHistory record={record} key={record.id} />
                   ))
                 )}
@@ -88,17 +112,36 @@ export default function Profile() {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
+              id="purchase-history"
             >
               <Typography>Purchase History</Typography>
             </AccordionSummary>
             <AccordionDetails>
+              <IconButton
+                variant="outlined"
+                size="small"
+                onClick={() =>
+                  setSortedPayments(
+                    sortByDateDesc(sortedPayments, "created_at")
+                  )
+                }
+              >
+                <KeyboardDoubleArrowDownIcon />
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                size="small"
+                onClick={() =>
+                  setSortedPayments(sortByDateAsc(sortedPayments, "created_at"))
+                }
+              >
+                <KeyboardDoubleArrowUpIcon />
+              </IconButton>
               <Stack spacing={1}>
-                {payments.length === 0 ? (
+                {sortedPayments.length === 0 ? (
                   <Typography>You didn't purchase any credits yet!</Typography>
                 ) : (
-                  payments.map((payment) => (
+                  sortedPayments.map((payment) => (
                     <PaymentHistoryCard payment={payment} key={payment.id} />
                   ))
                 )}
