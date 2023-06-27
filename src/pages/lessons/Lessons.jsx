@@ -6,7 +6,6 @@ import { getTeacherLessons, getStudentLessons } from "../../redux/lessonSlice";
 import { sortByDateAsc, sortByDateDesc } from "../../utilities";
 
 import SearchIcon from "@mui/icons-material/Search";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 
@@ -14,7 +13,7 @@ const Lessons = () => {
   const dispatch = useDispatch()
   const { user, role } = useSelector((store) => store.user);
   const { myLessons } = useSelector((store) => store.lesson);
-  const [sortedLessons, setSortedLessons] = useState(myLessons);
+  const [sortedLessons, setSortedLessons] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
@@ -24,6 +23,10 @@ const Lessons = () => {
       dispatch(getStudentLessons(user.id));
     }
   }, [dispatch, role, user.id]);
+
+  useEffect(() => {
+    setSortedLessons(sortByDateDesc(myLessons, "start"));
+  }, [myLessons]);
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -64,14 +67,6 @@ const Lessons = () => {
           >
             <KeyboardDoubleArrowUpIcon />
           </IconButton>
-
-          <IconButton
-            variant="outlined"
-            size="small"
-            onClick={() => setSortedLessons(myLessons)}
-          >
-            <ShuffleIcon />
-          </IconButton>
         </div>
         <div>
           <TextField
@@ -89,14 +84,6 @@ const Lessons = () => {
       </Toolbar>
 
       <Grid container spacing={4} sx={{ py: 1 }}>
-        {/* {filteredLessons.length === 0
-          ? myLessons.map((lesson) => (
-              <LessonCard lesson={lesson} key={lesson.id} />
-            ))
-          : filteredLessons.map((lesson) => (
-              <LessonCard lesson={lesson} key={lesson.id} />
-            ))} */}
-
         {filteredLessons.map((lesson) => (
               <LessonCard lesson={lesson} key={lesson.id} />
             ))}

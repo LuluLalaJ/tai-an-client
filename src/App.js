@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar } from './components'
 import { useSelector, useDispatch } from "react-redux";
-import { getAllLessons } from './redux/lessonSlice';
 
 import {
   AuthWrapper,
@@ -25,15 +24,7 @@ import {
 
 
 const App = () => {
-  const dispatch = useDispatch()
   const { isSignedIn, role } = useSelector((store) => store.user);
-
-  //is it necessary to include dispatch in the dependency?
-  useEffect(() => {
-    dispatch(getAllLessons());
-  }, [dispatch]);
-
-
   return (
     <>
       <AuthWrapper>

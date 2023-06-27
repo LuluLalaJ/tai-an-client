@@ -13,8 +13,6 @@ const initialState = {
   isLessonPopOpen: false,
   lessonToEdit: "",
   afterEdit:"",
-  testing:"",
-  testing2: ""
 };
 
 export const getAllLessons = createAsyncThunk(

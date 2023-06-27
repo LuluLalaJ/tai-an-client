@@ -12,9 +12,9 @@ import { sortByStringAsc, sortByStringDesc } from "../../utilities";
 
 const Students = () => {
   const dispatch = useDispatch()
-  const {user} = useSelector(store => store.user)
-  const {students} = useSelector(store => store.students)
-  const [sortedStudents, setSortedStudents] = useState(students);
+  const { user } = useSelector(store => store.user)
+  const { students } = useSelector(store => store.students)
+  const [sortedStudents, setSortedStudents] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleSearchChange = (e) => {
@@ -43,6 +43,10 @@ const Students = () => {
   useEffect(() => {
     dispatch(getStudents(user.id));
   }, [dispatch, user.id]);
+
+  useEffect(() => {
+    setSortedStudents(sortByStringAsc(students));
+  }, [students]);
 
   return (
     <Container sx={{ py: 2 }} maxWidth="md">
@@ -98,13 +102,6 @@ const Students = () => {
       </Toolbar>
 
       <Grid container spacing={4} sx={{ py: 1 }}>
-        {/* {filteredStudents.length === 0
-          ? students.map((student) => (
-              <StudentCard student={student} key={student.id} />
-            ))
-          : filteredStudents.map((student) => (
-              <StudentCard student={student} key={student.id} />
-            ))} */}
         {filteredStudents.map((student) => (
               <StudentCard student={student} key={student.id} />
             ))}
