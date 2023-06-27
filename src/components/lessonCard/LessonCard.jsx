@@ -74,7 +74,7 @@ const LessonCard = ({ lesson }) => {
                 {title[0]}
               </Avatar>
             }
-            title={`${title.slice(0, 30)}...`}
+            title={`${title}`}
             subheader={start}
           />
 

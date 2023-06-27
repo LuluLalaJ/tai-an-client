@@ -13,20 +13,22 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import ClassIcon from "@mui/icons-material/Class";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLessonPop, deleteLessonRequest } from "../../redux/lessonSlice";
 import { addEnrollment, cancelEnrollment } from "../../redux/enrollmentSlice";
 import { TOMORROW, LESSON_LEVEL } from "../../constants";
 import { getEnrollmentId, checkStudentEnrollment } from "../../utilities";
+import { green } from "@mui/material/colors";
 
 export default function LessonPop({ info }) {
-  // console.log(info)
   const dispatch = useDispatch();
   const { isLessonPopOpen } = useSelector((store) => store.lesson);
   const { role, user } = useSelector((store) => store.user);
-  //this lessonId is a string
   const lessonId = parseInt(info.event.id);
+  const {title} = info.event
+
   const {
     is_full,
     description,
@@ -72,6 +74,19 @@ export default function LessonPop({ info }) {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar
+                // sx={{ bgcolor: green[500] }}
+                >
+                <ClassIcon/>
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary={`${title}`}
+              secondary="Lesson"
+            />
+          </ListItem>
           <ListItem>
             <ListItemAvatar>
               <Avatar src={teacher["avatar"]}></Avatar>
