@@ -59,23 +59,18 @@ const Schedule = () => {
   }, [newLesson]);
 
   const editLesson = (info) => {
-    // console.log(info)
     setSelectedEvent(info);
     dispatch(openLessonPop());
 
 
   };
 
-
-  //note all the message with time is in Eastern - backend in UTC - everything in UTC
   const changeEndTime = (info) => {
     if (user.id === info.event.extendedProps['teacher_id']) {
       const message = `Do you want to change the time for ${info.event.title}?`;
       if (!window.confirm(message)) {
         info.revert();
       } else {
-        // console.log("end", info.event.end);
-        //format: Sun Jul 02 2023 11:00:00 GMT-0400 (Eastern Daylight Time)
         const lessonId = parseInt(info.event.id);
         dispatch(editLessonRequest([lessonId, { end: info.event.end }]));
       }
@@ -87,7 +82,6 @@ const Schedule = () => {
 
 
   const changeStartTime = (info) => {
-    // NOTE: fullcalendar's dates is just native JavaScript Date objects
     if (user.id === info.event.extendedProps["teacher_id"]) {
       const message = `Do you want to change the time for ${info.event.title}?`;
       if (!window.confirm(message)) {
@@ -101,8 +95,6 @@ const Schedule = () => {
       info.revert();
     }
   };
-
-  // console.log("currentCal", currentCal);
 
   const currentCalGreyedPast = currentCal.map(event => {
     const eventStartDate = new Date(event.start)
@@ -144,30 +136,16 @@ return (
         center: "title",
         right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
       }}
-      initialView="timeGridWeek"
+      initialView="dayGridMonth"
       editable={role === "teacher"}
       selectable={role === "teacher"}
       selectMirror={role === "teacher"}
       dayMaxEvents={true}
-      //add event through here
       select={(info) => addLesson(info)}
       eventResize={(info) => changeEndTime(info)}
       eventDrop={(info) => changeStartTime(info)}
-      //edit event detail through here
       eventClick={(info) => editLesson(info)}
       events={currentCalGreyedPast}
-      /* you should also look into eventContent which might be able to change the displayed content
-      or other options to change colors
-      https://fullcalendar.io/docs/event-display
-      you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventRemove={function(){}}
-            eventChange={(info)=>{
-      //   const lessonId = parseInt(info.event.id);
-      //   dispatch(editLessonRequest([lessonId, info.event]))
-      // }}
-          */
-      //
     />
     {selectedEvent && <LessonPop info={selectedEvent} />}
   </Box>

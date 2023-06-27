@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Toolbar, TextField, IconButton, Grid, Container} from "@mui/material";
+import { Toolbar, TextField, IconButton, Grid, Container, Typography} from "@mui/material";
 import { LessonCard } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherLessons, getStudentLessons } from "../../redux/lessonSlice";
@@ -42,6 +42,7 @@ const Lessons = () => {
     );
   });
 
+
   return (
     <Container sx={{ py: 2 }} maxWidth="md">
       <Toolbar
@@ -83,11 +84,15 @@ const Lessons = () => {
         </div>
       </Toolbar>
 
-      <Grid container spacing={4} sx={{ py: 1 }}>
-        {filteredLessons.map((lesson) => (
-              <LessonCard lesson={lesson} key={lesson.id} />
-            ))}
-      </Grid>
+      {filteredLessons.length === 0 ? (
+        <Typography variant="h3">No lesson found...</Typography>
+      ) : (
+        <Grid container spacing={4} sx={{ py: 1 }}>
+          {filteredLessons.map((lesson) => (
+            <LessonCard lesson={lesson} key={lesson.id} />
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 }

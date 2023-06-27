@@ -152,6 +152,8 @@ const lessonSlice = createSlice({
       })
       .addCase(getAllLessons.rejected, (state, action) => {
         state.isLoading = false;
+        state.currentCal = [];
+        state.allLessons = [];
         state.error = action.payload;
       })
       .addCase(getTeacherLessons.pending, (state) => {
@@ -166,6 +168,8 @@ const lessonSlice = createSlice({
       })
       .addCase(getTeacherLessons.rejected, (state, action) => {
         state.isLoading = false;
+        state.currentCal = [];
+        state.myLessons = [];
         state.error = action.payload;
       })
       .addCase(getStudentLessons.pending, (state) => {
@@ -180,6 +184,8 @@ const lessonSlice = createSlice({
       })
       .addCase(getStudentLessons.rejected, (state, action) => {
         state.isLoading = false;
+        state.currentCal = [];
+        state.myLessons = [];
         state.error = action.payload;
       })
       .addCase(postNewLesson.pending, (state) => {
