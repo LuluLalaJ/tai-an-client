@@ -136,6 +136,9 @@ const lessonSlice = createSlice({
     closeLessonPop: (state) => {
       state.isLessonPopOpen = false;
     },
+    resetNewLesson: state => {
+      state.newLesson = ""
+    }
   },
 
   extraReducers: (builder) => {
@@ -311,6 +314,6 @@ export const {
   updateNewLessonTime,
   openLessonPop,
   closeLessonPop,
-  // setLessonPopInfo,
+  resetNewLesson,
 } = lessonSlice.actions;
 export default lessonSlice.reducer;

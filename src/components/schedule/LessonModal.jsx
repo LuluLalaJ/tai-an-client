@@ -46,8 +46,6 @@ export default function LessonModal() {
     capacity: yup.number().required("required"),
     level: yup.number().required("required"),
     price: yup.number().required("required"),
-    // start: yup.date().required("required"),
-    // end: yup.date().required("required"),
   });
 
   const formik = useFormik({
@@ -62,7 +60,6 @@ export default function LessonModal() {
     onSubmit: (values) => {
       const lessonValues ={...values, ...newLessonTime}
       //add error handling later
-      console.log(lessonValues)
       dispatch(postNewLesson(lessonValues));
       dispatch(closeNewLessonFormModal());
     },

@@ -14,7 +14,8 @@ import {
   openNewLessonFormModal,
   updateNewLessonTime,
   openLessonPop,
-  editLessonRequest
+  editLessonRequest,
+  resetNewLesson,
 } from "../../redux/lessonSlice";
 import {TOMORROW } from '../../constants'
 
@@ -38,7 +39,6 @@ const Schedule = () => {
       alert("You can only add a new lesson at least one day in advance!");
       info.view.calendar.unselect();
     } else {
-      console.log(info);
       const selectedTime = {
         start: info.startStr,
         end: info.endStr,
@@ -51,7 +51,7 @@ const Schedule = () => {
   };
 
   useEffect(() => {
-    if (newLesson) {
+    if (newLesson && selectedCalendar) {
       const calendarApi = selectedCalendar.view.calendar;
       calendarApi.unselect();
       calendarApi.addEvent(newLesson);
@@ -61,8 +61,6 @@ const Schedule = () => {
   const editLesson = (info) => {
     setSelectedEvent(info);
     dispatch(openLessonPop());
-
-
   };
 
   const changeEndTime = (info) => {
