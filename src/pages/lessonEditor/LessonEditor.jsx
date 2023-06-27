@@ -52,12 +52,18 @@ const LessonEditor = () => {
     description: yup.string().required("required"),
     capacity: yup.number().required("required"),
     level: yup.number().required("required"),
-    price: yup.number().min(0, "The price can't be negative").required("required"),
+    price: yup
+      .number()
+      .min(0, "The price can't be negative")
+      .required("required"),
     start: yup.date().required("required"),
-    end: yup.date().required("required"),
+    end: yup
+      .date()
+      .required("required"),
   });
 
     const handleFormSubmit = (values) => {
+      // console.log(typeof(values.start))
       dispatch(editLessonRequest([id, values]));
     };
 
@@ -128,6 +134,7 @@ return (
               value={dayjs.utc(values.end)}
               name="end"
               error={!!touched.end && !!errors.end}
+              helperText={touched.end && errors.end}
               sx={{ gridColumn: "span 2" }}
               disablePast={true}
               minutesStep={30}
