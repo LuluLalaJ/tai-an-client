@@ -46,33 +46,24 @@ const LessonEditor = () => {
    end,
  };
 
-  // console.log(dayjs(start));
-  // console.log(dayjs(start).toDate());
-
   const formSchema = yup.object().shape({
     //MORE ON THESE VALIDATION LATER AFTER MOST FUNCTIONALITIES ARE BUILT
     title: yup.string().required("required"),
     description: yup.string().required("required"),
     capacity: yup.number().required("required"),
     level: yup.number().required("required"),
-    price: yup.number().required("required"),
+    price: yup.number().min(0, "The price can't be negative").required("required"),
     start: yup.date().required("required"),
     end: yup.date().required("required"),
   });
 
     const handleFormSubmit = (values) => {
-      // SERVER DATE TO BE DIFFERENT FROM THE DATE I SUBMITT
-      // There must be a better way
-      console.log("submit", values.start);
-      console.log("submit", values.end);
       dispatch(editLessonRequest([id, values]));
     };
 
   if (lessonToEdit) {
 return (
   <Box m="20px">
-    {/* <Header title="CREATE USER" subtitle="Create a New User Profile" /> */}
-
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={initialValues}
@@ -107,6 +98,7 @@ return (
               name="title"
               onBlur={handleBlur}
               error={!!touched.title && !!errors.title}
+              helperText={touched.title && errors.title}
               sx={{ gridColumn: "span 2" }}
             />
 
@@ -184,19 +176,23 @@ return (
             </FormControl>
 
             <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-              <InputLabel htmlFor="price">Price</InputLabel>
-              <OutlinedInput
+              <TextField
+                fullWidth
                 id="price"
-                startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
-                }
-                label="price"
                 type="number"
-                name="price"
-                value={values.price}
+                label="Price"
                 onChange={handleChange}
+                value={values.price}
+                name="price"
                 onBlur={handleBlur}
                 error={!!touched.price && !!errors.price}
+                helperText={touched.price && errors.price}
+                sx={{ gridColumn: "span 2" }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
+                }}
               />
             </FormControl>
 
@@ -212,6 +208,7 @@ return (
               value={values.description}
               name="description"
               error={!!touched.description && !!errors.description}
+              helperText={touched.description && errors.description}
               sx={{ gridColumn: "span 6" }}
             />
           </Box>
