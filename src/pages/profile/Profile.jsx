@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import { Stack, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Container, Stack, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Container } from "@mui/material";
 import { useSelector } from "react-redux";
-import { StudentProfileEditor, TeacherProfileEditor } from "../../components";
+import {
+  StudentProfileEditor,
+  TeacherProfileEditor,
+  PaymentHistoryCard,
+  LessonCreditHistory,
+} from "../../components";
 import axios from "axios";
-import { PaymentHistoryCard, LessonCreditHistory } from "../../components";
+
 
 export default function Profile() {
 

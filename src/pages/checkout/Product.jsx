@@ -103,7 +103,6 @@ export default function Product() {
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === "Enterprise" ? 12 : 6}
               md={4}
             >
               <Card>

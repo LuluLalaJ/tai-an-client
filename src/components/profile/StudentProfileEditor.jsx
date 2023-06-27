@@ -1,15 +1,10 @@
-import * as React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+
+import { Accordion, AccordionSummary, AccordionDetails, Avatar, Box, Button, TextField, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { editStudentProfile } from "../../redux/userSlice";
-import Avatar from "@mui/material/Avatar";
-
 
 const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -34,6 +29,7 @@ const StudentProfileEditor = () => {
     } = user;
 
     const initialValues = {
+      id,
       username,
       email,
       phone,
@@ -55,20 +51,14 @@ const checkoutSchema = yup.object().shape({
 });
 
     const handleFormSubmit = (values) => {
-       console.log(values);
        dispatch(editStudentProfile([id, values]))
      };
 
 
      return (
        <Accordion>
-         <AccordionSummary
-           expandIcon={<ExpandMoreIcon />}
-           aria-controls="panel1a-content"
-           id="panel1a-header"
-         >
-           <Avatar alt="Cindy Baker" src={avatar} />
-
+         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="student-profile">
+           <Avatar alt={username} src={avatar} />
          </AccordionSummary>
          <AccordionDetails>
            <Formik
@@ -89,9 +79,6 @@ const checkoutSchema = yup.object().shape({
                    display="grid"
                    gap="30px"
                    gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                   // sx={{
-                   //   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                   // }}
                  >
                    <TextField
                      fullWidth
@@ -198,7 +185,7 @@ const checkoutSchema = yup.object().shape({
                      onBlur={handleBlur}
                      onChange={handleChange}
                      value={values.address_line2}
-                     name="address2"
+                     name="address_line2"
                      error={!!touched.address_line2 && !!errors.address_line2}
                      helperText={touched.address_line2 && errors.address_line2}
                      sx={{ gridColumn: "span 2" }}
