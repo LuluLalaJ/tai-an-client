@@ -147,7 +147,6 @@ export default function Product() {
                   <Button
                     type="submit"
                     onClick={(e) => {
-                      console.log("submitted");
                       purchaseCredits(e, tier.pi);
                     }}
                     fullWidth

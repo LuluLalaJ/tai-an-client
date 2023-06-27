@@ -1,8 +1,4 @@
-import { Container } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { Box, Container, Paper, Typography, Grid} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 const Canceled = () => {
@@ -13,7 +9,6 @@ const Canceled = () => {
           position: "relative",
           backgroundColor: "grey.800",
           color: "#fff",
-          // mb: 4,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
