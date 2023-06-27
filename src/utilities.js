@@ -33,7 +33,6 @@ export const sortByDateAsc = (array, dateKey) => {
   return newArr;
 };
 
-// still need to understand string sorting 
 export const sortByStringDesc = (array, attriKey) => {
   const newArr = [...array];
   newArr.sort((a, b) => {

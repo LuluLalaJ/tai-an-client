@@ -1,19 +1,10 @@
 import { useEffect } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import GlobalStyles from "@mui/material/GlobalStyles";
-import Container from "@mui/material/Container";
-import { CardMedia } from "@mui/material";
-import LessonCredit100 from "../../assets/LessonCredit100.jpeg"
+import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from "@mui/material";
+import LessonCredit100 from "../../assets/LessonCredit100.jpeg";
 import LessonCredit200 from "../../assets/LessonCredit200.jpg";
 import LessonCredit300 from "../../assets/LessonCredit300.jpeg";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const tiers = [
   {
@@ -44,44 +35,42 @@ export default function Product() {
   const {user} = useSelector(store => store.user )
   const id = user.id
 
-   useEffect(() => {
-     async function fetchConfig() {
-       await fetch("/config").then((r) =>
-         r.json()
-       );
-     }
-     fetchConfig();
-   }, []);
-
+  useEffect(() => {
+    async function fetchConfig() {
+      await axios
+        .get("/config")
+        .then((response) => response.data)
+        .catch((error) => {
+          console.error("Error fetching config:", error);
+        });
+    }
+    fetchConfig();
+  }, []);
 
   const purchaseCredits = (e, pi) => {
-    e.preventDefault()
-    // axios
-    //   .post("/create-checkout-session", {
-    //     quantity: 1,
-    //   })
+    e.preventDefault();
 
     const postRequestObj = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        price: pi,
-        quantity: 1,
-        metadata: {
-          id: id
-        }
-      }),
+      price: pi,
+      quantity: 1,
+      metadata: {
+        id: id,
+      },
     };
-    fetch("/create-checkout-session", postRequestObj)
-      .then((r) => r.json())
-      .then((data) => (window.location.href = data.url));
-  }
+
+    axios
+      .post("/create-checkout-session", postRequestObj, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => response.data)
+      .then((data) => (window.location.href = data.url))
+      .catch((error) => {
+        console.error("Error purchasing credits:", error);
+      });
+  };
 
   return (
     <>
-      <GlobalStyles
-        styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }}
-      />
       <Container
         disableGutters
         maxWidth="sm"
@@ -103,9 +92,8 @@ export default function Product() {
           color="text.secondary"
           component="p"
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae ex
-          minus molestias velit dignissimos officiis libero itaque repudiandae
-          doloribus fugit?
+          Discover the transformative world of tea at our school.
+          Purchase lesson credits tailored to your needs. Begin your enchanting tea journey today!
         </Typography>
       </Container>
       <Container maxWidth="md" component="main">
@@ -153,22 +141,20 @@ export default function Product() {
                   <CardMedia
                     sx={{ height: 140 }}
                     image={tier.image}
-                    // title="green iguana"
                   />
                 </CardContent>
                 <CardActions>
-                    <Button
-                      type="submit"
-                      onClick={(e) => {
-                        console.log("submitted");
-                        purchaseCredits(e, tier.pi);
-                      }
-                        }
-                      fullWidth
-                      variant={tier.buttonVariant}
-                    >
-                      Check Out
-                    </Button>
+                  <Button
+                    type="submit"
+                    onClick={(e) => {
+                      console.log("submitted");
+                      purchaseCredits(e, tier.pi);
+                    }}
+                    fullWidth
+                    variant={tier.buttonVariant}
+                  >
+                    Check Out
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
