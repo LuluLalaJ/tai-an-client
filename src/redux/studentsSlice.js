@@ -82,6 +82,7 @@ const studentsSlice = createSlice({
           }
           return student;
         });
+        state.students = state.students.filter(student => student.enrollments.length > 0)
       });
   },
 });

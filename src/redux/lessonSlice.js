@@ -227,7 +227,7 @@ const lessonSlice = createSlice({
         );
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
-        const [lessonId, enrollmentId] = action.payload;
+        const [lessonId, enrollmentId, role] = action.payload;
         const lesson1 = state.myLessons.find(
           (lesson) => lesson.id === lessonId
         );
@@ -237,7 +237,11 @@ const lessonSlice = createSlice({
           );
         }
 
-        // state.myLessons = state.myLessons.filter(lesson => lesson.id !== lessonId)
+        if (role === "student") {
+          state.myLessons = state.myLessons.filter(
+            (lesson) => lesson.id !== lessonId
+          );
+        }
 
         const lesson2 = state.currentCal.find(
           (lesson) => lesson.id === lessonId

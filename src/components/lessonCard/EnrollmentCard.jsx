@@ -16,7 +16,6 @@ import CommentIcon from "@mui/icons-material/Comment";
 
 
 export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
-    // console.log(enrollment)
     const dispatch = useDispatch()
     const {student:{first_name, last_name, avatar, id: student_id}, comment, status, id, lesson_id} = enrollment
     const {user, role} = useSelector(store => store.user)
@@ -29,7 +28,7 @@ export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
              `Are you sure you want to unenroll ${first_name} ${last_name}`
            )
          ) {
-           dispatch(cancelEnrollment([lesson_id, id]));
+           dispatch(cancelEnrollment([lesson_id, id, role]));
          }
     }
 
@@ -39,9 +38,11 @@ export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
           `Are you sure you want to unenroll from the lesson?`
         )
       ) {
-        dispatch(cancelEnrollment([lesson_id, id]));
+        dispatch(cancelEnrollment([lesson_id, id, role]));
       }
     };
+
+    console.log(role)
 
   return (
     <>

@@ -163,7 +163,7 @@ export default function LessonPop({ info }) {
                 variant="contained"
                 fullWidth
                 onClick={() => {
-                  dispatch(cancelEnrollment([lessonId, enrollmentId]));
+                  dispatch(cancelEnrollment([lessonId, enrollmentId, role]));
                   dispatch(dispatch(closeLessonPop()));
                 }}
               >

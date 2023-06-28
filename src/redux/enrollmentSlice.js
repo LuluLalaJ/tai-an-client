@@ -21,12 +21,14 @@ const initialState = {
 
 export const cancelEnrollment = createAsyncThunk(
   "enrollment/cancelEnrollment",
-  async ([lessonId, enrollmentId], thunkAPI) => {
+  async ([lessonId, enrollmentId, role], thunkAPI) => {
     try {
       const resp = await axios.delete(
         `/lessons/${lessonId}/enrollments/${enrollmentId}`
       );
-      thunkAPI.dispatch(cancelEnrollmentSuccess([lessonId, enrollmentId]));
+      thunkAPI.dispatch(
+        cancelEnrollmentSuccess([lessonId, enrollmentId, role])
+      );
       thunkAPI.dispatch(cancelStudentEnrollmentSuccess(enrollmentId));
       return resp.data;
     } catch (error) {
