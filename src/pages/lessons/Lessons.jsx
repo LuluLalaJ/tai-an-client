@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Toolbar, TextField, IconButton, Grid, Container, Typography} from "@mui/material";
+import { Box, Toolbar, TextField, IconButton, Grid, Container, Typography} from "@mui/material";
 import { LessonCard } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherLessons, getStudentLessons } from "../../redux/lessonSlice";
@@ -33,27 +33,28 @@ const Lessons = () => {
   };
 
   const filteredLessons = sortedLessons.filter((lesson) => {
-    const { title, description, teacher: {first_name, last_name} } = lesson;
+    const { title, description, teacher: {first_name, last_name}, start } = lesson;
     const keyword = searchKeyword.toLowerCase();
     return (
       title.toLowerCase().includes(keyword) ||
       description.toLowerCase().includes(keyword) ||
-      `${first_name} ${last_name}`.toLowerCase().includes(keyword)
+      `${first_name} ${last_name}`.toLowerCase().includes(keyword) ||
+      start.toLowerCase().includes(keyword)
     );
   });
 
 
   return (
-    <Container sx={{ py: 2, minHeight: "100vh"}} maxWidth="md">
+    <Container sx={{ py: 2, minHeight: "100vh" }} maxWidth="md">
       <Toolbar
         sx={{
           borderBottom: 1,
           borderColor: "divider",
           display: "flex",
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
         }}
       >
-        <div>
+        <Box sx={{ flex: "30%" }}>
           <IconButton
             variant="outlined"
             size="small"
@@ -68,20 +69,20 @@ const Lessons = () => {
           >
             <KeyboardDoubleArrowUpIcon />
           </IconButton>
-        </div>
-        <div>
-          <TextField
-            label="Search"
-            variant="outlined"
-            value={searchKeyword}
-            onChange={handleSearchChange}
-            size="small"
-            placeholder="Search"
-          />
-          <IconButton aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </div>
+        </Box>
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={searchKeyword}
+          onChange={handleSearchChange}
+          size="small"
+          fullWidth
+          placeholder="Search by title, description, teacher, or dates"
+          sx={{ flex: "60%" }}
+        />
+        <IconButton aria-label="search">
+          <SearchIcon />
+        </IconButton>
       </Toolbar>
 
       {filteredLessons.length === 0 ? (

@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudents } from "../../redux/studentsSlice";
 import { StudentCard }from "../../components";
-import { Toolbar, TextField, IconButton, Grid, Container } from "@mui/material";
+import {
+  Box,
+  Toolbar,
+  TextField,
+  IconButton,
+  Grid,
+  Container,
+} from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import { sortByStringAsc, sortByStringDesc } from "../../utilities";
@@ -16,6 +22,7 @@ const Students = () => {
   const { students } = useSelector(store => store.students)
   const [sortedStudents, setSortedStudents] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
+
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
@@ -30,6 +37,7 @@ const Students = () => {
       state,
       country
     } = student;
+
     const keyword = searchKeyword.toLowerCase();
     return (
       `${first_name} ${last_name}`.toLowerCase().includes(keyword) ||
@@ -45,20 +53,19 @@ const Students = () => {
   }, [dispatch, user.id]);
 
   useEffect(() => {
-    setSortedStudents(sortByStringAsc(students));
+    setSortedStudents(sortByStringAsc(students, "last_name"));
   }, [students]);
 
   return (
-    <Container sx={{ py: 2, minHeight:"100vh" }} maxWidth="md">
+    <Container sx={{ py: 2, minHeight: "100vh" }} maxWidth="md">
       <Toolbar
         sx={{
           borderBottom: 1,
           borderColor: "divider",
           display: "flex",
-          justifyContent: "space-between",
         }}
       >
-        <div>
+        <Box sx={{ flex: "30%" }}>
           <IconButton
             variant="outlined"
             size="small"
@@ -77,34 +84,26 @@ const Students = () => {
           >
             <KeyboardDoubleArrowUpIcon />
           </IconButton>
-
-          <IconButton
-            variant="outlined"
-            size="small"
-            onClick={() => setSortedStudents(students)}
-          >
-            <ShuffleIcon />
-          </IconButton>
-        </div>
-        <div>
+        </Box>
           <TextField
             label="Search"
             variant="outlined"
             value={searchKeyword}
             onChange={handleSearchChange}
             size="small"
-            placeholder="Search"
+            placeholder="Search by name, email, or hometown"
+            fullWidth
+            sx={{ flex: "60%" }}
           />
           <IconButton aria-label="search">
             <SearchIcon />
           </IconButton>
-        </div>
       </Toolbar>
 
       <Grid container spacing={4} sx={{ py: 1 }}>
         {filteredStudents.map((student) => (
-              <StudentCard student={student} key={student.id} />
-            ))}
+          <StudentCard student={student} key={student.id} />
+        ))}
       </Grid>
     </Container>
   );

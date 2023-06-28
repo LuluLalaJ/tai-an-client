@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 const StudentCard = ({student}) => {
       const { user } = useSelector((store) => store.user);
 
-  const {avatar, email, enrollments, first_name, last_name} = student
+  const {avatar, email, enrollments, first_name, last_name, city, state, country} = student
 
 const enrollmentsInMyLessons = enrollments.filter((enrollment) => {
   return enrollment.lesson.teacher_id === user.id;
@@ -48,16 +48,14 @@ if (enrollmentsInMyLessons.length === 0) {
           alt={`${first_name} ${last_name}`}
         />
         <CardContent>
-          <Typography variant="h6" color="text.secondary">
+          <Typography variant="h6" color="text.primary">
             Total Lessons: {enrollmentsInMyLessons.length}
           </Typography>
+          <Typography variant="body1" color="text.primary">
+            From: {city}, {state}, {country}
+          </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          {/* <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-           */}
-        </CardActions>
+        <CardActions disableSpacing></CardActions>
       </Card>
     </Grid>
   );
