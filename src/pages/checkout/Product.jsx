@@ -70,7 +70,7 @@ export default function Product() {
   };
 
   return (
-    <>
+    <Box minHeight="100vh">
       <Container
         disableGutters
         maxWidth="sm"
@@ -92,19 +92,15 @@ export default function Product() {
           color="text.secondary"
           component="p"
         >
-          Discover the transformative world of tea at our school.
-          Purchase lesson credits tailored to your needs. Begin your enchanting tea journey today!
+          Discover the transformative world of tea at our school. Purchase
+          lesson credits tailored to your needs. Begin your enchanting tea
+          journey today!
         </Typography>
       </Container>
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
-            <Grid
-              item
-              key={tier.title}
-              xs={12}
-              md={4}
-            >
+            <Grid item key={tier.title} xs={12} md={4}>
               <Card>
                 <CardHeader
                   title={tier.title}
@@ -137,10 +133,7 @@ export default function Product() {
                       ${tier.price}
                     </Typography>
                   </Box>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image={tier.image}
-                  />
+                  <CardMedia sx={{ height: 140 }} image={tier.image} />
                 </CardContent>
                 <CardActions>
                   <Button
@@ -159,6 +152,6 @@ export default function Product() {
           ))}
         </Grid>
       </Container>
-    </>
+    </Box>
   );
 }

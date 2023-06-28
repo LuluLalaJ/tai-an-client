@@ -44,7 +44,7 @@ const Lessons = () => {
 
 
   return (
-    <Container sx={{ py: 2 }} maxWidth="md">
+    <Container sx={{ py: 2, minHeight: "100vh"}} maxWidth="md">
       <Toolbar
         sx={{
           borderBottom: 1,

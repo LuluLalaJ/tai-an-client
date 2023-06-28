@@ -4,7 +4,7 @@ import { Grid, Container, Typography}from "@mui/material";
   const Home = () => {
   return (
     <Container maxWidth="lg">
-      <Grid container sx={{ height: "100vh" }}>
+      <Grid container sx={{ minHeight: "100vh" }}>
         <Grid item md={4} >
           <Typography variant="h1" sx={{ pt: 30 }}>
             Tai-an

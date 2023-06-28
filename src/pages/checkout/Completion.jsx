@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 const Completion = () => {
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" minHeight="100vh">
       <Paper
         sx={{
           position: "relative",
@@ -57,7 +57,7 @@ const Completion = () => {
         </Grid>
       </Paper>
     </Container>
-  )
+  );
 };
 
 export default Completion;

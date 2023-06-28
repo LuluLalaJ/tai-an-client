@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 const Error = () => {
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" minHeight="100vh">
       <Paper
         sx={{
           position: "relative",
@@ -44,7 +44,12 @@ const Error = () => {
               >
                 404 NOT FOUND
               </Typography>
-              <Typography variant="h5" color="inherit" component={RouterLink} to="/">
+              <Typography
+                variant="h5"
+                color="inherit"
+                component={RouterLink}
+                to="/"
+              >
                 Go back to Home
               </Typography>
             </Box>

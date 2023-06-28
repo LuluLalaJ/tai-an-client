@@ -14,7 +14,7 @@ const Teachers = () => {
   }, [dispatch]);
 
   return (
-    <main>
+    <Box sx={{ minHeight: "100vh" }}>
       <Box
         sx={{
           bgcolor: "background.paper",
@@ -42,8 +42,9 @@ const Teachers = () => {
             Japanese tea ceremony. With their extensive knowledge, dedication,
             and passion for the art, they impart not only the technical skills
             of making tea but also the profound principles of harmony, respect,
-            and tranquility. Through their guidance, students embark on a transformative journey,
-            discovering the beauty and depth of the tea ceremony.
+            and tranquility. Through their guidance, students embark on a
+            transformative journey, discovering the beauty and depth of the tea
+            ceremony.
           </Typography>
         </Container>
       </Box>
@@ -56,7 +57,7 @@ const Teachers = () => {
           ))}
         </Grid>
       </Container>
-    </main>
+    </Box>
   );
 }
 

@@ -56,7 +56,7 @@ export default function SignUp() {
   }
 
   return (
-    <Container sx={{ height: "80vh" }}>
+    <Container sx={{ minHeight: "100vh" }}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

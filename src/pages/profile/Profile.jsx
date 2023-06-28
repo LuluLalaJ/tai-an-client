@@ -3,7 +3,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Container, Stack, Typogr
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StudentProfileEditor,
   TeacherProfileEditor,
@@ -12,14 +12,17 @@ import {
 } from "../../components";
 import { sortByDateAsc, sortByDateDesc } from "../../utilities";
 import axios from "axios";
+import { checkSession } from "../../redux/userSlice";
 
 
 export default function Profile() {
+  const dispatch = useDispatch();
 
-  const { user, role } = useSelector(store => store.user )
-  const [ records, setRecords ] = useState([])
-  const [ sortedPayments, setSortedPayments ] = useState([])
-  const [ sortedRecords, setSortedRecords ] = useState([])
+  const { user, role } = useSelector((store) => store.user);
+  const [records, setRecords] = useState([]);
+  const [credit, setCredit] = useState(user.lesson_credit)
+  const [sortedPayments, setSortedPayments] = useState([]);
+  const [sortedRecords, setSortedRecords] = useState([]);
 
   useEffect(() => {
     if (role === "student") {
@@ -39,14 +42,26 @@ export default function Profile() {
       axios
         .get(`/students/${user.id}/lessoncredithistory`)
         .then((r) => {
-          setRecords(r.data)
-          setSortedRecords(sortByDateDesc(r.data, "created_at"));})
+          setRecords(r.data);
+          setSortedRecords(sortByDateDesc(r.data, "created_at"));
+        })
         .catch((err) => {
           console.log(err);
         });
     }
   }, [role, user.id]);
 
+  useEffect(() => {
+    if (role === "student") {
+      axios
+        .get(`/students/${user.id}`)
+        .then((r) => {setCredit(r.data.lesson_credit);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [])
 
   return (
     <Container sx={{ mt: 5, minHeight: "100vh" }}>
@@ -62,12 +77,7 @@ export default function Profile() {
               <Typography>Remaining Credit</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                $
-                {records
-                  ? user.lesson_credit
-                  : records[records.length - 1].new_credit}
-              </Typography>
+              <Typography>$ {credit}</Typography>
             </AccordionDetails>
           </Accordion>
 
