@@ -3,6 +3,7 @@ import {Grid, Box, Typography, Container} from "@mui/material";
 import { TeacherCard } from '../../components'
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachers } from '../../redux/teachersSlice';
+import { sortByStringAsc } from '../../utilities';
 
 
 const Teachers = () => {
@@ -50,7 +51,7 @@ const Teachers = () => {
       </Box>
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container spacing={4}>
-          {teachers.map((teacher) => (
+          {sortByStringAsc(teachers, "last_name").map((teacher) => (
             <Grid item key={teacher.id} xs={12} sm={6} md={4}>
               <TeacherCard teacher={teacher} />
             </Grid>
