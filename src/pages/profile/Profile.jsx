@@ -49,7 +49,7 @@ export default function Profile() {
 
 
   return (
-    <Container sx={{ mt: 5 }}>
+    <Container sx={{ mt: 5, minHeight: "100vh" }}>
       {role === "student" ? <StudentProfileEditor /> : <TeacherProfileEditor />}
 
       {role === "student" && (
@@ -97,7 +97,10 @@ export default function Profile() {
               >
                 <KeyboardDoubleArrowUpIcon />
               </IconButton>
-              <Stack spacing={1}>
+              <Stack
+                spacing={1}
+                sx={{ overflowY: "scroll", maxHeight: "30vh" }}
+              >
                 {sortedRecords.length === 0 ? (
                   <Typography>There are no records!</Typography>
                 ) : (
@@ -137,7 +140,10 @@ export default function Profile() {
               >
                 <KeyboardDoubleArrowUpIcon />
               </IconButton>
-              <Stack spacing={1}>
+              <Stack
+                spacing={1}
+                sx={{ overflowY: "scroll", maxHeight: "30vh" }}
+              >
                 {sortedPayments.length === 0 ? (
                   <Typography>You didn't purchase any credits yet!</Typography>
                 ) : (
