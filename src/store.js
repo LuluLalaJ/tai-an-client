@@ -5,6 +5,7 @@ import drawerReducer from './redux/drawerSlice'
 import lessonReducer from "./redux/lessonSlice";
 import enrollmentReducer from "./redux/enrollmentSlice";
 import studentsReducer from "./redux/studentsSlice"
+import "./index.css"
 
 export const store = configureStore({
   reducer: {
