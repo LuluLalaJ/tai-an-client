@@ -11,8 +11,8 @@ export default function Signin() {
   const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
-    username: yup.string().required("Must enter a username").max(20),
-    password: yup.string().required("Must enter password").max(125),
+    username: yup.string().required("Must enter the username").max(20),
+    password: yup.string().required("Must enter the password").max(125),
   });
 
   const formik = useFormik({
@@ -27,7 +27,7 @@ export default function Signin() {
     },
   });
 
-  const { values, handleChange, handleSubmit, touched, errors } = formik;
+  const { values, handleChange, handleSubmit, handleBlur, touched, errors } = formik;
 
   if (isSignedIn) {
     return <Navigate to="/" />;
@@ -80,9 +80,11 @@ export default function Signin() {
               label="Username"
               name="username"
               autoComplete="username"
+              onBlur={handleBlur}
               onChange={handleChange}
               value={values.username}
               error={!!touched.username && !!errors.username}
+              helperText={touched.username && errors.username}
             />
             <TextField
               margin="normal"
@@ -93,9 +95,11 @@ export default function Signin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
               error={!!touched.password && !!errors.password}
+              helperText={touched.password && errors.password}
             />
             <RadioGroup
               row
@@ -127,9 +131,6 @@ export default function Signin() {
             {signInError && <Alert severity="error">{signInError.error}</Alert>}
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link> */}
               </Grid>
               <Grid item>
                 <Link component={RouterLink} to={"/signup"} variant="body2">

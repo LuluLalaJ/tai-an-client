@@ -25,7 +25,7 @@ export default function SignUp() {
   const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
-    username: yup.string().required("Must enter a username"),
+    username: yup.string().required("required"),
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     email: yup.string().email("Invalid email").required("required"),
@@ -43,14 +43,13 @@ export default function SignUp() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      // CHECK WITH PRINCETON ON THIS
       values["first_name"] = values.firstName;
       values["last_name"] = values.lastName;
       dispatch(signUpUser(values));
     },
   });
 
-  const { values, handleChange, handleSubmit, touched, errors } = formik;
+  const { values, handleChange, handleSubmit, handleBlur, touched, errors } = formik;
 
   if (isSignedIn) {
     return <Navigate to="/" />;
@@ -89,9 +88,11 @@ export default function SignUp() {
                   label="Username"
                   name="username"
                   autoComplete="username"
+                  onBlur={handleBlur}
                   value={values.username}
                   onChange={handleChange}
                   error={!!touched.username && !!errors.username}
+                  helperText={touched.username && errors.username}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -102,9 +103,11 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  onBlur={handleBlur}
                   value={values.firstName}
                   onChange={handleChange}
                   error={!!touched.firstName && !!errors.firstName}
+                  helperText={touched.firstName && errors.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -115,9 +118,11 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onBlur={handleBlur}
                   value={values.lastName}
                   onChange={handleChange}
                   error={!!touched.lastName && !!errors.lastName}
+                  helperText={touched.lastName && errors.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,9 +133,11 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onBlur={handleBlur}
                   value={values.email}
                   onChange={handleChange}
                   error={!!touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -142,9 +149,11 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onBlur={handleBlur}
                   value={values.password}
                   onChange={handleChange}
                   error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
                 />
               </Grid>
               <Grid item xs={12}>
