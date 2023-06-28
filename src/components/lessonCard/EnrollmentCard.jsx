@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   cancelEnrollment,
   changeEnrollmentStatus,
-  resetChangeEnrollError,
 } from "../../redux/enrollmentSlice";
 import FeedbackModal from './FeedbackModal';
 import CommentIcon from "@mui/icons-material/Comment";
@@ -48,16 +47,6 @@ export const EnrollmentCard = ({enrollment, isFull, canEdit, isFutureEvent}) => 
       }
     };
 
-    console.log(changeEnrollError)
-
-    // useEffect(() => {
-    //   if (changeEnrollError) {
-    //     if (changeEnrollError.error === "Insufficient credit") {
-    //       dispatch(resetChangeEnrollError());
-    //       alert("Insufficient credit to register; please purchase more!");
-    //     }
-    //   }
-    // }, [changeEnrollError]);
 
   return (
     <>

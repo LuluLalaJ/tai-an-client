@@ -11,6 +11,7 @@ import {
 import {
   editStudentEnrollmentSuccess,
   cancelStudentEnrollmentSuccess,
+  getStudents,
 } from "./studentsSlice";
 
 
@@ -62,6 +63,8 @@ export const changeEnrollmentStatus = createAsyncThunk(
         data
       );
       thunkAPI.dispatch(getTeacherLessons(teacherId))
+      thunkAPI.dispatch(getStudents(teacherId));
+
       thunkAPI.dispatch(
         editEnrollmentStatusSuccess([lessonId, enrollmentId, data])
       );

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import * as yup from "yup";
 import { Formik } from 'formik';
 import dayjs from "dayjs";
@@ -23,6 +23,7 @@ dayjs.tz.setDefault("UTC");
 
 const LessonEditor = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const { lessonId } = useParams()
   const { lessonToEdit } = useSelector(store => store.lesson)
 
@@ -65,6 +66,7 @@ const LessonEditor = () => {
     const handleFormSubmit = (values) => {
       // console.log(typeof(values.start))
       dispatch(editLessonRequest([id, values]));
+      navigate("/lessons");
     };
 
   if (lessonToEdit) {

@@ -33,7 +33,7 @@ const EnrollmentDetail = ({enrollment}) => {
     const isFutureEvent = new Date(start) > TOMORROW;
 
      const handleFormSubmit = (values) => {
-       dispatch(changeEnrollmentStatus([lesson_id, id, values]));
+       dispatch(changeEnrollmentStatus([lesson_id, id, values, user.id]));
      };
 
     const handleDeleteEnrollment = () => {

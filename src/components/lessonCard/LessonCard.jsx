@@ -46,7 +46,7 @@ const LessonCard = ({ lesson }) => {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-    const {start, description, title, enrollments, is_full } = lesson
+    const {start, end, description, title, enrollments, is_full } = lesson
 
     //BACKEND HANDLING TOO
     const isFutureEvent = new Date(start) > TOMORROW;
@@ -66,7 +66,7 @@ const LessonCard = ({ lesson }) => {
               </Avatar>
             }
             title={`${title}`}
-            subheader={start}
+            subheader={`${start.slice(0, -3)}-${end.slice(-8, -3)}`}
           />
 
           <CardMedia

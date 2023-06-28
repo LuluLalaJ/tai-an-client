@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useEffect, useState, useRef } from "react";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,10 +8,10 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
 import EnrollmentDetail from "./EnrollmentDetail";
 import { Stack, Container } from "@mui/material";
-import { sortByDateDesc } from "../../utilities";
 
 export default function StudentEnrollmentModal({enrollments}) {
-  const [open, setOpen] = React.useState(false);
+
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => () => {
     setOpen(true);
   };
@@ -18,10 +19,10 @@ export default function StudentEnrollmentModal({enrollments}) {
     setOpen(false);
   };
 
-  const descriptionElementRef = React.useRef(null);
+  const descriptionElementRef = useRef(null);
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -43,6 +44,8 @@ export default function StudentEnrollmentModal({enrollments}) {
       return 0;
     }
   });
+
+
 
   return (
     <div>

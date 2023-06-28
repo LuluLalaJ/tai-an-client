@@ -4,7 +4,7 @@ import { LessonCard } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherLessons, getStudentLessons } from "../../redux/lessonSlice";
 import { sortByDateAsc, sortByDateDesc } from "../../utilities";
-
+import { resetChangeEnrollError } from "../../redux/enrollmentSlice";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
@@ -13,6 +13,17 @@ const Lessons = () => {
   const dispatch = useDispatch()
   const { user, role } = useSelector((store) => store.user);
   const { myLessons } = useSelector((store) => store.lesson);
+  const { changeEnrollError } = useSelector((store) => store.enrollment);
+  console.log(changeEnrollError);
+  useEffect(() => {
+    if (changeEnrollError) {
+      if (changeEnrollError.error === "Insufficient credit") {
+        alert("Insufficient credit to register!");
+      }
+      dispatch(resetChangeEnrollError());
+    }
+  }, [changeEnrollError]);
+
   const [sortedLessons, setSortedLessons] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 

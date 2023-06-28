@@ -15,14 +15,25 @@ import SearchIcon from "@mui/icons-material/Search";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import { sortByStringAsc, sortByStringDesc } from "../../utilities";
+import { resetChangeEnrollError } from "../../redux/enrollmentSlice";
 
 const Students = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector(store => store.user)
+  const { user } = useSelector((store) => store.user);
+  const { changeEnrollError } = useSelector((store) => store.enrollment);
+
   const { students } = useSelector(store => store.students)
   const [sortedStudents, setSortedStudents] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 
+  useEffect(() => {
+    if (changeEnrollError) {
+      if (changeEnrollError.error === "Insufficient credit") {
+        alert("Insufficient credit to register!");
+      }
+      dispatch(resetChangeEnrollError());
+    }
+  }, [changeEnrollError]);
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
