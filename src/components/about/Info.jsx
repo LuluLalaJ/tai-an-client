@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { Button, Typography } from "@mui/material";
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import DirectionsSubwayIcon from "@mui/icons-material/DirectionsSubway";
 
 const item = {
   display: "flex",
@@ -15,18 +18,12 @@ const item = {
 const number = {
   fontSize: 24,
   fontFamily: "default",
-  color: "secondary.main",
+  color: "primary.main",
   fontWeight: "medium",
-};
-
-const image = {
-  height: 55,
-  my: 4,
 };
 
 function Info() {
   return (
-    <Box component="section" sx={{ display: "flex", overflow: "hidden" }}>
       <Container
         sx={{
           mt: 10,
@@ -37,80 +34,69 @@ function Info() {
           alignItems: "center",
         }}
       >
-        <Box
-          component="img"
-          src="/static/themes/onepirate/productCurvyLines.png"
-          alt="curvy lines"
-          sx={{
-            pointerEvents: "none",
-            position: "absolute",
-            top: -180,
-            opacity: 0.7,
-          }}
-        />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
-          How it works
+        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 10 }}>
+          About
         </Typography>
-        <div>
-          <Grid container spacing={5}>
-            <Grid item xs={12} md={4}>
-              <Box sx={item}>
-                <Box sx={number}>1.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
-                </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Box sx={item}>
+              <Box sx={number}>Hours</Box>
+              <Box>
+                <QueryBuilderIcon sx={{ my: 4 }} />
               </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={item}>
-                <Box sx={number}>2.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks2.svg"
-                  alt="graph"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited
-                  quantities, so be quick.
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={item}>
-                <Box sx={number}>3.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  {"New offers every week. New experiences, new surprises. "}
-                  {"Your Sundays will no longer be alike."}
-                </Typography>
-              </Box>
-            </Grid>
+              <Typography variant="h5" align="center">
+                Weekdays: 9 am to 6 pm
+              </Typography>
+              <Typography variant="h5" align="center">
+                Saturday: 9 am to 8 pm
+              </Typography>
+              <Typography variant="h5" align="center">
+                Sunday: 11 am to 5 pm
+              </Typography>
+            </Box>
           </Grid>
-        </div>
+          <Grid item xs={12} md={4}>
+            <Box sx={item}>
+              <Box sx={number}>Location</Box>
+              <Box>
+                <LocationOnIcon sx={{ my: 4 }} />
+              </Box>
+              <Typography variant="h5" align="center">
+                153 E 69th Street
+              </Typography>
+              <Typography variant="h5" align="center">
+                New York
+              </Typography>
+              <Typography variant="h5" align="center">
+                NY
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={item}>
+              <Box sx={number}>Subway</Box>
+              <Box>
+                <DirectionsSubwayIcon sx={{ my: 4 }} />
+              </Box>
+              <Typography variant="h5" align="center">
+                68th Street (6)
+              </Typography>
+              <Typography variant="h5" align="center">
+                72nd Street (N/Q)
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
         <Button
-          color="secondary"
           size="large"
           variant="contained"
           component="a"
-          href="/premium-themes/onepirate/sign-up/"
+          href="/signup"
           sx={{ mt: 8 }}
         >
           Get started
         </Button>
       </Container>
-    </Box>
   );
 }
 

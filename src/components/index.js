@@ -12,7 +12,6 @@ import LessonCard from "./lessonCard/LessonCard";
 import StudentCard from "./studentCard/StudentCard";
 import LessonCreditHistory from "./profile/LessonCreditHistory";
 import Info from "./about/Info";
-import Hero from "./about/Hero";
 
 export {
   Footer,
@@ -29,5 +28,4 @@ export {
   PaymentHistoryCard,
   LessonCreditHistory,
   Info,
-  Hero
 };
