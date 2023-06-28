@@ -8,7 +8,7 @@ import { signOutUser } from "../../redux/userSlice";
 import { toggleDrawer } from "../../redux/drawerSlice";
 
 export default function TopBar() {
-  const pages = ["Teachers"];
+  const pages = ["Teachers", "About"];
   const { isSignedIn, user } = useSelector( store => store.user)
   const dispatch = useDispatch()
   const navigate = useNavigate();

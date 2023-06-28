@@ -4,6 +4,7 @@ import { TopBar, SideBar, Footer } from './components'
 import { useSelector } from "react-redux";
 
 import {
+  About,
   AuthWrapper,
   Error,
   Home,
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/teachers" element={<Teachers />} />
+          <Route path="/about" element={<About />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
 
