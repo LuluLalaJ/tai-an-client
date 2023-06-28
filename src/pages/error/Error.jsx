@@ -13,7 +13,7 @@ const Error = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundImage: `url(https://source.unsplash.com/random?wallpapers)`,
+          backgroundImage: `url(https://shorturl.at/iyJW7)`,
           minHeight: "100vh",
         }}
       >

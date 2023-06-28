@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 const Canceled = () => {
   return (
-    <Container maxWidth="xl"  sx={{minHeight: "100vh"}} >
+    <Container maxWidth="xl" sx={{ minHeight: "100vh" }}>
       <Paper
         sx={{
           position: "relative",
@@ -12,7 +12,7 @@ const Canceled = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundImage: `url(https://source.unsplash.com/random?wallpapers)`,
+          backgroundImage: `url(https://shorturl.at/hvU59)`,
           minHeight: "100vh",
         }}
       >

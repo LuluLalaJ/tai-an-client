@@ -13,7 +13,7 @@ const Completion = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundImage: `url(https://source.unsplash.com/random?wallpapers)`,
+          backgroundImage: `url(https://shorturl.at/pxBJS)`,
           minHeight: "100vh",
         }}
       >
