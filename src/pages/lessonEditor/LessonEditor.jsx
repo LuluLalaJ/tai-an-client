@@ -69,7 +69,7 @@ const LessonEditor = () => {
 
   if (lessonToEdit) {
 return (
-  <Box m="20px" minHeight="100vh">
+  <Box m="20px" sx={{ minHeight: "100vh" }}>
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={initialValues}

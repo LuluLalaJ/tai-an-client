@@ -107,7 +107,7 @@ const Schedule = () => {
   })
 
 return (
-  <Box m="20px" minHeight="100vh">
+  <Box m="20px" sx={{ minHeight: "100vh" }}>
     <LessonModal />
     <FullCalendar
       timeZone={"UTC"}

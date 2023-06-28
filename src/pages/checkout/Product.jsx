@@ -70,7 +70,7 @@ export default function Product() {
   };
 
   return (
-    <Box minHeight="100vh">
+    <Box sx={{ minHeight: "100vh" }}>
       <Container
         disableGutters
         maxWidth="sm"

@@ -66,7 +66,7 @@ export default function LessonPop({ info }) {
 
   useEffect(() => {
     if (error) {
-      if (error.error == "Insufficient credit") {
+      if (error.error === "Insufficient credit") {
         alert("Insufficient credit to register; please purchase more!")
         dispatch(resetEnrollmentError());
       }

@@ -235,6 +235,8 @@ const lessonSlice = createSlice({
             (enrollment) => enrollment.id !== enrollmentId
           );
         }
+        state.myLessons.filter(lesson => lesson.id !== lessonId )
+
         const lesson2 = state.currentCal.find(
           (lesson) => lesson.id === lessonId
         );

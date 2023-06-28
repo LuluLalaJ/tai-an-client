@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 const Canceled = () => {
   return (
-    <Container maxWidth="xl"  minHeight="100vh" >
+    <Container maxWidth="xl"  sx={{minHeight: "100vh"}} >
       <Paper
         sx={{
           position: "relative",
