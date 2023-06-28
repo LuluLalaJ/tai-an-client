@@ -44,13 +44,14 @@ const Lessons = () => {
   };
 
   const filteredLessons = sortedLessons.filter((lesson) => {
-    const { title, description, teacher: {first_name, last_name}, start } = lesson;
+    const { title, description, teacher: {first_name, last_name}, start, end} = lesson;
     const keyword = searchKeyword.toLowerCase();
     return (
       title.toLowerCase().includes(keyword) ||
       description.toLowerCase().includes(keyword) ||
       `${first_name} ${last_name}`.toLowerCase().includes(keyword) ||
-      start.toLowerCase().includes(keyword)
+      start.toLowerCase().includes(keyword) ||
+      end.toLowerCase().includes(keyword)
     );
   });
 

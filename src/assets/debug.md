@@ -1,9 +1,3 @@
-Sign Up:
-- front-end & back-end validation for inputs (what if users input invalid data)
-- reveal password option?
-- reset password option?
+- allow search lessons by end time
+- teachers can't start new lessons at certain time frame
 
-
-Profile:
-- font-end & back-end validation for inputs
-- lesson credit/purchase history empty error handling
