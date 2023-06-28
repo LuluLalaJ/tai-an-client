@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -10,15 +10,20 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useDispatch, useSelector } from 'react-redux';
-import { cancelEnrollment, changeEnrollmentStatus } from '../../redux/enrollmentSlice';
+import {
+  cancelEnrollment,
+  changeEnrollmentStatus,
+  resetChangeEnrollError,
+} from "../../redux/enrollmentSlice";
 import FeedbackModal from './FeedbackModal';
 import CommentIcon from "@mui/icons-material/Comment";
 
 
-export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
+export const EnrollmentCard = ({enrollment, isFull, canEdit, isFutureEvent}) => {
     const dispatch = useDispatch()
     const {student:{first_name, last_name, avatar, id: student_id}, comment, status, id, lesson_id} = enrollment
     const {user, role} = useSelector(store => store.user)
+    const {changeEnrollError} = useSelector(store => store.enrollment)
 
     const isStudentUser = role === "student" && user.id === student_id
 
@@ -42,7 +47,16 @@ export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
       }
     };
 
-    console.log(role)
+    console.log(changeEnrollError)
+
+    // useEffect(() => {
+    //   if (changeEnrollError) {
+    //     if (changeEnrollError.error === "Insufficient credit") {
+    //       dispatch(resetChangeEnrollError());
+    //       alert("Insufficient credit to register; please purchase more!");
+    //     }
+    //   }
+    // }, [changeEnrollError]);
 
   return (
     <>
@@ -68,7 +82,7 @@ export const EnrollmentCard = ({enrollment, canEdit, isFutureEvent}) => {
             {status === "waitlisted" && (
               <IconButton
                 aria-label="register"
-                disabled={!isFutureEvent}
+                disabled={!isFutureEvent || isFull}
                 onClick={() =>
                   dispatch(
                     changeEnrollmentStatus([

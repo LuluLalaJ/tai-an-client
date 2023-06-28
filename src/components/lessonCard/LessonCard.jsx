@@ -6,6 +6,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
+import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLessonRequest } from "../../redux/lessonSlice";
 import { Link as RouterLink } from "react-router-dom";
@@ -44,7 +46,7 @@ const LessonCard = ({ lesson }) => {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-    const {start, description, title, enrollments } = lesson
+    const {start, description, title, enrollments, is_full } = lesson
 
     //BACKEND HANDLING TOO
     const isFutureEvent = new Date(start) > TOMORROW;
@@ -56,7 +58,10 @@ const LessonCard = ({ lesson }) => {
             //maybe do group avatars here
             //maybe color separation between past and current events
             avatar={
-              <Avatar sx={{ bgcolor: (isFutureEvent) ? green[500] : grey[500]}} aria-label="lesson">
+              <Avatar
+                sx={{ bgcolor: isFutureEvent ? green[500] : grey[500] }}
+                aria-label="lesson"
+              >
                 {title[0]}
               </Avatar>
             }
@@ -71,6 +76,14 @@ const LessonCard = ({ lesson }) => {
             alt="Paella dish"
           />
           <CardContent>
+            {role === "student" && (
+              <Typography variant="body2" color="text.primary">
+                Teacher: {lesson.teacher.first_name} {lesson.teacher.last_name}
+              </Typography>
+            )}
+            <Typography variant="body2" color="text.primary">
+              Capacity: {is_full? "Full": "Not Full"}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               {description}
             </Typography>
@@ -95,7 +108,6 @@ const LessonCard = ({ lesson }) => {
                 </IconButton>
               </>
             )}
-
             <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}
@@ -135,6 +147,7 @@ const LessonCard = ({ lesson }) => {
                       key={enrollment.id}
                       canEdit={canEdit}
                       isFutureEvent={isFutureEvent}
+                      isFull={is_full}
                     />
                   ))}
               </List>

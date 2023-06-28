@@ -17,6 +17,7 @@ const initialState = {
   newEnrollment: null,
   isLoading: false,
   error: null,
+  changeEnrollError: null
 };
 
 export const cancelEnrollment = createAsyncThunk(
@@ -77,6 +78,9 @@ const enrollmentSlice = createSlice({
     resetEnrollmentError: state => {
       state.error = null
     },
+    resetChangeEnrollError: state => {
+      state.changeEnrollError = null
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -107,16 +111,19 @@ const enrollmentSlice = createSlice({
       })
       .addCase(changeEnrollmentStatus.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.changeEnrollError = null;
       })
       .addCase(changeEnrollmentStatus.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.changeEnrollError = null;
+      })
+      .addCase(changeEnrollmentStatus.rejected, (state, action) => {
+        state.isLoading = false;
+        state.changeEnrollError = action.payload;
       });
   },
 });
 
-export const {
-  resetEnrollmentError,
-} = enrollmentSlice.actions;
+export const { resetEnrollmentError, resetChangeEnrollError } =
+  enrollmentSlice.actions;
 export default enrollmentSlice.reducer;
