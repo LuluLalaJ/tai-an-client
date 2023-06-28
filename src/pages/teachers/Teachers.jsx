@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import {Grid, Box, Typography, Container} from "@mui/material";
 import { TeacherCard } from '../../components'
 import { useDispatch, useSelector } from "react-redux";
 import { getTeachers } from '../../redux/teachersSlice';

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { TopBar, SideBar, Footer } from './components'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   AuthWrapper,

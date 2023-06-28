@@ -4,7 +4,6 @@ import Error from "./error/Error";
 import Gallery from './gallery/Gallery';
 import Home from "./home/Home";
 import Lessons from "./lessons/Lessons";
-// import PrivateRoute from "./privateRoute/PrivateRoute";
 import Profile from "./profile/Profile";
 import Schedule from "./schedule/Schedule";
 import Signin from "./signin/Signin";
@@ -25,7 +24,6 @@ export {
   Lessons,
   Signin,
   Profile,
-  // PrivateRoute,
   Schedule,
   Signup,
   Students,

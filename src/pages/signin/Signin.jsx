@@ -1,22 +1,10 @@
-import { useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
+import {Alert, Avatar, Button, Box,TextField, FormControlLabel, Radio, RadioGroup, Grid, Link, Paper, Typography, } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../../redux/userSlice";
-
 
 export default function Signin() {
   const { isSignedIn, signInError } = useSelector((store) => store.user);
@@ -31,7 +19,7 @@ export default function Signin() {
     initialValues: {
       username: "",
       password: "",
-      role:"student"
+      role: "student",
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -42,7 +30,7 @@ export default function Signin() {
   const { values, handleChange, handleSubmit, touched, errors } = formik;
 
   if (isSignedIn) {
-    return <Navigate to="/" />
+    return <Navigate to="/" />;
   }
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
