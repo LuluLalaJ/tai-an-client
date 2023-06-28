@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -19,7 +19,7 @@ import { signInUser } from "../../redux/userSlice";
 
 
 export default function Signin() {
-  const { isSignedIn, error } = useSelector((store) => store.user);
+  const { isSignedIn, signInError } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
@@ -136,12 +136,7 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            {error
-            &&
-            <Alert severity="error">
-              {error.error}
-            </Alert>
-            }
+            {signInError && <Alert severity="error">{signInError.error}</Alert>}
             <Grid container>
               <Grid item xs>
                 {/* <Link href="#" variant="body2">

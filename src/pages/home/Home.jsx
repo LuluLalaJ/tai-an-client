@@ -1,15 +1,16 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Grid, Container, Typography}from "@mui/material";
 
   const Home = () => {
   return (
     <Container maxWidth="lg">
       <Grid container sx={{ height: "100vh" }}>
-        <Grid item md={4}>
-          <Typography variant="h2" sx={{ pt: 30 }}>
-            Welcome
+        <Grid item md={4} >
+          <Typography variant="h1" sx={{ pt: 30 }}>
+            Tai-an
+          </Typography>
+          <Typography variant="h2" sx={{ pt: 5 }}>
+            Tea School
           </Typography>
         </Grid>
         <Grid
