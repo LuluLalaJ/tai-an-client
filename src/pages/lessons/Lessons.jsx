@@ -51,7 +51,6 @@ const Lessons = () => {
           borderBottom: 1,
           borderColor: "divider",
           display: "flex",
-          // justifyContent: "space-between",
         }}
       >
         <Box sx={{ flex: "30%" }}>

@@ -6,8 +6,9 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
+import { green } from '@mui/material/colors';
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   cancelEnrollment,
   changeEnrollmentStatus,
@@ -20,19 +21,18 @@ import { TOMORROW } from "../../constants";
 
 const EnrollmentDetail = ({enrollment}) => {
     const dispatch = useDispatch();
-
+    const {user} = useSelector(store=>store.user)
     const {
       comment,
       id,
       lesson_id,
       status,
-      lesson: { start, end, title },
+      lesson: { start, end, title, is_full},
     } = enrollment;
 
     const isFutureEvent = new Date(start) > TOMORROW;
 
      const handleFormSubmit = (values) => {
-       console.log("submit", values);
        dispatch(changeEnrollmentStatus([lesson_id, id, values]));
      };
 
@@ -42,33 +42,34 @@ const EnrollmentDetail = ({enrollment}) => {
           `Are you sure you want to unenroll the student?`
         )
       ) {
-        //NEED TO RENDER IN THE FRONT AS WELL
         dispatch(cancelEnrollment([lesson_id, id]));
       }
     };
 
+  const full = is_full ? "full" : "not full"
   return (
     <>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar sx={{ bgcolor: isFutureEvent && green[500]}}>
             <AssignmentIndIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={`Lesson: ${title}`}
-          secondary={`Status: ${status}`}
+          secondary={`Lesson is ${full} | Status: ${status}`}
         />
         {status === "waitlisted" && (
           <IconButton
             aria-label="register"
-            disabled={!isFutureEvent}
+            disabled={!isFutureEvent || is_full}
             onClick={() =>
               dispatch(
                 changeEnrollmentStatus([
                   lesson_id,
                   id,
                   { status: "registered" },
+                  user.id,
                 ])
               )
             }
@@ -86,6 +87,7 @@ const EnrollmentDetail = ({enrollment}) => {
                   lesson_id,
                   id,
                   { status: "waitlisted" },
+                  user.id,
                 ])
               )
             }

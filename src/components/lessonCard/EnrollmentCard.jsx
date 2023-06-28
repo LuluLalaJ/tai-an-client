@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -17,6 +17,7 @@ import {
 } from "../../redux/enrollmentSlice";
 import FeedbackModal from './FeedbackModal';
 import CommentIcon from "@mui/icons-material/Comment";
+import axios from "axios";
 
 
 export const EnrollmentCard = ({enrollment, isFull, canEdit, isFutureEvent}) => {
@@ -89,6 +90,7 @@ export const EnrollmentCard = ({enrollment, isFull, canEdit, isFutureEvent}) => 
                       lesson_id,
                       id,
                       { status: "registered" },
+                      user.id,
                     ])
                   )
                 }
@@ -106,6 +108,7 @@ export const EnrollmentCard = ({enrollment, isFull, canEdit, isFutureEvent}) => 
                       lesson_id,
                       id,
                       { status: "waitlisted" },
+                      user.id,
                     ])
                   )
                 }

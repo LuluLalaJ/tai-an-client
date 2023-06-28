@@ -7,6 +7,7 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import IconButton from "@mui/material/IconButton";
 import EnrollmentDetail from "./EnrollmentDetail";
 import { Stack, Container } from "@mui/material";
+import { sortByDateDesc } from "../../utilities";
 
 export default function StudentEnrollmentModal({enrollments}) {
   const [open, setOpen] = React.useState(false);
@@ -17,7 +18,6 @@ export default function StudentEnrollmentModal({enrollments}) {
     setOpen(false);
   };
 
-  console.log(enrollments)
   const descriptionElementRef = React.useRef(null);
 
 
@@ -30,18 +30,26 @@ export default function StudentEnrollmentModal({enrollments}) {
     }
   }, [open]);
 
+
+  const sortedEnrollments = enrollments.sort((a, b) => {
+    const startTimeA = a.lesson.start;
+    const startTimeB = b.lesson.start;
+
+    if (startTimeA < startTimeB) {
+      return 1;
+    } else if (startTimeA > startTimeB) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <div>
       <IconButton aria-label="open-lesson-history" onClick={handleClickOpen()}>
         <LocalLibraryIcon />
       </IconButton>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll="paper"
-        // aria-labelledby="lesson-history"
-        // aria-describedby="lesson-history"
-      >
+      <Dialog open={open} onClose={handleClose} scroll="paper">
         <DialogTitle id="scroll-dialog-title">Lesson History</DialogTitle>
         <Container>
           <Stack
@@ -50,7 +58,7 @@ export default function StudentEnrollmentModal({enrollments}) {
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            {enrollments.map((enrollment) => (
+            {sortedEnrollments.map((enrollment) => (
               <EnrollmentDetail enrollment={enrollment} key={enrollment.id} />
             ))}
           </Stack>

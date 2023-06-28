@@ -12,7 +12,6 @@ import {
 } from "../../components";
 import { sortByDateAsc, sortByDateDesc } from "../../utilities";
 import axios from "axios";
-import { checkSession } from "../../redux/userSlice";
 
 
 export default function Profile() {

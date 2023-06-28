@@ -5,6 +5,7 @@ import {
   cancelEnrollmentSuccess,
   editEnrollmentStatusSuccess,
   addEnrollmentStatusSuccess,
+  getTeacherLessons,
 } from "./lessonSlice";
 
 import {
@@ -54,16 +55,18 @@ export const addEnrollment = createAsyncThunk(
 
 export const changeEnrollmentStatus = createAsyncThunk(
   "enrollment/changeEnrollmentStatus",
-  async ([lessonId, enrollmentId, data], thunkAPI) => {
+  async ([lessonId, enrollmentId, data, teacherId], thunkAPI) => {
     try {
       const resp = await axios.patch(
         `/lessons/${lessonId}/enrollments/${enrollmentId}`,
         data
       );
+      thunkAPI.dispatch(getTeacherLessons(teacherId))
       thunkAPI.dispatch(
         editEnrollmentStatusSuccess([lessonId, enrollmentId, data])
       );
       thunkAPI.dispatch(editStudentEnrollmentSuccess([enrollmentId, data]));
+
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
