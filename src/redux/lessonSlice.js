@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 const initialState = {
   newLessonTime: { start: "", end: "" },
   newLesson: "",
@@ -235,7 +236,8 @@ const lessonSlice = createSlice({
             (enrollment) => enrollment.id !== enrollmentId
           );
         }
-        state.myLessons.filter(lesson => lesson.id !== lessonId )
+
+        // state.myLessons = state.myLessons.filter(lesson => lesson.id !== lessonId)
 
         const lesson2 = state.currentCal.find(
           (lesson) => lesson.id === lessonId
