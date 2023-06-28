@@ -1,8 +1,5 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+
+import { AppBar, Avatar, Box, Toolbar, Button, IconButton} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -13,7 +10,7 @@ import { toggleDrawer } from "../../redux/drawerSlice";
 
 export default function TopBar() {
   const pages = ["Teachers"];
-  const { isSignedIn } = useSelector( store => store.user)
+  const { isSignedIn, user } = useSelector( store => store.user)
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -59,7 +56,8 @@ export default function TopBar() {
                 }}
                 onClick={() => dispatch(toggleDrawer(true))}
               >
-                <MenuIcon />
+                <Avatar src={user.avatar}>
+                </Avatar>
               </IconButton>
               <IconButton
                 size="large"
