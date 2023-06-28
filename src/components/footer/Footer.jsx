@@ -1,7 +1,15 @@
 import React from 'react';
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { Box, Typography, Container, Link} from '@mui/material';
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary">
+      <Link color="inherit" href="https://github.com/LuluLalaJ">
+        © Chen Jiang
+      </Link>{" "}
+    </Typography>
+  );
+}
 
 const Footer = () => {
   return (
@@ -17,11 +25,10 @@ const Footer = () => {
             : theme.palette.grey[800],
       }}
     >
-      <Container maxWidth="sm">
-        <Typography variant="body1">
-          My sticky footer can be found here.
-        </Typography>
-        {/* <Copyright /> */}
+      <Container maxWidth="md"
+      sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Typography variant="body1"></Typography>
+        <Copyright />
       </Container>
     </Box>
   );
