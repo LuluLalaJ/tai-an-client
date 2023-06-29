@@ -14,7 +14,6 @@ const Lessons = () => {
   const { user, role } = useSelector((store) => store.user);
   const { myLessons } = useSelector((store) => store.lesson);
   const { changeEnrollError } = useSelector((store) => store.enrollment);
-  console.log(changeEnrollError);
   useEffect(() => {
     if (changeEnrollError) {
       if (changeEnrollError.error === "Insufficient credit") {

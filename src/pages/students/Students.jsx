@@ -39,6 +39,16 @@ const Students = () => {
     setSearchKeyword(e.target.value);
   };
 
+  useEffect(() => {
+    dispatch(getStudents(user.id));
+  }, [dispatch, user.id]);
+
+  useEffect(() => {
+    setSortedStudents(sortByStringAsc(students, "last_name"));
+  }, [students]);
+
+  console.log(sortedStudents);
+
   const filteredStudents = sortedStudents.filter((student) => {
     const {
       first_name,
@@ -51,21 +61,15 @@ const Students = () => {
 
     const keyword = searchKeyword.toLowerCase();
     return (
-      `${first_name} ${last_name}`.toLowerCase().includes(keyword) ||
-      email.toLowerCase().includes(keyword) ||
-      city.toLowerCase().includes(keyword) ||
-      state.toLowerCase().includes(keyword) ||
-      country.toLowerCase().includes(keyword)
+      (first_name && first_name.toLowerCase().includes(keyword)) ||
+      (last_name && last_name.toLowerCase().includes(keyword)) ||
+      (email && email.toLowerCase().includes(keyword)) ||
+      (city && city.toLowerCase().includes(keyword)) ||
+      (state && state.toLowerCase().includes(keyword)) ||
+      (country && country.toLowerCase().includes(keyword))
     );
   });
 
-  useEffect(() => {
-    dispatch(getStudents(user.id));
-  }, [dispatch, user.id]);
-
-  useEffect(() => {
-    setSortedStudents(sortByStringAsc(students, "last_name"));
-  }, [students]);
 
   return (
     <Container sx={{ py: 2, minHeight: "100vh" }} maxWidth="md">
