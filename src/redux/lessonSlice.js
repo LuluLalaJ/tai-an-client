@@ -233,6 +233,7 @@ const lessonSlice = createSlice({
       })
       .addCase(cancelEnrollmentSuccess, (state, action) => {
         const [lessonId, enrollmentId, role] = action.payload;
+
         const lesson1 = state.myLessons.find(
           (lesson) => lesson.id === lessonId
         );
@@ -247,15 +248,23 @@ const lessonSlice = createSlice({
             (lesson) => lesson.id !== lessonId
           );
         }
+        //  if (role === "student" && state.currentCal == state.myLessons) {
+        //    state.currentCal = state.currentCal.filter(
+        //      (lesson) => lesson.id !== lessonId
+        //    );
+        //  }
 
-        const lesson2 = state.currentCal.find(
-          (lesson) => lesson.id === lessonId
-        );
-        if (lesson2) {
-          lesson2.enrollments = lesson2.enrollments.filter(
-            (enrollment) => enrollment.id !== enrollmentId
-          );
-        }
+         const lesson2 = state.currentCal.find(
+           (lesson) => lesson.id === lessonId
+         );
+         if (lesson2) {
+           lesson2.enrollments = lesson2.enrollments.filter(
+             (enrollment) => enrollment.id !== enrollmentId
+           );
+         }
+
+
+
       })
       .addCase(editEnrollmentStatusSuccess, (state, action) => {
         const [lessonId, enrollmentId, data] = action.payload;
