@@ -1,9 +1,7 @@
 # Tai-an Tea School Client
-
 This is a front-end client for Tai-an Tea School, a lesson management website provides tea teachers and students a streamlined and efficient platform for lesson registration and feedback. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Installation
-
 Clone this repository, install all the dependencies (`npm install`) and run `npm start`.  Open http://localhost:4000 to view it in the browser. You will also need to install the back-end of this application available at https://github.com/LuluLalaJ/tai-an-server.
 
 
@@ -24,5 +22,5 @@ The website provides students convenient access to school's schedule of tea less
 * FullCalendar
 * Stripe API
 * Formik
-* Yup 
+* Yup
 * HTML, CSS, JavaScript
