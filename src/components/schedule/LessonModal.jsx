@@ -61,12 +61,13 @@ export default function LessonModal() {
       const lessonValues ={...values, ...newLessonTime}
       //add error handling later
       dispatch(postNewLesson(lessonValues));
+      resetForm();
       dispatch(closeNewLessonFormModal());
     },
   });
 
 
-  const { values, handleChange, handleSubmit } = formik;
+  const { values, handleChange, handleSubmit, resetForm } = formik;
 
   return (
     <div>

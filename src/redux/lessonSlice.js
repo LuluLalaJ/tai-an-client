@@ -54,7 +54,9 @@ export const postNewLesson = createAsyncThunk(
   async (newLessonInfo, thunkAPI) => {
     try {
       const resp = await axios.post(`/lessons`, newLessonInfo);
+      thunkAPI.dispatch(getAllLessons());
       return resp.data;
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -139,6 +141,9 @@ const lessonSlice = createSlice({
     },
     resetNewLesson: state => {
       state.newLesson = ""
+    },
+    setAllOrMy: (state, action) => {
+      state.allOrMy = action.payload
     }
   },
 

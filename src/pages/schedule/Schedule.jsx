@@ -15,7 +15,7 @@ import {
   updateNewLessonTime,
   openLessonPop,
   editLessonRequest,
-  resetNewLesson,
+  setAllOrMy,
 } from "../../redux/lessonSlice";
 import {TOMORROW } from '../../constants'
 
@@ -28,7 +28,7 @@ const Schedule = () => {
   const { user, role } = useSelector((store) => store.user);
 
   useEffect(() => {
-    dispatch(getAllLessons());
+    dispatch(getAllLessons())
   }, [dispatch]);
 
   const [selectedCalendar, setSelectedCalendar] = useState("");
@@ -117,7 +117,7 @@ return (
         allLessons: {
           text: "All Lessons",
           click: function () {
-            dispatch(getAllLessons());
+            dispatch(getAllLessons())
           },
         },
         myLessons: {
@@ -125,7 +125,7 @@ return (
           click: function () {
             if (role === "student") {
               dispatch(getStudentLessons(user.id));
-            } else if (role === "teacher") dispatch(getTeacherLessons(user.id));
+            } else if (role === "teacher") dispatch(getTeacherLessons(user.id))
           },
         },
       }}
