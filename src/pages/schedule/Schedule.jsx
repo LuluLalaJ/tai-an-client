@@ -134,7 +134,7 @@ return (
         center: "title",
         right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
       }}
-      initialView="dayGridMonth"
+      initialView="timeGridWeek"
       editable={role === "teacher"}
       selectable={role === "teacher"}
       selectMirror={role === "teacher"}
