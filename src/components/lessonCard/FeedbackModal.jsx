@@ -8,7 +8,7 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 import { Formik } from "formik";
 import TextField from "@mui/material/TextField";
 import { changeEnrollmentStatus } from "../../redux/enrollmentSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -23,14 +23,14 @@ const style = {
 };
 
 export default function FeedbackModal({ comment, lessonId, enrollmentId }) {
+  const { user } = useSelector(store => store.user)
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
    const handleFormSubmit = (values) => {
-     console.log("submit", values);
-     dispatch(changeEnrollmentStatus([lessonId, enrollmentId, values]));
+     dispatch(changeEnrollmentStatus([lessonId, enrollmentId, values, user.id]));
 
    };
 
