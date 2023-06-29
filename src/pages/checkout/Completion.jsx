@@ -48,9 +48,9 @@ const Completion = () => {
                 variant="h5"
                 color="inherit"
                 component={RouterLink}
-                to="/"
+                to="/schedule"
               >
-                Go back to Home
+                Schedule a Lesson
               </Typography>
             </Box>
           </Grid>

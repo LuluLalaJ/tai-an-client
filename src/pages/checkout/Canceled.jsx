@@ -47,9 +47,9 @@ const Canceled = () => {
                 variant="h5"
                 color="inherit"
                 component={RouterLink}
-                to="/"
+                to="/product"
               >
-                Go back to Home
+                Go back to Purchase Credits
               </Typography>
             </Box>
           </Grid>
